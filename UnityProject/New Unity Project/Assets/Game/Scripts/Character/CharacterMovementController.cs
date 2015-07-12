@@ -77,7 +77,8 @@ public class CharacterMovementController : MonoBehaviour
 			_rigidBody.velocity = _lastVelocity;
 
 			Quaternion lookRotation    = Quaternion.LookRotation(velocity);
-			_lastLookRotation		   = Quaternion.Lerp(_lastLookRotation, lookRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			//_lastLookRotation		   = Quaternion.Lerp(_lastLookRotation, lookRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			_lastLookRotation		   = lookRotation;
 			_rigidBody.rotation 	   = Quaternion.Euler(0, _lastLookRotation.eulerAngles.y, 0);
 		}
 		else
