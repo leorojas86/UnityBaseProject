@@ -5,7 +5,7 @@ public class KeyboardCharacterInput : CharacterInput
 {
 	#region Variables
 
-	private Vector3 _lastMovement = Vector3.zero;
+	private float _lastMovementRotation = 0;
 
 	#endregion
 
@@ -13,18 +13,22 @@ public class KeyboardCharacterInput : CharacterInput
 	
 	public override Vector3 GetMovement()
 	{
-		Vector3 movement = Vector3.zero;
+		if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+		{
+			float distance  = Input.GetKey(KeyCode.W) ? 1f : 0.001f;
 
-		if(Input.GetKey(KeyCode.W))
-		   movement += Vector3.forward;
+			if(Input.GetKey(KeyCode.A))
+				_lastMovementRotation += Constants.KEYBOARD_ROTATION_SPEED;
+			
+			if(Input.GetKey(KeyCode.D))
+				_lastMovementRotation -= Constants.KEYBOARD_ROTATION_SPEED;
 
-		if(Input.GetKey(KeyCode.A))
-		   movement += Vector3.left;
+			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, distance, _lastMovementRotation);
 
-		if(Input.GetKey(KeyCode.D))
-		   movement += Vector3.right;
+			return new Vector3(movement2D.x, 0, movement2D.y);
+		}
 
-		return movement;
+		return Vector3.zero;
 	}
 
 	public override bool IsJumpButtonDown()
