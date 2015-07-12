@@ -6,7 +6,7 @@ public class Character : MonoBehaviour
 {
 	#region Variables
 
-	private int _health 									= Constants.DEFAULT_HEALTH;
+	private int _health 									= Constants.DEFAULT_CHARACTER_HEALTH;
 	private int _score  									= 0;
 	private CharacterMovementController _movementController = null;
 
@@ -66,7 +66,7 @@ public class Character : MonoBehaviour
 
 	public void Reset()
 	{
-		_health = Constants.DEFAULT_HEALTH;
+		_health = Constants.DEFAULT_CHARACTER_HEALTH;
 		_score 	= 0;
 
 		_movementController.Reset();

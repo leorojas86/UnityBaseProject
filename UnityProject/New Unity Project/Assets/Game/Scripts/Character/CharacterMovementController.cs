@@ -5,18 +5,12 @@ using System.Collections.Generic;
 //http://unity3d.com/earn/tutorials/projects/space-shooter/moving-the-player
 public class CharacterMovementController : MonoBehaviour 
 {
-	#region Constants
-
-	private float PLAYER_MIN_FLOOR_JUMP_DISTANCE = 0.05f;
-
-	#endregion
-
 	#region Variables
 	
 	private CharacterInput _playerInput     = null;
 	private Rigidbody _rigidBody 	    	= null; 
 	private float _lastLookRotation 		= 0;
-	private float _speed					= 0.1f;
+	private float _speed					= 10.0f;
 
 	#endregion
 
@@ -24,8 +18,9 @@ public class CharacterMovementController : MonoBehaviour
 
 	void Awake()
 	{
-		_rigidBody   = GetComponentInChildren<Rigidbody>();
-		_playerInput = new KeyboardCharacterInput();
+		_rigidBody   			= GetComponentInChildren<Rigidbody>();
+		_rigidBody.constraints  = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		_playerInput 			= new KeyboardCharacterInput();
 	}
 
 	void Start() 
@@ -38,11 +33,11 @@ public class CharacterMovementController : MonoBehaviour
 		UpdateMovement(movement);
 	}
 
-	private bool IsNearToLanded()
+	private bool IsLanded()
 	{
 		float belowCollisionDistance = GetBelowCollisionDistance();
 
-		return belowCollisionDistance < PLAYER_MIN_FLOOR_JUMP_DISTANCE;
+		return belowCollisionDistance < Constants.MIN_CHARACTER_LANDED_FLOOR_DISTANCE;
 	}
 
 	private float GetBelowCollisionDistance()
@@ -66,7 +61,6 @@ public class CharacterMovementController : MonoBehaviour
 			/*if(playerAnimation.IsPlaying("idle_anim"))
 				playerAnimation.CrossFade("run_anim");*/
 
-			_rigidBody.constraints 	   = RigidbodyConstraints.None; 
 			Quaternion lookRotation    = Quaternion.LookRotation(velocity);
 			Vector3 lookRotationVector = lookRotation.eulerAngles;
 			_lastLookRotation		   = lookRotationVector.y;
