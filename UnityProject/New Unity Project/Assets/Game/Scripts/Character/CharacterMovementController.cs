@@ -2,14 +2,15 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(Character))]
 public class CharacterMovementController : MonoBehaviour 
 {
 	#region Variables
-	
-	private CharacterInput _playerInput     = null;
-	private Rigidbody _rigidBody 	    	= null;
-	private float _lastLookRotation 		= 0;
-	private float _speed					= Constants.CHARACTER_DEFAULT_SPEED;
+
+	private Rigidbody _rigidBody 	    = null;
+	private float _lastLookRotation 	= 0;
+	private float _speed				= Constants.CHARACTER_DEFAULT_SPEED;
+	private Character _character		= null;
 
 	#endregion
 
@@ -17,14 +18,14 @@ public class CharacterMovementController : MonoBehaviour
 
 	void Awake()
 	{
-		_rigidBody   			= GetComponentInChildren<Rigidbody>();
-		_rigidBody.constraints  = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-		_playerInput 			= new KeyboardCharacterInput();
+		_rigidBody   		   = GetComponentInChildren<Rigidbody>();
+		_character 			   = GetComponent<Character> ();
+		_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 	}
 	
 	void Update() 
 	{
-		Vector3 movement = _playerInput.GetMovement();
+		Vector3 movement = _character.Input.GetMovement();
 
 		UpdateMovement(movement);
 	}

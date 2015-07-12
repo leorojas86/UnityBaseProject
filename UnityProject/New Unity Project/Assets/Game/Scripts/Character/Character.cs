@@ -9,6 +9,7 @@ public class Character : MonoBehaviour
 	private int _health 									= Constants.CHARACTER_DEFAULT_HEALTH;
 	private int _score  									= 0;
 	private CharacterMovementController _movementController = null;
+	private CharacterInput _characterInput 					= new KeyboardCharacterInput();
 
 	#endregion
 
@@ -29,6 +30,11 @@ public class Character : MonoBehaviour
 	public bool IsDead
 	{
 		get { return _health == 0; }
+	}
+
+	public CharacterInput Input
+	{
+		get { return _characterInput; }
 	}
 	
 	#endregion
