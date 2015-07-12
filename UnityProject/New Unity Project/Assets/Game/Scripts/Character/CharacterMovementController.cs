@@ -9,6 +9,7 @@ public class CharacterMovementController : MonoBehaviour
 
 	private Rigidbody _rigidBody 	    = null;
 	private float _lastLookRotation 	= 0;
+	private Vector3 _lastVelocity       = Vector3.zero;
 	private float _speed				= Constants.CHARACTER_DEFAULT_SPEED;
 	private Character _character		= null;
 
@@ -20,7 +21,7 @@ public class CharacterMovementController : MonoBehaviour
 	{
 		_rigidBody   		   = GetComponentInChildren<Rigidbody>();
 		_character 			   = GetComponent<Character> ();
-		_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
+		_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 	
 	void Update() 
@@ -49,9 +50,10 @@ public class CharacterMovementController : MonoBehaviour
 	
 	private void UpdateMovement(Vector3 movement)
 	{
-		Vector3 velocity   = movement * _speed;
-		velocity.y 		   = _rigidBody.velocity.y;
-		_rigidBody.velocity = velocity;
+		Vector3 velocity    = movement * _speed;
+		_lastVelocity 		= Vector3.Lerp(_lastVelocity, velocity, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+		_lastVelocity.y     = _rigidBody.velocity.y;//Keep gravity movement, only change x,z
+		_rigidBody.velocity = _lastVelocity;
 
 		if(movement != Vector3.zero)
 		{
@@ -60,7 +62,7 @@ public class CharacterMovementController : MonoBehaviour
 
 			Quaternion lookRotation    = Quaternion.LookRotation(velocity);
 			Vector3 lookRotationVector = lookRotation.eulerAngles;
-			_lastLookRotation		   = lookRotationVector.y;
+			_lastLookRotation		   = MathUtils.LinearBezier(_lastLookRotation, lookRotationVector.y, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 			_rigidBody.rotation 	   = Quaternion.Euler(0, _lastLookRotation, 0);
 		}
 		else
