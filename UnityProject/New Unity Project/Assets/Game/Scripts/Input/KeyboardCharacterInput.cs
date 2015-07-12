@@ -15,7 +15,7 @@ public class KeyboardCharacterInput : CharacterInput
 	{
 		if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
 		{
-			float distance  = Input.GetKey(KeyCode.W) ? 1f : 0.001f;
+			float distance = Input.GetKey(KeyCode.W) ? 1f : 0.001f;
 
 			if(Input.GetKey(KeyCode.A))
 				_lastMovementRotation += Constants.KEYBOARD_ROTATION_SPEED;
