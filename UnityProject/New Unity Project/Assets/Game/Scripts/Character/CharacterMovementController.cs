@@ -2,15 +2,14 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-//http://unity3d.com/earn/tutorials/projects/space-shooter/moving-the-player
 public class CharacterMovementController : MonoBehaviour 
 {
 	#region Variables
 	
 	private CharacterInput _playerInput     = null;
-	private Rigidbody _rigidBody 	    	= null; 
+	private Rigidbody _rigidBody 	    	= null;
 	private float _lastLookRotation 		= 0;
-	private float _speed					= 10.0f;
+	private float _speed					= Constants.CHARACTER_DEFAULT_SPEED;
 
 	#endregion
 
@@ -22,14 +21,11 @@ public class CharacterMovementController : MonoBehaviour
 		_rigidBody.constraints  = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
 		_playerInput 			= new KeyboardCharacterInput();
 	}
-
-	void Start() 
-	{
-	}
-
+	
 	void Update() 
 	{
 		Vector3 movement = _playerInput.GetMovement();
+
 		UpdateMovement(movement);
 	}
 
@@ -37,7 +33,7 @@ public class CharacterMovementController : MonoBehaviour
 	{
 		float belowCollisionDistance = GetBelowCollisionDistance();
 
-		return belowCollisionDistance < Constants.MIN_CHARACTER_LANDED_FLOOR_DISTANCE;
+		return belowCollisionDistance < Constants.CHARACTER_MIN_LANDED_FLOOR_DISTANCE;
 	}
 
 	private float GetBelowCollisionDistance()
