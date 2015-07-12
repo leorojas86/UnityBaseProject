@@ -23,6 +23,11 @@ public class PS3CharacterInput : CharacterInput
 	{
 		return Input.GetKeyDown(KeyCode.JoystickButton14);
 	}
+
+	public override void SetMovementRotation(float rotation)
+	{
+
+	}
 	
 	#endregion
 }

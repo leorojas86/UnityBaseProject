@@ -31,6 +31,11 @@ public class KeyboardCharacterInput : CharacterInput
 		return Vector3.zero;
 	}
 
+	public override void SetMovementRotation(float rotation)
+	{
+		_lastMovementRotation = rotation + 90;//Rotation 0 is right
+	}
+
 	public override bool IsJumpButtonDown()
 	{
 		return Input.GetKeyDown(KeyCode.Space);

@@ -22,5 +22,7 @@ public abstract class  CharacterInput
 		return GetMovement() != Vector3.zero || IsJumpButtonDown();
 	}
 
+	public abstract void SetMovementRotation (float rotation);
+
 	#endregion
 }

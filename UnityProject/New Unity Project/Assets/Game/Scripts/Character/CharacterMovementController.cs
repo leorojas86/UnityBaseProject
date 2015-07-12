@@ -22,6 +22,9 @@ public class CharacterMovementController : MonoBehaviour
 		_rigidBody   		   = GetComponentInChildren<Rigidbody>();
 		_character 			   = GetComponent<Character> ();
 		_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
+		_lastLookRotation      = transform.rotation;
+
+		_character.Input.SetMovementRotation(_lastLookRotation.eulerAngles.y);
 	}
 	
 	void Update() 
