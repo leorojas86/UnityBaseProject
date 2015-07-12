@@ -30,11 +30,10 @@ public class CharacterMovementController : MonoBehaviour
 
 		bool isLanded = IsLanded();
 
-		Debug.Log(isLanded);
+		//Debug.Log(isLanded);
 
 		if(isLanded && _character.Input.IsJumpButtonDown())
 		{
-			Debug.Log("Jumping");
 			Vector3 velocity    = _rigidBody.velocity;
 			velocity.y 		    += 10;
 			_rigidBody.velocity = velocity; 
@@ -62,16 +61,17 @@ public class CharacterMovementController : MonoBehaviour
 	
 	private void UpdateMovement()
 	{
-		Vector3 movement    = _character.Input.GetMovement();
-		Vector3 velocity    = movement * _speed;
-		_lastVelocity 		= Vector3.Lerp(_lastVelocity, velocity, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-		_lastVelocity.y     = _rigidBody.velocity.y;//Keep gravity movement, only change x,z
-		_rigidBody.velocity = _lastVelocity;
+		Vector3 movement = _character.Input.GetMovement();
 
 		if(movement != Vector3.zero)
 		{
 			/*if(playerAnimation.IsPlaying("idle_anim"))
 				playerAnimation.CrossFade("run_anim");*/
+
+			Vector3 velocity    = movement * _speed;
+			_lastVelocity 		= Vector3.Lerp(_lastVelocity, velocity, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			_lastVelocity.y     = _rigidBody.velocity.y;//Keep gravity movement, only change x,z
+			_rigidBody.velocity = _lastVelocity;
 
 			Quaternion lookRotation    = Quaternion.LookRotation(velocity);
 			_lastLookRotation		   = Quaternion.Lerp(_lastLookRotation, lookRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
