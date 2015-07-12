@@ -12,6 +12,11 @@ public class KeyboardCharacterInput : CharacterInput
 		
 		return new Vector3(moveHorizontal, 0.0f, moveVertical);
 	}
+
+	public override bool IsJumpButtonDown()
+	{
+		return Input.GetKeyDown(KeyCode.Space);
+	}
 	
 	#endregion
 }

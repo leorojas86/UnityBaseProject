@@ -15,5 +15,12 @@ public abstract class  CharacterInput
 
 	public abstract Vector3 GetMovement();
 
+	public abstract bool IsJumpButtonDown();
+
+	public virtual bool Detect()
+	{
+		return GetMovement() != Vector3.zero || IsJumpButtonDown();
+	}
+
 	#endregion
 }

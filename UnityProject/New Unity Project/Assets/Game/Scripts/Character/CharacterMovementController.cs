@@ -26,14 +26,26 @@ public class CharacterMovementController : MonoBehaviour
 	
 	void Update() 
 	{
-		Vector3 movement = _character.Input.GetMovement();
+		UpdateMovement();
 
-		UpdateMovement(movement);
+		bool isLanded = IsLanded();
+
+		Debug.Log(isLanded);
+
+		if(isLanded && _character.Input.IsJumpButtonDown())
+		{
+			Debug.Log("Jumping");
+			Vector3 velocity    = _rigidBody.velocity;
+			velocity.y 		    += 10;
+			_rigidBody.velocity = velocity; 
+		}
 	}
 
 	private bool IsLanded()
 	{
 		float belowCollisionDistance = GetBelowCollisionDistance();
+
+		//Debug.Log("belowCollisionDistance = " + belowCollisionDistance);
 
 		return belowCollisionDistance < Constants.CHARACTER_MIN_LANDED_FLOOR_DISTANCE;
 	}
@@ -48,8 +60,9 @@ public class CharacterMovementController : MonoBehaviour
 		return float.MaxValue;
 	}
 	
-	private void UpdateMovement(Vector3 movement)
+	private void UpdateMovement()
 	{
+		Vector3 movement    = _character.Input.GetMovement();
 		Vector3 velocity    = movement * _speed;
 		_lastVelocity 		= Vector3.Lerp(_lastVelocity, velocity, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 		_lastVelocity.y     = _rigidBody.velocity.y;//Keep gravity movement, only change x,z
@@ -75,8 +88,7 @@ public class CharacterMovementController : MonoBehaviour
 
 	public void Reset()
 	{
-		GetComponent<Rigidbody>().velocity = Vector3.zero;
-		UpdateMovement(Vector3.zero);//Update stand position
+		_rigidBody.velocity = Vector3.zero;
 	}
 
 	#endregion
