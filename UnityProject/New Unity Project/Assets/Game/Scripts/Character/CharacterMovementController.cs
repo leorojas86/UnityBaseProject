@@ -7,11 +7,11 @@ public class CharacterMovementController : MonoBehaviour
 {
 	#region Variables
 
-	private Rigidbody _rigidBody 	    = null;
-	private float _lastLookRotation 	= 0;
-	private Vector3 _lastVelocity       = Vector3.zero;
-	private float _speed				= Constants.CHARACTER_DEFAULT_SPEED;
-	private Character _character		= null;
+	private Rigidbody _rigidBody 	    	= null;
+	private Quaternion _lastLookRotation 	= Quaternion.identity;
+	private Vector3 _lastVelocity       	= Vector3.zero;
+	private float _speed					= Constants.CHARACTER_DEFAULT_SPEED;
+	private Character _character			= null;
 
 	#endregion
 
@@ -61,16 +61,15 @@ public class CharacterMovementController : MonoBehaviour
 				playerAnimation.CrossFade("run_anim");*/
 
 			Quaternion lookRotation    = Quaternion.LookRotation(velocity);
-			Vector3 lookRotationVector = lookRotation.eulerAngles;
-			_lastLookRotation		   = MathUtils.LinearBezier(_lastLookRotation, lookRotationVector.y, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-			_rigidBody.rotation 	   = Quaternion.Euler(0, _lastLookRotation, 0);
+			_lastLookRotation		   = Quaternion.Lerp(_lastLookRotation, lookRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			_rigidBody.rotation 	   = Quaternion.Euler(0, _lastLookRotation.eulerAngles.y, 0);
 		}
 		else
 		{
 			/*if(playerAnimation.IsPlaying("run_anim"))
 				playerAnimation.CrossFade("idle_anim");*/
 
-			_rigidBody.rotation = Quaternion.Euler(0, _lastLookRotation, 0);
+			_rigidBody.rotation = Quaternion.Euler(0, _lastLookRotation.eulerAngles.y, 0);
 		}
 	}
 
