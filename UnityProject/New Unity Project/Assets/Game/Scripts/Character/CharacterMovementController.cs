@@ -8,7 +8,6 @@ public class CharacterMovementController : MonoBehaviour
 	#region Variables
 
 	private Rigidbody _rigidBody 	    	= null;
-	private Quaternion _lastLookRotation 	= Quaternion.identity;
 	private float _speed					= Constants.CHARACTER_DEFAULT_SPEED;
 	private Character _character			= null;
 
@@ -21,9 +20,8 @@ public class CharacterMovementController : MonoBehaviour
 		_rigidBody   		   = GetComponentInChildren<Rigidbody>();
 		_character 			   = GetComponent<Character> ();
 		_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
-		_lastLookRotation      = transform.rotation;
 
-		_character.Input.SetMovementRotation(_lastLookRotation.eulerAngles.y);
+		_character.Input.SetMovementRotation(transform.rotation.y);
 	}
 	
 	void Update() 
@@ -75,11 +73,10 @@ public class CharacterMovementController : MonoBehaviour
 			newVelocity.y		  	  = _rigidBody.velocity.y; //Keep gravity movement, only change x,z
 			_rigidBody.velocity 	  = newVelocity;
 
-			Quaternion lookRotation    = Quaternion.LookRotation(targetVelocity);
+			Quaternion lookRotation    = Quaternion.LookRotation(movement);
 			//_lastLookRotation		   = Quaternion.Lerp(_lastLookRotation, lookRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-			_lastLookRotation		   = lookRotation;
 			//Only rotate in y axis
-			_rigidBody.rotation = Quaternion.Euler(0, _lastLookRotation.eulerAngles.y, 0);
+			_rigidBody.rotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0);
 		}
 		else
 		{
