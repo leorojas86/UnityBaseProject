@@ -73,8 +73,9 @@ public class CharacterMovementController : MonoBehaviour
 
 			Vector3 velocity    = movement * _speed;
 			_lastVelocity 		= Vector3.Lerp(_lastVelocity, velocity, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-			_lastVelocity.y     = _rigidBody.velocity.y;//Keep gravity movement, only change x,z
-			_rigidBody.velocity = _lastVelocity;
+
+			//Keep gravity movement, only change x,z
+			_rigidBody.velocity = new Vector3(_lastVelocity.x, _rigidBody.velocity.y, _lastVelocity.z);
 
 			Quaternion lookRotation    = Quaternion.LookRotation(velocity);
 			//_lastLookRotation		   = Quaternion.Lerp(_lastLookRotation, lookRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
