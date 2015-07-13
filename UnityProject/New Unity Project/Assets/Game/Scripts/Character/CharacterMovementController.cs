@@ -9,7 +9,6 @@ public class CharacterMovementController : MonoBehaviour
 
 	private Rigidbody _rigidBody 	    	= null;
 	private Quaternion _lastLookRotation 	= Quaternion.identity;
-	private Vector3 _lastVelocity       	= Vector3.zero;
 	private float _speed					= Constants.CHARACTER_DEFAULT_SPEED;
 	private Character _character			= null;
 
@@ -71,24 +70,25 @@ public class CharacterMovementController : MonoBehaviour
 			/*if(playerAnimation.IsPlaying("idle_anim"))
 				playerAnimation.CrossFade("run_anim");*/
 
-			Vector3 velocity    = movement * _speed;
-			_lastVelocity 		= Vector3.Lerp(_lastVelocity, velocity, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			Vector3 targetVelocity    = movement * _speed;
+			Vector3 newVelocity 	  = Vector3.Lerp(_rigidBody.velocity, targetVelocity, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			newVelocity.y		  	  = _rigidBody.velocity.y; //Keep gravity movement, only change x,z
+			_rigidBody.velocity 	  = newVelocity;
 
-			//Keep gravity movement, only change x,z
-			_rigidBody.velocity = new Vector3(_lastVelocity.x, _rigidBody.velocity.y, _lastVelocity.z);
-
-			Quaternion lookRotation    = Quaternion.LookRotation(velocity);
+			Quaternion lookRotation    = Quaternion.LookRotation(targetVelocity);
 			//_lastLookRotation		   = Quaternion.Lerp(_lastLookRotation, lookRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 			_lastLookRotation		   = lookRotation;
-			_rigidBody.rotation 	   = Quaternion.Euler(0, _lastLookRotation.eulerAngles.y, 0);
 		}
 		else
 		{
 			/*if(playerAnimation.IsPlaying("run_anim"))
 				playerAnimation.CrossFade("idle_anim");*/
 
-			_rigidBody.rotation = Quaternion.Euler(0, _lastLookRotation.eulerAngles.y, 0);
+			//_lastVelocity = Vector3.zero;
 		}
+
+		//Only rotate in y axis
+		_rigidBody.rotation = Quaternion.Euler(0, _lastLookRotation.eulerAngles.y, 0);
 	}
 
 	public void Reset()
