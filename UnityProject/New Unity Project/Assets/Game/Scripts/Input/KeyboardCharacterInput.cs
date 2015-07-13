@@ -33,7 +33,7 @@ public class KeyboardCharacterInput : CharacterInput
 
 	public override void SetMovementRotation(float rotation)
 	{
-		_lastMovementRotation = rotation + 90;//Rotation 0 is right
+		_lastMovementRotation = rotation;
 	}
 
 	public override bool IsJumpButtonDown()

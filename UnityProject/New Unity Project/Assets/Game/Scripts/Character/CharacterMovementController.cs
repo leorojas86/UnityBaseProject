@@ -10,6 +10,7 @@ public class CharacterMovementController : MonoBehaviour
 	private Rigidbody _rigidBody 	    	= null;
 	private float _speed					= Constants.CHARACTER_DEFAULT_SPEED;
 	private Character _character			= null;
+	//private float _targetRotation			= 0;
 
 	#endregion
 
