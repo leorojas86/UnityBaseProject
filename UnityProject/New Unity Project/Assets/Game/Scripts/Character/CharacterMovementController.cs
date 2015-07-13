@@ -78,6 +78,8 @@ public class CharacterMovementController : MonoBehaviour
 			Quaternion lookRotation    = Quaternion.LookRotation(targetVelocity);
 			//_lastLookRotation		   = Quaternion.Lerp(_lastLookRotation, lookRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 			_lastLookRotation		   = lookRotation;
+			//Only rotate in y axis
+			_rigidBody.rotation = Quaternion.Euler(0, _lastLookRotation.eulerAngles.y, 0);
 		}
 		else
 		{
@@ -87,8 +89,7 @@ public class CharacterMovementController : MonoBehaviour
 			//_lastVelocity = Vector3.zero;
 		}
 
-		//Only rotate in y axis
-		_rigidBody.rotation = Quaternion.Euler(0, _lastLookRotation.eulerAngles.y, 0);
+
 	}
 
 	public void Reset()
