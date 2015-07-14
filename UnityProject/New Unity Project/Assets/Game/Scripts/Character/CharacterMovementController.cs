@@ -29,16 +29,21 @@ public class CharacterMovementController : MonoBehaviour
 		_character.Input.UpdateInput();
 
 		UpdateMovement();
+		CheckForJump();
+	}
 
-		bool isLanded = IsLanded();
-
-		//Debug.Log(isLanded);
-
-		if(isLanded && _character.Input.IsJumpingButtonDown)
+	private void CheckForJump()
+	{
+		if(_character.Input.IsJumpingButtonDown)
 		{
-			Vector3 velocity    = _rigidBody.velocity;
-			velocity.y 		    += 10;
-			_rigidBody.velocity = velocity; 
+			bool isLanded = IsLanded();
+			
+			if(isLanded)
+			{
+				Vector3 velocity    = _rigidBody.velocity;
+				velocity.y 		    += Constants.CHARACTER_JUMP_FORCE;
+				_rigidBody.velocity = velocity; 
+			}
 		}
 	}
 
