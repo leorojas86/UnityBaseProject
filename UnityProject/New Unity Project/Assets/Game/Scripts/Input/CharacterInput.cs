@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public abstract class  CharacterInput 
+public abstract class CharacterInput 
 {
 	#region Variables
 	
