@@ -3,43 +3,35 @@ using System.Collections;
 
 public class KeyboardCharacterInput : CharacterInput 
 {
-	#region Variables
-
-	private float _lastMovementRotation = 0;
-
-	#endregion
-
 	#region Methods
-	
-	public override Vector3 GetMovement()
+
+	public override void UpdateInput()
 	{
-		if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+		_isJumpingButtonDown = Input.GetKeyDown(KeyCode.Space);
+
+		UpdateRotation();
+		UpdateMovement();
+	}
+
+	private void UpdateRotation()
+	{
+		if(Input.GetKey(KeyCode.A))
+			_rotation -= Constants.KEYBOARD_ROTATION_SPEED;
+		
+		if(Input.GetKey(KeyCode.D))
+			_rotation += Constants.KEYBOARD_ROTATION_SPEED;
+	}
+	
+	private void UpdateMovement()
+	{
+		if(Input.GetKey(KeyCode.W))
 		{
-			float distance = Input.GetKey(KeyCode.W) ? 1f : 0.001f;
-
-			if(Input.GetKey(KeyCode.A))
-				_lastMovementRotation += Constants.KEYBOARD_ROTATION_SPEED;
-			
-			if(Input.GetKey(KeyCode.D))
-				_lastMovementRotation -= Constants.KEYBOARD_ROTATION_SPEED;
-
-			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, distance, _lastMovementRotation);
-
-			return new Vector3(movement2D.x, 0, movement2D.y);
+			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, _rotation);
+			_movement 		   = new Vector3(movement2D.y, 0, movement2D.x);
 		}
-
-		return Vector3.zero;
+		else
+			_movement = Vector3.zero;
 	}
 
-	public override void SetMovementRotation(float rotation)
-	{
-		_lastMovementRotation = rotation;
-	}
-
-	public override bool IsJumpButtonDown()
-	{
-		return Input.GetKeyDown(KeyCode.Space);
-	}
-	
 	#endregion
 }

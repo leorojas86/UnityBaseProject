@@ -10,8 +10,16 @@ public class PS3CharacterInput : CharacterInput
 	#endregion
 
 	#region Methods
+
+	public override void UpdateInput()
+	{
+		_isJumpingButtonDown = Input.GetKeyDown(KeyCode.Space);
+		
+		//UpdateRotation();
+		//UpdateMovement();
+	}
 	
-	public override Vector3 GetMovement()
+	/*public override Vector3 GetMovement()
 	{
 		float moveHorizontal = Input.GetAxis("Horizontal");
 		float moveVertical   = Input.GetAxis("Vertical");
@@ -27,7 +35,7 @@ public class PS3CharacterInput : CharacterInput
 	public override void SetMovementRotation(float rotation)
 	{
 
-	}
+	}*/
 	
 	#endregion
 }

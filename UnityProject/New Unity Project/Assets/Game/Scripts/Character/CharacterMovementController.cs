@@ -18,22 +18,23 @@ public class CharacterMovementController : MonoBehaviour
 
 	void Awake()
 	{
-		_rigidBody   		   = GetComponentInChildren<Rigidbody>();
-		_character 			   = GetComponent<Character> ();
-		_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
-
-		_character.Input.SetMovementRotation(transform.rotation.y);
+		_rigidBody   		      = GetComponentInChildren<Rigidbody>();
+		_character 			      = GetComponent<Character>();
+		_character.Input.Rotation = transform.rotation.y;
+		_rigidBody.constraints    = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 	
 	void Update() 
 	{
+		_character.Input.UpdateInput();
+
 		UpdateMovement();
 
 		bool isLanded = IsLanded();
 
 		//Debug.Log(isLanded);
 
-		if(isLanded && _character.Input.IsJumpButtonDown())
+		if(isLanded && _character.Input.IsJumpingButtonDown)
 		{
 			Vector3 velocity    = _rigidBody.velocity;
 			velocity.y 		    += 10;
@@ -62,32 +63,15 @@ public class CharacterMovementController : MonoBehaviour
 	
 	private void UpdateMovement()
 	{
-		Vector3 movement = _character.Input.GetMovement();
-
-		if(movement != Vector3.zero)
+		if(_character.Input.Movement != Vector3.zero)
 		{
-			/*if(playerAnimation.IsPlaying("idle_anim"))
-				playerAnimation.CrossFade("run_anim");*/
-
-			Vector3 targetVelocity    = movement * _speed;
+			Vector3 targetVelocity    = _character.Input.Movement * _speed;
 			Vector3 newVelocity 	  = Vector3.Lerp(_rigidBody.velocity, targetVelocity, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 			newVelocity.y		  	  = _rigidBody.velocity.y; //Keep gravity movement, only change x,z
 			_rigidBody.velocity 	  = newVelocity;
-
-			Quaternion lookRotation    = Quaternion.LookRotation(movement);
-			//_lastLookRotation		   = Quaternion.Lerp(_lastLookRotation, lookRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-			//Only rotate in y axis
-			_rigidBody.rotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0);
-		}
-		else
-		{
-			/*if(playerAnimation.IsPlaying("run_anim"))
-				playerAnimation.CrossFade("idle_anim");*/
-
-			//_lastVelocity = Vector3.zero;
 		}
 
-
+		_rigidBody.rotation = Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(0, _character.Input.Rotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 	}
 
 	public void Reset()
