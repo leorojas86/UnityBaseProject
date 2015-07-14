@@ -7,10 +7,9 @@ public class CharacterMovementController : MonoBehaviour
 {
 	#region Variables
 
-	private Rigidbody _rigidBody 	    	= null;
-	private float _speed					= Constants.CHARACTER_DEFAULT_SPEED;
-	private Character _character			= null;
-	//private float _targetRotation			= 0;
+	private Rigidbody _rigidBody 	= null;
+	private float _speed			= Constants.CHARACTER_DEFAULT_SPEED;
+	private Character _character	= null;
 
 	#endregion
 
@@ -20,7 +19,7 @@ public class CharacterMovementController : MonoBehaviour
 	{
 		_rigidBody   		      = GetComponentInChildren<Rigidbody>();
 		_character 			      = GetComponent<Character>();
-		_character.Input.Rotation = transform.rotation.y;
+		_character.Input.Rotation = transform.rotation.eulerAngles.y;
 		_rigidBody.constraints    = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 	
