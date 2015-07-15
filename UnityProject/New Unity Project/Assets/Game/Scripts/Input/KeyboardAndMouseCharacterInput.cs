@@ -24,12 +24,17 @@ public class KeyboardAndMouseCharacterInput : CharacterInput
 
 		if(Input.GetKey(KeyCode.W))
 			rotationMovement = _rotation;
+
+		if(Input.GetKey(KeyCode.A))
+			rotationMovement = _rotation - 90;
+
+		if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
+			rotationMovement = _rotation - 45;
 		 
 		if(Input.GetKey(KeyCode.S))
 			rotationMovement = _rotation - 180;
 
-		if(Input.GetKey(KeyCode.A))
-			rotationMovement = _rotation - 90;
+
 
 		if(Input.GetKey(KeyCode.D))
 			rotationMovement = _rotation + 90;
