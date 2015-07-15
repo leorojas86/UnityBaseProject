@@ -20,14 +20,23 @@ public class KeyboardAndMouseCharacterInput : CharacterInput
 	
 	private void UpdateMovement()
 	{
+		float rotationMovement = 0;
+
 		if(Input.GetKey(KeyCode.W))
+			rotationMovement = _rotation;
+		 
+		if(Input.GetKey(KeyCode.S))
+			rotationMovement = _rotation - 180;
+
+		if(Input.GetKey(KeyCode.A))
+			rotationMovement = _rotation - 90;
+
+		if(Input.GetKey(KeyCode.D))
+			rotationMovement = _rotation + 90;
+
+		if(rotationMovement != 0)
 		{
-			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, _rotation);
-			_movement 		   = new Vector3(movement2D.y, 0, movement2D.x);
-		}
-		else if(Input.GetKey(KeyCode.S))
-		{
-			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, _rotation - 180);
+			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, rotationMovement);
 			_movement 		   = new Vector3(movement2D.y, 0, movement2D.x);
 		}
 		else
