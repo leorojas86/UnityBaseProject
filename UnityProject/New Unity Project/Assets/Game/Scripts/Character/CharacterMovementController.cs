@@ -10,6 +10,27 @@ public class CharacterMovementController : MonoBehaviour
 	private Rigidbody _rigidBody 	= null;
 	private float _speed			= Constants.CHARACTER_DEFAULT_SPEED;
 	private Character _character	= null;
+	private bool _isFalling			= false;
+	private bool _isJumping			= false;
+
+	#endregion
+
+	#region Properties
+
+	public bool IsFalling
+	{
+		get { return _isFalling; }
+	}
+
+	public bool IsJumping
+	{
+		get { return _isJumping; }
+	}
+
+	public bool IsLanded
+	{
+		get { return !_isFalling && !_isJumping; }
+	}
 
 	#endregion
 
@@ -25,6 +46,13 @@ public class CharacterMovementController : MonoBehaviour
 	
 	void Update() 
 	{
+		if(_isJumping)
+			_isJumping = _rigidBody.velocity.y > Constants.CHARACTER_MIN_FALLING_Y_VELOCITY;
+		else
+			_isFalling = _rigidBody.velocity.y < -Constants.CHARACTER_MIN_FALLING_Y_VELOCITY;
+
+		//Debug.Log("_isJumping = " + _isJumping + " _isFalling = " + _isFalling + " _rigidBody.velocity.y = " + _rigidBody.velocity.y);
+
 		_character.Input.UpdateInput();
 
 		UpdateMovement();
@@ -33,20 +61,16 @@ public class CharacterMovementController : MonoBehaviour
 
 	private void CheckForJump()
 	{
-		if(_character.Input.IsJumpingButtonDown)
+		if(_character.Input.IsJumpingButtonDown && IsLanded)
 		{
-			bool isLanded = IsLanded();
-			
-			if(isLanded)
-			{
-				Vector3 velocity    = _rigidBody.velocity;
-				velocity.y 		    += Constants.CHARACTER_JUMP_FORCE;
-				_rigidBody.velocity = velocity; 
-			}
+			Vector3 velocity    = _rigidBody.velocity;
+			velocity.y 		    += Constants.CHARACTER_JUMP_FORCE;
+			_rigidBody.velocity = velocity; 
+			_isJumping 			= true;
 		}
 	}
 
-	private bool IsLanded()
+	/*private bool IsLanded()
 	{
 		float belowCollisionDistance = GetBelowCollisionDistance();
 
@@ -63,7 +87,7 @@ public class CharacterMovementController : MonoBehaviour
 			return hit.distance;
 
 		return float.MaxValue;
-	}
+	}*/
 	
 	private void UpdateMovement()
 	{
