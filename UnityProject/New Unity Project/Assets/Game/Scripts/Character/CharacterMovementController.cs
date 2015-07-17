@@ -91,10 +91,11 @@ public class CharacterMovementController : MonoBehaviour
 	
 	private void UpdateMovement()
 	{
-		if(_character.Input.Movement != Vector3.zero && IsLanded)
+		if(_character.Input.Movement != Vector3.zero)
 		{
 			Vector3 targetVelocity    = _character.Input.Movement * _speed;
-			Vector3 newVelocity 	  = Vector3.Lerp(_rigidBody.velocity, targetVelocity, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			float lerp			      = IsLanded ? Constants.CHARACTER_MOVEMENT_LERP_SPEED : Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_FLYING_MULTIPLIER;
+			Vector3 newVelocity 	  = Vector3.Lerp(_rigidBody.velocity, targetVelocity, lerp);
 			newVelocity.y		  	  = _rigidBody.velocity.y; //Keep gravity movement, only change x,z
 			_rigidBody.velocity 	  = newVelocity;
 		}
