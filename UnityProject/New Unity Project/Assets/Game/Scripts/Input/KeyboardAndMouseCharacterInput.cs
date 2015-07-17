@@ -20,24 +20,35 @@ public class KeyboardAndMouseCharacterInput : CharacterInput
 	
 	private void UpdateMovement()
 	{
+		bool isWPressed = Input.GetKey(KeyCode.W);
+		bool isAPressed = Input.GetKey(KeyCode.A);
+		bool isSPressed = Input.GetKey(KeyCode.S);
+		bool isDPressed = Input.GetKey(KeyCode.D);
+
 		float rotationMovement = 0;
 
-		if(Input.GetKey(KeyCode.W))
-			rotationMovement = _rotation;
+		if(isWPressed && isAPressed)
+			rotationMovement = _rotation + 315;
+		else if(isWPressed && isDPressed)
+			rotationMovement = _rotation + 45;
+		else if(isSPressed && isAPressed)
+			rotationMovement = _rotation + 225;
+		else if(isSPressed && isDPressed)
+			rotationMovement = _rotation + 135;
+		else
+		{
+			if(isWPressed)
+				rotationMovement = _rotation;
 
-		if(Input.GetKey(KeyCode.A))
-			rotationMovement = _rotation - 90;
+			if(isSPressed)
+				rotationMovement = _rotation + 180;
 
-		if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.A))
-			rotationMovement = _rotation - 45;
-		 
-		if(Input.GetKey(KeyCode.S))
-			rotationMovement = _rotation - 180;
+			if(isAPressed)
+				rotationMovement = _rotation + 270;
 
-
-
-		if(Input.GetKey(KeyCode.D))
-			rotationMovement = _rotation + 90;
+			if(isDPressed)
+				rotationMovement = _rotation + 90;
+		}
 
 		if(rotationMovement != 0)
 		{
