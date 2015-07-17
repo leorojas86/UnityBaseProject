@@ -12,6 +12,7 @@ public class CharacterMovementController : MonoBehaviour
 	private Character _character	= null;
 	private bool _isFalling			= false;
 	private bool _isJumping			= false;
+	private int _fallingFrames	    = 5;
 
 	#endregion
 
@@ -46,10 +47,7 @@ public class CharacterMovementController : MonoBehaviour
 	
 	void Update() 
 	{
-		if(_isJumping)
-			_isJumping = _rigidBody.velocity.y > Constants.CHARACTER_MIN_FALLING_Y_VELOCITY;
-		else
-			_isFalling = _rigidBody.velocity.y < -Constants.CHARACTER_MIN_FALLING_Y_VELOCITY;
+		UpdateJumpingAndFallingFlags();
 
 		//Debug.Log("_isJumping = " + _isJumping + " _isFalling = " + _isFalling + " _rigidBody.velocity.y = " + _rigidBody.velocity.y);
 
@@ -57,6 +55,32 @@ public class CharacterMovementController : MonoBehaviour
 
 		UpdateMovement();
 		CheckForJump();
+	}
+
+	private void UpdateJumpingAndFallingFlags()
+	{
+		if(_isJumping)
+		{
+			_isJumping = _rigidBody.velocity.y > Constants.CHARACTER_MIN_FALLING_Y_VELOCITY;
+			
+			if(!_isJumping)
+			{
+				_fallingFrames = 0;
+				_isFalling     = true;
+			}
+		}
+		else if(_isFalling)
+		{
+			_fallingFrames++;
+			
+			if(_fallingFrames > 3 && Mathf.Abs(_rigidBody.velocity.y) < Constants.CHARACTER_MIN_FALLING_Y_VELOCITY)
+				_isFalling = false;
+		}
+	}
+
+	void OnGUI()
+	{
+		GUI.Label(new Rect(100,0,1000,1000), "_isFalling = " + _isFalling + " _isJumping = " + _isJumping);
 	}
 
 	private void CheckForJump()

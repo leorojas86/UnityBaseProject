@@ -7,7 +7,7 @@ public class KeyboardCharacterInput : CharacterInput
 
 	public override void UpdateInput()
 	{
-		_isJumpButtonDown = Input.GetKeyDown(KeyCode.Space);
+		_isJumpButtonDown = Input.GetKey(KeyCode.Space);
 
 		UpdateRotation();
 		UpdateMovement();

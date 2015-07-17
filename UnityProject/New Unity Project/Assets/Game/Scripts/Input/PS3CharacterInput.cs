@@ -7,7 +7,7 @@ public class PS3CharacterInput : CharacterInput
 
 	public override void UpdateInput()
 	{
-		_isJumpButtonDown = Input.GetKeyDown(KeyCode.JoystickButton14);
+		_isJumpButtonDown = Input.GetKey(KeyCode.JoystickButton14);
 		_yRotation 			+= Input.GetAxis("Horizontal") * Constants.KEYBOARD_ROTATION_SPEED;
 
 		UpdateMovement();
