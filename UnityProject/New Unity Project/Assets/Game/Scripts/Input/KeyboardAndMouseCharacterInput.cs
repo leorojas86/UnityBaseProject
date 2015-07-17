@@ -7,7 +7,7 @@ public class KeyboardAndMouseCharacterInput : CharacterInput
 
 	public override void UpdateInput()
 	{
-		_isJumpingButtonDown = Input.GetKeyDown(KeyCode.Space);
+		_isJumpButtonDown = Input.GetKeyDown(KeyCode.Space);
 
 		UpdateRotation();
 		UpdateMovement();
@@ -15,7 +15,7 @@ public class KeyboardAndMouseCharacterInput : CharacterInput
 
 	private void UpdateRotation()
 	{
-		_rotation += Input.GetAxis("Mouse X") * Constants.MOUSE_ROTATION_SPEED;
+		_yRotation += Input.GetAxis("Mouse X") * Constants.MOUSE_ROTATION_SPEED;
 	}
 	
 	private void UpdateMovement()
@@ -28,26 +28,26 @@ public class KeyboardAndMouseCharacterInput : CharacterInput
 		float rotationMovement = 0;
 
 		if(isWPressed && isAPressed)
-			rotationMovement = _rotation + 315;
+			rotationMovement = _yRotation + 315;
 		else if(isWPressed && isDPressed)
-			rotationMovement = _rotation + 45;
+			rotationMovement = _yRotation + 45;
 		else if(isSPressed && isAPressed)
-			rotationMovement = _rotation + 225;
+			rotationMovement = _yRotation + 225;
 		else if(isSPressed && isDPressed)
-			rotationMovement = _rotation + 135;
+			rotationMovement = _yRotation + 135;
 		else
 		{
 			if(isWPressed)
-				rotationMovement = _rotation;
+				rotationMovement = _yRotation;
 
 			if(isSPressed)
-				rotationMovement = _rotation + 180;
+				rotationMovement = _yRotation + 180;
 
 			if(isAPressed)
-				rotationMovement = _rotation + 270;
+				rotationMovement = _yRotation + 270;
 
 			if(isDPressed)
-				rotationMovement = _rotation + 90;
+				rotationMovement = _yRotation + 90;
 		}
 
 		if(rotationMovement != 0)

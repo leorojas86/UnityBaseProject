@@ -40,7 +40,7 @@ public class CharacterMovementController : MonoBehaviour
 	{
 		_rigidBody   		      = GetComponentInChildren<Rigidbody>();
 		_character 			      = GetComponent<Character>();
-		_character.Input.Rotation = transform.rotation.eulerAngles.y;
+		_character.Input.YRotation = transform.rotation.eulerAngles.y;
 		_rigidBody.constraints    = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 	
@@ -61,7 +61,7 @@ public class CharacterMovementController : MonoBehaviour
 
 	private void CheckForJump()
 	{
-		if(_character.Input.IsJumpingButtonDown && IsLanded)
+		if(_character.Input.IsJumpButtonDown && IsLanded)
 		{
 			Vector3 velocity    = _rigidBody.velocity;
 			velocity.y 		    += Constants.CHARACTER_JUMP_FORCE;
@@ -99,7 +99,7 @@ public class CharacterMovementController : MonoBehaviour
 			_rigidBody.velocity 	  = newVelocity;
 		}
 
-		_rigidBody.rotation = Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(0, _character.Input.Rotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+		_rigidBody.rotation = Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(0, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 	}
 
 	public void Reset()

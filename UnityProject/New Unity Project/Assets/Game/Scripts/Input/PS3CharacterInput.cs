@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class PS3CharacterInput : CharacterInput 
@@ -7,8 +7,8 @@ public class PS3CharacterInput : CharacterInput
 
 	public override void UpdateInput()
 	{
-		_isJumpingButtonDown = Input.GetKeyDown(KeyCode.JoystickButton14);
-		_rotation 			+= Input.GetAxis("Horizontal") * Constants.KEYBOARD_ROTATION_SPEED;
+		_isJumpButtonDown = Input.GetKeyDown(KeyCode.JoystickButton14);
+		_yRotation 			+= Input.GetAxis("Horizontal") * Constants.KEYBOARD_ROTATION_SPEED;
 
 		UpdateMovement();
 	}
@@ -19,7 +19,7 @@ public class PS3CharacterInput : CharacterInput
 
 		if(verticalAxis != 0)
 		{
-			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, verticalAxis, _rotation);
+			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, verticalAxis, _yRotation);
 			_movement 		   = new Vector3(movement2D.y, 0, movement2D.x);
 		}
 		else

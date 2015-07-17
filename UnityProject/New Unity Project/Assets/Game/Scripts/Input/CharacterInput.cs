@@ -5,18 +5,18 @@ public abstract class CharacterInput
 {
 	#region Variables
 	
-	protected float _rotation   		= 0;
+	protected float _yRotation   		= 0;
 	protected Vector3 _movement 		= Vector3.zero;
-	protected bool _isJumpingButtonDown = false;
+	protected bool _isJumpButtonDown 	= false;
 	
 	#endregion
 	
 	#region Properties
 	
-	public float Rotation
+	public float YRotation
 	{
-		get { return _rotation; }
-		set { _rotation = value; }
+		get { return _yRotation; }
+		set { _yRotation = value; }
 	}
 	
 	public Vector3 Movement 
@@ -24,9 +24,9 @@ public abstract class CharacterInput
 		get { return _movement; }
 	}
 	
-	public bool IsJumpingButtonDown
+	public bool IsJumpButtonDown
 	{
-		get { return _isJumpingButtonDown; }
+		get { return _isJumpButtonDown; }
 	}
 	
 	#endregion
@@ -45,7 +45,7 @@ public abstract class CharacterInput
 
 	public virtual bool Detect()
 	{
-		return Movement != Vector3.zero || _isJumpingButtonDown;
+		return Movement != Vector3.zero || _isJumpButtonDown;
 	}
 
 	#endregion
