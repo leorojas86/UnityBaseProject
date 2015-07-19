@@ -46,7 +46,7 @@ public class CharacterMovementController : MonoBehaviour
 		_character.Input.YRotation = transform.rotation.eulerAngles.y;
 
 		if(characterCamera != null)
-			_character.Input.XRotation = characterCamera.transform.rotation.eulerAngles.z;
+			_character.Input.XRotation = characterCamera.transform.localRotation.eulerAngles.z;
 		else
 			_character.Input.XRotation = transform.rotation.eulerAngles.z;
 
@@ -138,8 +138,8 @@ public class CharacterMovementController : MonoBehaviour
 	{
 		if(characterCamera != null)
 		{	
-			characterCamera.transform.rotation  = Quaternion.Lerp(characterCamera.transform.rotation, Quaternion.Euler(_character.Input.XRotation, 0, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-			_rigidBody.rotation   	 			= Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(0, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			characterCamera.transform.localRotation  = Quaternion.Lerp(characterCamera.transform.localRotation, Quaternion.Euler(_character.Input.XRotation, 0, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			_rigidBody.rotation   	 				 = Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(0, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 		}
 		else
 			_rigidBody.rotation = Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(_character.Input.XRotation, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
