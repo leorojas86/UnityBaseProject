@@ -7,6 +7,8 @@ public class CharacterMovementController : MonoBehaviour
 {
 	#region Variables
 
+	public Camera characterCamera = null;
+
 	private Rigidbody _rigidBody 	= null;
 	private float _speed			= Constants.CHARACTER_DEFAULT_SPEED;
 	private Character _character	= null;
@@ -42,7 +44,12 @@ public class CharacterMovementController : MonoBehaviour
 		_rigidBody   		       = GetComponentInChildren<Rigidbody>();
 		_character 			       = GetComponent<Character>();
 		_character.Input.YRotation = transform.rotation.eulerAngles.y;
-		_character.Input.XRotation = transform.rotation.eulerAngles.z;
+
+		if(characterCamera != null)
+			_character.Input.XRotation = characterCamera.transform.rotation.eulerAngles.z;
+		else
+			_character.Input.XRotation = transform.rotation.eulerAngles.z;
+
 		_rigidBody.constraints     = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 	
@@ -55,6 +62,7 @@ public class CharacterMovementController : MonoBehaviour
 		_character.Input.UpdateInput();
 
 		UpdateMovement();
+		UpdateRotation();
 		CheckForJump();
 	}
 
@@ -124,8 +132,17 @@ public class CharacterMovementController : MonoBehaviour
 			newVelocity.y		  	  = _rigidBody.velocity.y; //Keep gravity movement, only change x,z
 			_rigidBody.velocity 	  = newVelocity;
 		}
+	}
 
-		_rigidBody.rotation = Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(_character.Input.XRotation, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+	private void UpdateRotation()
+	{
+		if(characterCamera != null)
+		{	
+			characterCamera.transform.rotation  = Quaternion.Lerp(characterCamera.transform.rotation, Quaternion.Euler(_character.Input.XRotation, 0, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			_rigidBody.rotation   	 			= Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(0, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+		}
+		else
+			_rigidBody.rotation = Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(_character.Input.XRotation, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 	}
 
 	public void Reset()
