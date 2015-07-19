@@ -39,10 +39,11 @@ public class CharacterMovementController : MonoBehaviour
 
 	void Awake()
 	{
-		_rigidBody   		      = GetComponentInChildren<Rigidbody>();
-		_character 			      = GetComponent<Character>();
+		_rigidBody   		       = GetComponentInChildren<Rigidbody>();
+		_character 			       = GetComponent<Character>();
 		_character.Input.YRotation = transform.rotation.eulerAngles.y;
-		_rigidBody.constraints    = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
+		_character.Input.XRotation = transform.rotation.eulerAngles.z;
+		_rigidBody.constraints     = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 	
 	void Update() 
@@ -124,7 +125,7 @@ public class CharacterMovementController : MonoBehaviour
 			_rigidBody.velocity 	  = newVelocity;
 		}
 
-		_rigidBody.rotation = Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(0, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+		_rigidBody.rotation = Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(_character.Input.XRotation, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 	}
 
 	public void Reset()

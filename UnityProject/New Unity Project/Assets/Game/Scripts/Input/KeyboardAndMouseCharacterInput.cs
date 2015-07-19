@@ -16,6 +16,7 @@ public class KeyboardAndMouseCharacterInput : CharacterInput
 	private void UpdateRotation()
 	{
 		_yRotation += Input.GetAxis("Mouse X") * Constants.MOUSE_ROTATION_SPEED;
+		_xRotation -= Input.GetAxis("Mouse Y") * Constants.MOUSE_ROTATION_SPEED;
 	}
 	
 	private void UpdateMovement()
