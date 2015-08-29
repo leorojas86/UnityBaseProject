@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public abstract class CharacterInput 
+public abstract class PlayerInput 
 {
 	#region Variables
 	
@@ -40,7 +40,7 @@ public abstract class CharacterInput
 
 	#region Constructors
 
-	public CharacterInput()
+	public PlayerInput()
 	{
 	}
 
@@ -50,7 +50,7 @@ public abstract class CharacterInput
 
 	public abstract void UpdateInput();
 
-	public abstract CharacterInput Detect();
+	public abstract PlayerInput Detect();
 
 	#endregion
 }

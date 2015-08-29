@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -8,7 +8,7 @@ public class InputManager
 
 	private static InputManager _instance = null;
 
-	private List<CharacterInput> _registeredInputs = new List<CharacterInput>();
+	private List<PlayerInput> _registeredInputs = new List<PlayerInput>();
 
 	#endregion
 
@@ -27,7 +27,7 @@ public class InputManager
 		}
 	}
 
-	public List<CharacterInput> RegisteredInputs
+	public List<PlayerInput> RegisteredInputs
 	{
 		get { return _registeredInputs; }
 	}
@@ -44,12 +44,12 @@ public class InputManager
 
 	#region Methods
 
-	public CharacterInput DetectNewCharacterInput()
+	public PlayerInput DetectNewCharacterInput()
 	{
 		for(int x = 0; x < _registeredInputs.Count; x++)
 		{
-			CharacterInput currentInput  = _registeredInputs[x];
-			CharacterInput detectedInput = currentInput.Detect();
+			PlayerInput currentInput  = _registeredInputs[x];
+			PlayerInput detectedInput = currentInput.Detect();
 
 			if(detectedInput != null)
 				return detectedInput;

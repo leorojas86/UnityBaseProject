@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class Game : MonoBehaviour 
@@ -7,9 +7,9 @@ public class Game : MonoBehaviour
 
 	void Awake() 
 	{
-		InputManager.Instance.RegisteredInputs.Add(new KeyboardAndMouseCharacterInput());
-		InputManager.Instance.RegisteredInputs.Add(new KeyboardCharacterInput());
-		InputManager.Instance.RegisteredInputs.Add(new PS3CharacterInput());
+		InputManager.Instance.RegisteredInputs.Add(new KeyboardAndMousePlayerInput());
+		InputManager.Instance.RegisteredInputs.Add(new KeyboardPlayerInput());
+		InputManager.Instance.RegisteredInputs.Add(new PS3PlayerInput());
 	}
 
 	#endregion

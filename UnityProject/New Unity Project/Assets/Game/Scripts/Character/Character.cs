@@ -9,7 +9,7 @@ public class Character : MonoBehaviour
 	private int _health 									= Constants.CHARACTER_DEFAULT_HEALTH;
 	private int _score  									= 0;
 	private CharacterMovementController _movementController = null;
-	private CharacterInput _characterInput 					= null;
+	private PlayerInput _input 					= null;
 
 	#endregion
 
@@ -32,9 +32,9 @@ public class Character : MonoBehaviour
 		get { return _health == 0; }
 	}
 
-	public CharacterInput Input
+	public PlayerInput Input
 	{
-		get { return _characterInput; }
+		get { return _input; }
 	}
 	
 	#endregion
@@ -48,8 +48,8 @@ public class Character : MonoBehaviour
 
 	void Update()
 	{
-		if(_characterInput == null)
-			_characterInput = InputManager.Instance.DetectNewCharacterInput();
+		if(_input == null)
+			_input = InputManager.Instance.DetectNewCharacterInput();
 	}
 
 	public void TakeDamage(int damage, Object damageOwner)

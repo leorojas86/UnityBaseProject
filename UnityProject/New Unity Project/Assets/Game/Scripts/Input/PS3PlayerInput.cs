@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class PS3CharacterInput : CharacterInput 
+public class PS3PlayerInput : PlayerInput 
 {
 	#region Methods
 
@@ -88,10 +88,10 @@ public class PS3CharacterInput : CharacterInput
 			_movement = Vector3.zero;
 	}
 
-	public override CharacterInput Detect()
+	public override PlayerInput Detect()
 	{
 		if(Input.GetKey(KeyCode.JoystickButton14))
-			return new PS3CharacterInput();
+			return new PS3PlayerInput();
 
 		return null;
 	}

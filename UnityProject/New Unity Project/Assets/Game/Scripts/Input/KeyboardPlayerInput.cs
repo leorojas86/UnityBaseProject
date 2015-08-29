@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class KeyboardCharacterInput : CharacterInput 
+public class KeyboardPlayerInput : PlayerInput 
 {
 	#region Methods
 
@@ -38,14 +38,14 @@ public class KeyboardCharacterInput : CharacterInput
 			_movement = Vector3.zero;
 	}
 
-	public override CharacterInput Detect()
+	public override PlayerInput Detect()
 	{
 		//Debug.Log("Detect");
 
 		if(Input.GetKey(KeyCode.Space))
 		{
 			//Debug.Log("Detected");
-			return new KeyboardCharacterInput();
+			return new KeyboardPlayerInput();
 		}
 
 		return null;

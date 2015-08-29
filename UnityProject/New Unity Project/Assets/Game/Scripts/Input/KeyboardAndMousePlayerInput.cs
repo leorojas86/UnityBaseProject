@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
-public class KeyboardAndMouseCharacterInput : CharacterInput 
+public class KeyboardAndMousePlayerInput : PlayerInput 
 {
 	#region Methods
 
@@ -60,10 +60,10 @@ public class KeyboardAndMouseCharacterInput : CharacterInput
 			_movement = Vector3.zero;
 	}
 
-	public override CharacterInput Detect()
+	public override PlayerInput Detect()
 	{
 		if(Input.GetAxis("Mouse X") != 0)
-			return new KeyboardAndMouseCharacterInput();
+			return new KeyboardAndMousePlayerInput();
 
 		return null;
 	}
