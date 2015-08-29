@@ -44,6 +44,25 @@ public class InputManager
 
 	#region Methods
 
+	public void Update()
+	{
+		if(Debug.isDebugBuild)
+			CheckInput();
+	}
+
+	private void CheckInput()
+	{
+		int keyCount = (int)KeyCode.Joystick8Button19;
+
+		for(int keyCodeIndex = 0; keyCodeIndex < keyCount; keyCodeIndex++)
+		{
+			KeyCode currentKeyCode = (KeyCode)keyCodeIndex;
+
+			if(Input.GetKey(currentKeyCode))
+				Debug.Log("Get Key = " + currentKeyCode);
+		}
+	}
+
 	public PlayerInput DetectNewCharacterInput()
 	{
 		for(int x = 0; x < _registeredInputs.Count; x++)
@@ -52,7 +71,11 @@ public class InputManager
 			PlayerInput detectedInput = currentInput.Detect();
 
 			if(detectedInput != null)
+			{
+				Debug.Log(detectedInput + " detected");
+
 				return detectedInput;
+			}
 		}
 
 		return null;

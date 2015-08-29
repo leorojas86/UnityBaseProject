@@ -10,6 +10,13 @@ public class Game : MonoBehaviour
 		InputManager.Instance.RegisteredInputs.Add(new KeyboardAndMousePlayerInput());
 		InputManager.Instance.RegisteredInputs.Add(new KeyboardPlayerInput());
 		InputManager.Instance.RegisteredInputs.Add(new PS3PlayerInput());
+
+		Application.targetFrameRate = 120;
+	}
+
+	void Update()
+	{
+		InputManager.Instance.Update();
 	}
 
 	#endregion
