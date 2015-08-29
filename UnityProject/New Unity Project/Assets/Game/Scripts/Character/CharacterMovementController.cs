@@ -47,13 +47,8 @@ public class CharacterMovementController : MonoBehaviour
 
 	private void Initialize()
 	{
-		_character.Input.YRotation = transform.rotation.eulerAngles.y;
-		
-		if(characterCamera != null)
-			_character.Input.XRotation = characterCamera.transform.localRotation.eulerAngles.z;
-		else
-			_character.Input.XRotation = transform.rotation.eulerAngles.z;
-		
+		_character.Input.YRotation       = transform.rotation.eulerAngles.y;
+		_character.Input.XRotation       = characterCamera != null ? characterCamera.transform.localRotation.eulerAngles.z : transform.rotation.eulerAngles.z;
 		_character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 	
