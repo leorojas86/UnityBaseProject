@@ -12,6 +12,10 @@ public class Character : MonoBehaviour
 	private PlayerInput _input 								= null;
 	private Rigidbody _rigidBody 							= null;
 
+	private bool _isGoingDown		= false;
+	private bool _isGoingUp			= false;
+	private bool _isLanded 			= false;
+
 	#endregion
 
 	#region Properties
@@ -42,6 +46,21 @@ public class Character : MonoBehaviour
 	{
 		get { return _input; }
 	}
+
+	public bool IsFalling
+	{
+		get { return _isGoingDown; }
+	}
+	
+	public bool IsJumping
+	{
+		get { return _isGoingUp; }
+	}
+	
+	public bool IsLanded
+	{
+		get { return _isLanded; }
+	}
 	
 	#endregion
 
@@ -57,29 +76,18 @@ public class Character : MonoBehaviour
 	{
 		if(_input == null)
 			_input = InputManager.Instance.DetectNewCharacterInput();
+
+		UpdateLandedFlag();
 	}
 
 	public void TakeDamage(int damage, Object damageOwner)
 	{
 		if(!IsDead)
 		{
-			//Debug.Log("TakeDamage damage = " + damage);
 			_health -= damage;
 			
 			if(_health <= 0)
-			{
 				_health = 0;
-				
-				/*Player damageOwnerPlayer = damageOwner as Player;//Killer
-				
-				if(damageOwnerPlayer != null && damageOwnerPlayer != this)
-					damageOwnerPlayer._score++;
-				else
-					_score--;
-				
-				playerAnimation.Stop();
-				StartCoroutine(DeadFallingCoroutine());*/
-			}
 		}
 	}
 
@@ -91,10 +99,45 @@ public class Character : MonoBehaviour
 		_movementController.Reset();
 	}
 
-	/*void OnCollisionEnter(Collision collision) 
+	void OnGUI()
 	{
+		GUI.Label(new Rect(100,0,1000,1000), "_rigidBody.velocity.y = " + _rigidBody.velocity.y + " _isLanded = " + _isLanded +  " _isGoingDown = " + _isGoingDown + " _isGoingUp = " + _isGoingUp);
+	}
 
-	}*/
+	private void UpdateLandedFlag()
+	{
+		if(_isLanded)
+			_isLanded = Mathf.Abs(_rigidBody.velocity.y) < Constants.CHARACTER_MAX_LANDED_Y_VELOCITY;
+		else
+		{
+			_isGoingUp   = _rigidBody.velocity.y > Constants.CHARACTER_MAX_LANDED_Y_VELOCITY;
+			_isGoingDown = _rigidBody.velocity.y < -Constants.CHARACTER_MAX_LANDED_Y_VELOCITY;
+		}
+	}
+
+	void OnCollisionEnter(Collision collision)
+	{
+		CheckForTerrainCollision(collision);
+	}
+	
+	void OnCollisionStay(Collision collision)
+	{
+		CheckForTerrainCollision(collision);
+	}
+	
+	private void CheckForTerrainCollision(Collision collision)
+	{
+		if(!_isLanded)
+		{
+			_isLanded = collision.collider.gameObject.layer == LayerMask.NameToLayer("Terrain");
+			
+			if(_isLanded)
+			{
+				_isGoingUp   = false;
+				_isGoingDown = false;
+			}
+		}
+	}
 
 	#endregion
 }
