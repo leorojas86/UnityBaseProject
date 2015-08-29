@@ -60,5 +60,13 @@ public class KeyboardAndMouseCharacterInput : CharacterInput
 			_movement = Vector3.zero;
 	}
 
+	public override CharacterInput Detect()
+	{
+		if(Input.GetAxis("Mouse X") != 0)
+			return new KeyboardAndMouseCharacterInput();
+
+		return null;
+	}
+
 	#endregion
 }

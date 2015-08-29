@@ -50,10 +50,7 @@ public abstract class CharacterInput
 
 	public abstract void UpdateInput();
 
-	public virtual bool Detect()
-	{
-		return Movement != Vector3.zero || _isJumpButtonDown;
-	}
+	public abstract CharacterInput Detect();
 
 	#endregion
 }

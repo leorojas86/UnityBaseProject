@@ -9,7 +9,7 @@ public class Character : MonoBehaviour
 	private int _health 									= Constants.CHARACTER_DEFAULT_HEALTH;
 	private int _score  									= 0;
 	private CharacterMovementController _movementController = null;
-	private CharacterInput _characterInput 					= new PS3CharacterInput();
+	private CharacterInput _characterInput 					= null;
 
 	#endregion
 
@@ -44,6 +44,12 @@ public class Character : MonoBehaviour
 	void Awake()
 	{
 		_movementController = GetComponent<CharacterMovementController>();
+	}
+
+	void Update()
+	{
+		if(_characterInput == null)
+			_characterInput = InputManager.Instance.DetectNewCharacterInput();
 	}
 
 	public void TakeDamage(int damage, Object damageOwner)

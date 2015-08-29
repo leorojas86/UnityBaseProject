@@ -38,5 +38,18 @@ public class KeyboardCharacterInput : CharacterInput
 			_movement = Vector3.zero;
 	}
 
+	public override CharacterInput Detect()
+	{
+		//Debug.Log("Detect");
+
+		if(Input.GetKey(KeyCode.Space))
+		{
+			//Debug.Log("Detected");
+			return new KeyboardCharacterInput();
+		}
+
+		return null;
+	}
+
 	#endregion
 }

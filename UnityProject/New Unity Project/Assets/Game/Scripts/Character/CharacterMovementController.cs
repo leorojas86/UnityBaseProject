@@ -16,6 +16,8 @@ public class CharacterMovementController : MonoBehaviour
 	private bool _isJumping			= false;
 	private int _fallingFrames	    = 5;
 
+	private bool _isInitialized = false;
+
 	#endregion
 
 	#region Properties
@@ -41,29 +43,44 @@ public class CharacterMovementController : MonoBehaviour
 
 	void Awake()
 	{
-		_rigidBody   		       = GetComponentInChildren<Rigidbody>();
-		_character 			       = GetComponent<Character>();
-		_character.Input.YRotation = transform.rotation.eulerAngles.y;
+		_character = GetComponent<Character>();
+		_rigidBody = GetComponentInChildren<Rigidbody>();
+	}
 
+	private void Initialize()
+	{
+		Debug.Log("Initialize");
+
+		_character.Input.YRotation = transform.rotation.eulerAngles.y;
+		
 		if(characterCamera != null)
 			_character.Input.XRotation = characterCamera.transform.localRotation.eulerAngles.z;
 		else
 			_character.Input.XRotation = transform.rotation.eulerAngles.z;
-
-		_rigidBody.constraints     = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
+		
+		_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 	
 	void Update() 
 	{
-		UpdateJumpingAndFallingFlags();
+		if(_character.Input != null)
+		{
+			if(!_isInitialized)
+			{
+				Initialize();
+				_isInitialized = true;
+			}
 
-		//Debug.Log("_isJumping = " + _isJumping + " _isFalling = " + _isFalling + " _rigidBody.velocity.y = " + _rigidBody.velocity.y);
+			UpdateJumpingAndFallingFlags();
 
-		_character.Input.UpdateInput();
+			//Debug.Log("_isJumping = " + _isJumping + " _isFalling = " + _isFalling + " _rigidBody.velocity.y = " + _rigidBody.velocity.y);
 
-		UpdateMovement();
-		UpdateRotation();
-		CheckForJump();
+			_character.Input.UpdateInput();
+
+			UpdateMovement();
+			UpdateRotation();
+			CheckForJump();
+		}
 	}
 
 	private void UpdateJumpingAndFallingFlags()

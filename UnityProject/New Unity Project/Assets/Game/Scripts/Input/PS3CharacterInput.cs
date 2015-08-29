@@ -87,6 +87,14 @@ public class PS3CharacterInput : CharacterInput
 		else
 			_movement = Vector3.zero;
 	}
+
+	public override CharacterInput Detect()
+	{
+		if(Input.GetKey(KeyCode.JoystickButton14))
+			return new PS3CharacterInput();
+
+		return null;
+	}
 	
 	#endregion
 }
