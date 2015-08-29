@@ -9,12 +9,11 @@ public class CharacterMovementController : MonoBehaviour
 
 	public Camera characterCamera = null;
 
-	private Rigidbody _rigidBody 	= null;
 	private float _speed			= Constants.CHARACTER_DEFAULT_SPEED;
 	private Character _character	= null;
-	private bool _isFalling			= false;
-	private bool _isJumping			= false;
-	private int _fallingFrames	    = 5;
+	private bool _isGoingDown		= false;
+	private bool _isGoingUp			= false;
+	private bool _isLanded 			= false;
 
 	private bool _isInitialized = false;
 
@@ -24,17 +23,17 @@ public class CharacterMovementController : MonoBehaviour
 
 	public bool IsFalling
 	{
-		get { return _isFalling; }
+		get { return _isGoingDown; }
 	}
 
 	public bool IsJumping
 	{
-		get { return _isJumping; }
+		get { return _isGoingUp; }
 	}
 
 	public bool IsLanded
 	{
-		get { return !_isFalling && !_isJumping; }
+		get { return _isLanded; }
 	}
 
 	#endregion
@@ -44,13 +43,10 @@ public class CharacterMovementController : MonoBehaviour
 	void Awake()
 	{
 		_character = GetComponent<Character>();
-		_rigidBody = GetComponentInChildren<Rigidbody>();
 	}
 
 	private void Initialize()
 	{
-		Debug.Log("Initialize");
-
 		_character.Input.YRotation = transform.rotation.eulerAngles.y;
 		
 		if(characterCamera != null)
@@ -58,7 +54,7 @@ public class CharacterMovementController : MonoBehaviour
 		else
 			_character.Input.XRotation = transform.rotation.eulerAngles.z;
 		
-		_rigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
+		_character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 	
 	void Update() 
@@ -71,7 +67,7 @@ public class CharacterMovementController : MonoBehaviour
 				_isInitialized = true;
 			}
 
-			UpdateJumpingAndFallingFlags();
+			UpdateLandedFlag();
 
 			//Debug.Log("_isJumping = " + _isJumping + " _isFalling = " + _isFalling + " _rigidBody.velocity.y = " + _rigidBody.velocity.y);
 
@@ -83,40 +79,31 @@ public class CharacterMovementController : MonoBehaviour
 		}
 	}
 
-	private void UpdateJumpingAndFallingFlags()
+	private void UpdateLandedFlag()
 	{
-		if(_isJumping)
+		if(_isLanded)
+			_isLanded = Mathf.Abs(_character.RigidBody.velocity.y) < Constants.CHARACTER_MAX_LANDED_Y_VELOCITY;
+		else
 		{
-			_isJumping = _rigidBody.velocity.y > Constants.CHARACTER_MIN_JUMPING_Y_VELOCITY;
-			
-			if(!_isJumping)
-			{
-				_fallingFrames = 0;
-				_isFalling     = true;
-			}
-		}
-		else if(_isFalling)
-		{
-			_fallingFrames++;
-			
-			if(_fallingFrames > Constants.CHARACTER_MIN_FALING_FRAMES && _rigidBody.velocity.y > -Constants.CHARACTER_MIN_FALLING_Y_VELOCITY)
-				_isFalling = false;
+			_isGoingUp   = _character.RigidBody.velocity.y > Constants.CHARACTER_MAX_LANDED_Y_VELOCITY;
+			_isGoingDown = _character.RigidBody.velocity.y < -Constants.CHARACTER_MAX_LANDED_Y_VELOCITY;
+			//_isLanded    = !_isGoingUp && !_isGoingDown;
 		}
 	}
 
 	void OnGUI()
 	{
-		GUI.Label(new Rect(100,0,1000,1000), "_rigidBody.velocity.y = " + _rigidBody.velocity.y + " _isFalling = " + _isFalling + " _isJumping = " + _isJumping);
+		GUI.Label(new Rect(100,0,1000,1000), "_rigidBody.velocity.y = " + _character.RigidBody.velocity.y + " _isLanded = " + _isLanded +  " _isGoingDown = " + _isGoingDown + " _isGoingUp = " + _isGoingUp);
 	}
 
 	private void CheckForJump()
 	{
 		if(_character.Input.IsJumpButtonDown && IsLanded)
 		{
-			Vector3 velocity    = _rigidBody.velocity;
-			velocity.y 		    += Constants.CHARACTER_JUMP_FORCE;
-			_rigidBody.velocity = velocity; 
-			_isJumping 			= true;
+			Vector3 velocity    		  = _character.RigidBody.velocity;
+			velocity.y 		    		  += Constants.CHARACTER_JUMP_FORCE;
+			_character.RigidBody.velocity = velocity; 
+			_isGoingUp 					  = true;
 		}
 	}
 
@@ -143,11 +130,11 @@ public class CharacterMovementController : MonoBehaviour
 	{
 		if(_character.Input.Movement != Vector3.zero)
 		{
-			Vector3 targetVelocity    = _character.Input.Movement * _speed;
-			float lerp			      = IsLanded ? Constants.CHARACTER_MOVEMENT_LERP_SPEED : Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_FLYING_MULTIPLIER;
-			Vector3 newVelocity 	  = Vector3.Lerp(_rigidBody.velocity, targetVelocity, lerp);
-			newVelocity.y		  	  = _rigidBody.velocity.y; //Keep gravity movement, only change x,z
-			_rigidBody.velocity 	  = newVelocity;
+			Vector3 targetVelocity    	  = _character.Input.Movement * _speed;
+			float lerp			      	  = IsLanded ? Constants.CHARACTER_MOVEMENT_LERP_SPEED : Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_FLYING_MULTIPLIER;
+			Vector3 newVelocity 	  	  = Vector3.Lerp(_character.RigidBody.velocity, targetVelocity, lerp);
+			newVelocity.y		  	  	  = _character.RigidBody.velocity.y; //Keep gravity movement, only change x,z
+			_character.RigidBody.velocity = newVelocity;
 		}
 	}
 
@@ -156,15 +143,39 @@ public class CharacterMovementController : MonoBehaviour
 		if(characterCamera != null)
 		{	
 			characterCamera.transform.localRotation  = Quaternion.Lerp(characterCamera.transform.localRotation, Quaternion.Euler(_character.Input.XRotation, 0, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-			_rigidBody.rotation   	 				 = Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(0, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			_character.RigidBody.rotation   	 				 = Quaternion.Lerp(_character.RigidBody.rotation, Quaternion.Euler(0, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 		}
 		else
-			_rigidBody.rotation = Quaternion.Lerp(_rigidBody.rotation, Quaternion.Euler(_character.Input.XRotation, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			_character.RigidBody.rotation = Quaternion.Lerp(_character.RigidBody.rotation, Quaternion.Euler(_character.Input.XRotation, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 	}
 
 	public void Reset()
 	{
-		_rigidBody.velocity = Vector3.zero;
+		_character.RigidBody.velocity = Vector3.zero;
+	}
+
+	void OnCollisionEnter(Collision collision)
+	{
+		CheckForTerrainCollision(collision);
+	}
+
+	void OnCollisionStay(Collision collision)
+	{
+		CheckForTerrainCollision(collision);
+	}
+
+	private void CheckForTerrainCollision(Collision collision)
+	{
+		if(!_isLanded)
+		{
+			_isLanded = collision.collider.gameObject.layer == LayerMask.NameToLayer("Terrain");
+			
+			if(_isLanded)
+			{
+				_isGoingUp   = false;
+				_isGoingDown = false;
+			}
+		}
 	}
 
 	#endregion

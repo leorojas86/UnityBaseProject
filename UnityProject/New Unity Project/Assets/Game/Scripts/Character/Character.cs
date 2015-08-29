@@ -9,11 +9,17 @@ public class Character : MonoBehaviour
 	private int _health 									= Constants.CHARACTER_DEFAULT_HEALTH;
 	private int _score  									= 0;
 	private CharacterMovementController _movementController = null;
-	private PlayerInput _input 					= null;
+	private PlayerInput _input 								= null;
+	private Rigidbody _rigidBody 							= null;
 
 	#endregion
 
 	#region Properties
+
+	public Rigidbody RigidBody
+	{
+		get { return _rigidBody; }
+	} 
 	
 	public int Health
 	{
@@ -43,6 +49,7 @@ public class Character : MonoBehaviour
 
 	void Awake()
 	{
+		_rigidBody 			= GetComponentInChildren<Rigidbody>();
 		_movementController = GetComponent<CharacterMovementController>();
 	}
 
@@ -83,6 +90,11 @@ public class Character : MonoBehaviour
 
 		_movementController.Reset();
 	}
+
+	/*void OnCollisionEnter(Collision collision) 
+	{
+
+	}*/
 
 	#endregion
 }
