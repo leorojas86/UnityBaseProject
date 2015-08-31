@@ -9,7 +9,8 @@ public class Game : MonoBehaviour
 	{
 		InputManager.Instance.RegisteredInputs.Add(new KeyboardAndMousePlayerInput());
 		InputManager.Instance.RegisteredInputs.Add(new KeyboardPlayerInput());
-		InputManager.Instance.RegisteredInputs.Add(new PS3PlayerInput());
+		//InputManager.Instance.RegisteredInputs.Add(new PS3PlayerInput());
+		InputManager.Instance.RegisteredInputs.Add(new XboxPlayerInput());
 
 		Application.targetFrameRate = 120;
 	}

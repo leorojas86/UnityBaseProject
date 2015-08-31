@@ -40,7 +40,7 @@ public abstract class PlayerInput
 
 	#region Constructors
 
-	public PlayerInput()
+	protected PlayerInput()
 	{
 	}
 

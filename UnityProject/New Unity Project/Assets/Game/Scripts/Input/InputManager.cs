@@ -46,8 +46,8 @@ public class InputManager
 
 	public void Update()
 	{
-		if(Debug.isDebugBuild)
-			CheckInput();
+		//if(Debug.isDebugBuild)
+		//	CheckInput();
 	}
 
 	private void CheckInput()
