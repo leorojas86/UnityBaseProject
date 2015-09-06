@@ -13,8 +13,6 @@ public class TouchPlayerInput : PlayerInput
 
 	public override void UpdateInput(Vector3 currentCharacterPosition)
 	{
-		_isJumpButtonDown = Input.touchCount > 1;
-
 		CheckForNewTouch();
 
 		if(_lastTouchPosition != Vector3.zero)
@@ -27,11 +25,19 @@ public class TouchPlayerInput : PlayerInput
 				UpdateMovement(currentCharacterPosition, relativePosition.normalized);
 			}
 			else
-			{
-				_lastTouchPosition = Vector3.zero;
-				_targetMovement    = Vector3.zero;
-			}
+				CleanLastInput();
 		}
+
+		_isJumpButtonDown = Input.touchCount > 1 || Input.GetMouseButton(1);
+
+		if(_isJumpButtonDown)
+			CleanLastInput();
+	}
+
+	private void CleanLastInput()
+	{
+		_lastTouchPosition = Vector3.zero;
+		_targetMovement    = Vector3.zero;
 	}
 
 	private void CheckForNewTouch()
