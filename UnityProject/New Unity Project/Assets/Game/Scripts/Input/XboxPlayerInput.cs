@@ -5,11 +5,9 @@ public class XboxPlayerInput : PlayerInput
 {
 	#region Methods
 
-	public override void UpdateInput()
+	public override void UpdateInput(Character character)
 	{
 		_isJumpButtonDown = Input.GetKey(KeyCode.JoystickButton2);
-
-		Debug.Log("_isJumpButtonDown = " + _isJumpButtonDown);
 
 		UpdateRotation();
 		UpdateMovement();
@@ -17,7 +15,7 @@ public class XboxPlayerInput : PlayerInput
 
 	private void UpdateRotation()
 	{
-		_yRotation += Input.GetAxis("Horizontal") * Constants.KEYBOARD_ROTATION_SPEED;
+		_targetRotation.y += Input.GetAxis("Horizontal") * Constants.KEYBOARD_ROTATION_SPEED;
 	}
 
 	private void UpdateMovement()
@@ -26,11 +24,11 @@ public class XboxPlayerInput : PlayerInput
 		
 		if(verticalAxis != 0)
 		{
-			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, verticalAxis, _yRotation);
-			_movement 		   = new Vector3(movement2D.y, 0, movement2D.x);
+			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, verticalAxis, _targetRotation.y);
+			_targetMovement 		   = new Vector3(movement2D.y, 0, movement2D.x);
 		}
 		else
-			_movement = Vector3.zero;
+			_targetMovement = Vector3.zero;
 	}
 
 	public override PlayerInput Detect()

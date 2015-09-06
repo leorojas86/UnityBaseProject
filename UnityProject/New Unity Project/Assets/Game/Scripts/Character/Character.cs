@@ -76,6 +76,8 @@ public class Character : MonoBehaviour
 	{
 		if(_input == null)
 			_input = InputManager.Instance.DetectNewCharacterInput();
+		else
+			_input.UpdateInput(this);
 
 		UpdateLandedFlag();
 	}

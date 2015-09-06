@@ -28,8 +28,9 @@ public class CharacterMovementController : MonoBehaviour
 
 	private void Initialize()
 	{
-		_character.Input.YRotation       = transform.rotation.eulerAngles.y;
-		_character.Input.XRotation       = characterCamera != null ? characterCamera.transform.localRotation.eulerAngles.z : transform.rotation.eulerAngles.z;
+		float initialYRotation 			 = transform.rotation.eulerAngles.y;
+		float initialZRotation 			 = characterCamera != null ? characterCamera.transform.localRotation.eulerAngles.z : transform.rotation.eulerAngles.z;
+		_character.Input.TargetRotation  = new Vector3(0, initialYRotation, initialZRotation);
 		_character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 	
@@ -42,8 +43,6 @@ public class CharacterMovementController : MonoBehaviour
 				Initialize();
 				_isInitialized = true;
 			}
-
-			_character.Input.UpdateInput();
 
 			UpdateMovement();
 			UpdateRotation();
@@ -63,9 +62,9 @@ public class CharacterMovementController : MonoBehaviour
 	
 	private void UpdateMovement()
 	{
-		if(_character.Input.Movement != Vector3.zero)
+		if(_character.Input.TargetMovement != Vector3.zero)
 		{
-			Vector3 targetVelocity    	  = _character.Input.Movement * _speed;
+			Vector3 targetVelocity    	  = _character.Input.TargetMovement * _speed;
 			float lerp			      	  = _character.IsLanded ? Constants.CHARACTER_MOVEMENT_LERP_SPEED : Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_FLYING_MULTIPLIER;
 			Vector3 newVelocity 	  	  = Vector3.Lerp(_character.RigidBody.velocity, targetVelocity, lerp);
 			newVelocity.y		  	  	  = _character.RigidBody.velocity.y; //Keep gravity movement, only change x,z
@@ -77,11 +76,11 @@ public class CharacterMovementController : MonoBehaviour
 	{
 		if(characterCamera != null)
 		{	
-			characterCamera.transform.localRotation  = Quaternion.Lerp(characterCamera.transform.localRotation, Quaternion.Euler(_character.Input.XRotation, 0, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-			_character.RigidBody.rotation   	 	 = Quaternion.Lerp(_character.RigidBody.rotation, Quaternion.Euler(0, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			characterCamera.transform.localRotation  = Quaternion.Lerp(characterCamera.transform.localRotation, Quaternion.Euler(_character.Input.TargetRotation.z, 0, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			_character.RigidBody.rotation   	 	 = Quaternion.Lerp(_character.RigidBody.rotation, Quaternion.Euler(0, _character.Input.TargetRotation.y, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 		}
 		else
-			_character.RigidBody.rotation = Quaternion.Lerp(_character.RigidBody.rotation, Quaternion.Euler(_character.Input.XRotation, _character.Input.YRotation, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			_character.RigidBody.rotation = Quaternion.Lerp(_character.RigidBody.rotation, Quaternion.Euler(_character.Input.TargetRotation.z, _character.Input.TargetRotation.y, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 	}
 
 	public void Reset()

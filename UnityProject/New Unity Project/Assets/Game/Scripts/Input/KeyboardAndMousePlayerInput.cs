@@ -5,7 +5,7 @@ public class KeyboardAndMousePlayerInput : PlayerInput
 {
 	#region Methods
 
-	public override void UpdateInput()
+	public override void UpdateInput(Character character)
 	{
 		_isJumpButtonDown = Input.GetKey(KeyCode.Space);
 
@@ -15,8 +15,8 @@ public class KeyboardAndMousePlayerInput : PlayerInput
 
 	private void UpdateRotation()
 	{
-		_yRotation += Input.GetAxis("Mouse X") * Constants.MOUSE_ROTATION_SPEED;
-		_xRotation -= Input.GetAxis("Mouse Y") * Constants.MOUSE_ROTATION_SPEED;
+		_targetRotation.y += Input.GetAxis("Mouse X") * Constants.MOUSE_ROTATION_SPEED;
+		_targetRotation.z -= Input.GetAxis("Mouse Y") * Constants.MOUSE_ROTATION_SPEED;
 	}
 	
 	private void UpdateMovement()
@@ -29,35 +29,35 @@ public class KeyboardAndMousePlayerInput : PlayerInput
 		float rotationMovement = 0;
 
 		if(isWPressed && isAPressed)
-			rotationMovement = _yRotation + 315;
+			rotationMovement = _targetRotation.y + 315;
 		else if(isWPressed && isDPressed)
-			rotationMovement = _yRotation + 45;
+			rotationMovement = _targetRotation.y + 45;
 		else if(isSPressed && isAPressed)
-			rotationMovement = _yRotation + 225;
+			rotationMovement = _targetRotation.y + 225;
 		else if(isSPressed && isDPressed)
-			rotationMovement = _yRotation + 135;
+			rotationMovement = _targetRotation.y + 135;
 		else
 		{
 			if(isWPressed)
-				rotationMovement = _yRotation;
+				rotationMovement = _targetRotation.y;
 
 			if(isSPressed)
-				rotationMovement = _yRotation + 180;
+				rotationMovement = _targetRotation.y + 180;
 
 			if(isAPressed)
-				rotationMovement = _yRotation + 270;
+				rotationMovement = _targetRotation.y + 270;
 
 			if(isDPressed)
-				rotationMovement = _yRotation + 90;
+				rotationMovement = _targetRotation.y + 90;
 		}
 
 		if(rotationMovement != 0)
 		{
 			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, rotationMovement);
-			_movement 		   = new Vector3(movement2D.y, 0, movement2D.x);
+			_targetMovement 		   = new Vector3(movement2D.y, 0, movement2D.x);
 		}
 		else
-			_movement = Vector3.zero;
+			_targetMovement = Vector3.zero;
 	}
 
 	public override PlayerInput Detect()

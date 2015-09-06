@@ -5,30 +5,23 @@ public abstract class PlayerInput
 {
 	#region Variables
 	
-	protected float _yRotation   		= 0;
-	protected float _xRotation			= 0;
-	protected Vector3 _movement 		= Vector3.zero;
-	protected bool _isJumpButtonDown 	= false;
+	protected Vector3 _targetRotation = Vector3.zero;
+	protected Vector3 _targetMovement = Vector3.zero;
+	protected bool _isJumpButtonDown  = false;
 	
 	#endregion
 	
 	#region Properties
-	
-	public float YRotation
-	{
-		get { return _yRotation; }
-		set { _yRotation = value; }
-	}
 
-	public float XRotation
+	public Vector3 TargetRotation
 	{
-		get { return _xRotation; }
-		set { _xRotation = value; }
-	}
+		get { return _targetRotation; }
+		set { _targetRotation = value; }
+	} 
 	
-	public Vector3 Movement 
+	public Vector3 TargetMovement 
 	{
-		get { return _movement; }
+		get { return _targetMovement; }
 	}
 	
 	public bool IsJumpButtonDown
@@ -48,7 +41,7 @@ public abstract class PlayerInput
 
 	#region Methods
 
-	public abstract void UpdateInput();
+	public abstract void UpdateInput(Character character);
 
 	public abstract PlayerInput Detect();
 
