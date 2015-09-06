@@ -14,9 +14,9 @@ public class Character : MonoBehaviour
 	private PlayerInput _input 								= null;
 	private Rigidbody _rigidBody 							= null;
 
-	private bool _isGoingDown		= false;
-	private bool _isGoingUp			= false;
-	private bool _isLanded 			= false;
+	private bool _isGoingDown	= false;
+	private bool _isGoingUp		= false;
+	private bool _isLanded 		= false;
 
 	#endregion
 
@@ -108,10 +108,10 @@ public class Character : MonoBehaviour
 		_movementController.Reset();
 	}
 
-	void OnGUI()
+	/*void OnGUI()
 	{
 		GUI.Label(new Rect(100,0,1000,1000), "_rigidBody.velocity.y = " + _rigidBody.velocity.y + " _isLanded = " + _isLanded +  " _isGoingDown = " + _isGoingDown + " _isGoingUp = " + _isGoingUp);
-	}
+	}*/
 
 	private void UpdateLandedFlag()
 	{

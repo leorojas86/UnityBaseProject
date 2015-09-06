@@ -52,6 +52,8 @@ public class TouchPlayerInput : PlayerInput
 				_lastTouchPosition 							= hits[0].point;
 				Game.Instance.touchGuide.transform.position = _lastTouchPosition;
 			}
+			else
+				_lastTouchPosition = touchRay.GetPoint(10000);
 		}
 	}
 
