@@ -5,7 +5,6 @@ public abstract class PlayerInput
 {
 	#region Variables
 
-	//protected Character _character    = null; 
 	protected Vector3 _targetRotation = Vector3.zero;
 	protected Vector3 _targetMovement = Vector3.zero;
 	protected bool _isJumpButtonDown  = false;
@@ -13,12 +12,6 @@ public abstract class PlayerInput
 	#endregion
 	
 	#region Properties
-
-	/*/public Character Character
-	{
-		get { return _character; }
-		set { _character = value; }
-	}*/
 
 	public Vector3 TargetRotation
 	{

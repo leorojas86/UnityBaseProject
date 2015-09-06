@@ -25,7 +25,7 @@ public class PS3PlayerInput : PlayerInput
 		if(verticalAxis != 0)
 		{
 			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, verticalAxis, _targetRotation.y);
-			_targetMovement 		   = new Vector3(movement2D.y, 0, movement2D.x);
+			_targetMovement    = new Vector3(movement2D.y, 0, movement2D.x);
 		}
 		else
 			_targetMovement = Vector3.zero;
