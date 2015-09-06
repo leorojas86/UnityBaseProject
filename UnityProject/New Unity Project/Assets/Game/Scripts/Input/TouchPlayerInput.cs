@@ -21,8 +21,8 @@ public class TouchPlayerInput : PlayerInput
 
 			if(relativePosition.magnitude > 2)//Do not move if the target is less that 2 meters distance
 			{
-				UpdateRotation(currentCharacterPosition, relativePosition.normalized);
-				UpdateMovement(currentCharacterPosition, relativePosition.normalized);
+				UpdateRotation(relativePosition);
+				UpdateMovement(relativePosition);
 			}
 			else
 				CleanLastInput();
@@ -42,30 +42,33 @@ public class TouchPlayerInput : PlayerInput
 
 	private void CheckForNewTouch()
 	{
-		if(Input.GetMouseButton(0))
+		if(Input.GetMouseButtonDown(0))
 		{
 			Ray touchRay      = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit[] hits = Physics.RaycastAll(touchRay);
 
 			if(hits.Length > 0)
-				_lastTouchPosition = hits[0].point;
+			{
+				_lastTouchPosition 							= hits[0].point;
+				Game.Instance.touchGuide.transform.position = _lastTouchPosition;
+			}
 		}
 	}
 
-	private void UpdateRotation(Vector3 currentCharacterPosition, Vector3 relativePosition)
+	private void UpdateRotation(Vector3 relativePosition)
 	{
 		_targetRotation.y = Quaternion.LookRotation(relativePosition).eulerAngles.y;
 	}
 	
-	private void UpdateMovement(Vector3 currentCharacterPosition, Vector3 relativePosition)
+	private void UpdateMovement(Vector3 relativePosition)
 	{
 		relativePosition.y = 0;
-		_targetMovement    = relativePosition;
+		_targetMovement    = relativePosition.normalized;
 	}
 
 	public override PlayerInput Detect()
 	{
-		if(Input.GetMouseButton(0))
+		if(Input.GetMouseButtonDown(0))
 			return new TouchPlayerInput();
 
 		return null;

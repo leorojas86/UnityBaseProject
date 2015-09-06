@@ -3,6 +3,23 @@ using System.Collections;
 
 public class Game : MonoBehaviour 
 {
+	#region Variables
+
+	public Transform touchGuide = null;
+
+	private static Game _instance = null;
+
+	#endregion
+
+	#region Properties
+
+	public static Game Instance
+	{
+		get { return _instance; }
+	}
+
+	#endregion
+
 	#region Methods
 
 	void Awake() 
@@ -14,11 +31,18 @@ public class Game : MonoBehaviour
 		InputManager.Instance.RegisteredInputs.Add(new TouchPlayerInput());
 
 		Application.targetFrameRate = 120;
+
+		_instance = this;
 	}
 
 	void Update()
 	{
 		InputManager.Instance.Update();
+	}
+
+	void OnDestroy()
+	{
+		_instance = null;
 	}
 
 	#endregion
