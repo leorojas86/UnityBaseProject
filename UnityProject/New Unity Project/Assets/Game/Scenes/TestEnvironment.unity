@@ -1225,6 +1225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 173f25dfd47f4412bb22bfcb4b199a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstPersonCamera: {fileID: 1671572468}
 --- !u!114 &1602675558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1236,7 +1237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1190d565752b45848a4bd9156397475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterCamera: {fileID: 1671572468}
 --- !u!1001 &1615739574
 Prefab:
   m_ObjectHideFlags: 0

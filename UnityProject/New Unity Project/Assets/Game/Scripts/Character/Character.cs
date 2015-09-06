@@ -6,6 +6,8 @@ public class Character : MonoBehaviour
 {
 	#region Variables
 
+	public Camera firstPersonCamera = null;
+
 	private int _health 									= Constants.CHARACTER_DEFAULT_HEALTH;
 	private int _score  									= 0;
 	private CharacterMovementController _movementController = null;

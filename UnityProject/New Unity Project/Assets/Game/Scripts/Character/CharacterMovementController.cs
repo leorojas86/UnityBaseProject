@@ -7,8 +7,6 @@ public class CharacterMovementController : MonoBehaviour
 {
 	#region Variables
 
-	public Camera characterCamera = null;
-
 	private float _speed			= Constants.CHARACTER_DEFAULT_SPEED;
 	private Character _character	= null;
 	private bool _isInitialized     = false;
@@ -29,7 +27,7 @@ public class CharacterMovementController : MonoBehaviour
 	private void Initialize()
 	{
 		float initialYRotation 			 = transform.rotation.eulerAngles.y;
-		float initialZRotation 			 = characterCamera != null ? characterCamera.transform.localRotation.eulerAngles.z : transform.rotation.eulerAngles.z;
+		float initialZRotation 			 = _character.firstPersonCamera != null ? _character.firstPersonCamera.transform.localRotation.eulerAngles.z : transform.rotation.eulerAngles.z;
 		_character.Input.TargetRotation  = new Vector3(0, initialYRotation, initialZRotation);
 		_character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
@@ -74,10 +72,10 @@ public class CharacterMovementController : MonoBehaviour
 
 	private void UpdateRotation()
 	{
-		if(characterCamera != null)
+		if(_character.firstPersonCamera != null)
 		{	
-			characterCamera.transform.localRotation  = Quaternion.Lerp(characterCamera.transform.localRotation, Quaternion.Euler(_character.Input.TargetRotation.z, 0, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-			_character.RigidBody.rotation   	 	 = Quaternion.Lerp(_character.RigidBody.rotation, Quaternion.Euler(0, _character.Input.TargetRotation.y, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			_character.firstPersonCamera.transform.localRotation    = Quaternion.Lerp(_character.firstPersonCamera.transform.localRotation, Quaternion.Euler(_character.Input.TargetRotation.z, 0, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+			_character.RigidBody.rotation   	 	 				= Quaternion.Lerp(_character.RigidBody.rotation, Quaternion.Euler(0, _character.Input.TargetRotation.y, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 		}
 		else
 			_character.RigidBody.rotation = Quaternion.Lerp(_character.RigidBody.rotation, Quaternion.Euler(_character.Input.TargetRotation.z, _character.Input.TargetRotation.y, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
