@@ -17,8 +17,21 @@ public class TouchPlayerInput : PlayerInput
 
 		CheckForNewTouch();
 
-		UpdateRotation(currentCharacterPosition);
-		UpdateMovement();
+		if(_lastTouchPosition != Vector3.zero)
+		{
+			Vector3 relativePosition = _lastTouchPosition - currentCharacterPosition;
+
+			if(relativePosition.magnitude > 2)//Do not move if the target is less that 2 meters distance
+			{
+				UpdateRotation(currentCharacterPosition, relativePosition.normalized);
+				UpdateMovement(currentCharacterPosition, relativePosition.normalized);
+			}
+			else
+			{
+				_lastTouchPosition = Vector3.zero;
+				_targetMovement    = Vector3.zero;
+			}
+		}
 	}
 
 	private void CheckForNewTouch()
@@ -33,46 +46,21 @@ public class TouchPlayerInput : PlayerInput
 		}
 	}
 
-	private void UpdateRotation(Vector3 currentCharacterPosition)
+	private void UpdateRotation(Vector3 currentCharacterPosition, Vector3 relativePosition)
 	{
-		if(_lastTouchPosition != Vector3.zero)
-		{
-			Vector3 relativeRotation = _lastTouchPosition - currentCharacterPosition;
-
-			_targetRotation.y = Quaternion.LookRotation(relativeRotation).eulerAngles.y;
-			/*if(Input.GetKey(KeyCode.A))
-				_targetRotation.y -= Constants.KEYBOARD_ROTATION_SPEED;
-			
-			if(Input.GetKey(KeyCode.D))
-				_targetRotation.y += Constants.KEYBOARD_ROTATION_SPEED;*/
-		}
+		_targetRotation.y = Quaternion.LookRotation(relativePosition).eulerAngles.y;
 	}
 	
-	private void UpdateMovement()
+	private void UpdateMovement(Vector3 currentCharacterPosition, Vector3 relativePosition)
 	{
-		/*if(Input.GetKey(KeyCode.W))
-		{
-			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, _targetRotation.y);
-			_targetMovement 		   = new Vector3(movement2D.y, 0, movement2D.x);
-		}
-		else if(Input.GetKey(KeyCode.S))
-		{
-			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, _targetRotation.y - 180);
-			_targetMovement 		   = new Vector3(movement2D.y, 0, movement2D.x);
-		}
-		else
-			_targetMovement = Vector3.zero;*/
+		relativePosition.y = 0;
+		_targetMovement    = relativePosition;
 	}
 
 	public override PlayerInput Detect()
 	{
-		//Debug.Log("Detect");
-
 		if(Input.GetMouseButton(0))
-		{
-			//Debug.Log("Detected");
 			return new TouchPlayerInput();
-		}
 
 		return null;
 	}
