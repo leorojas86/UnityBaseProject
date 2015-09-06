@@ -79,7 +79,12 @@ public class Character : MonoBehaviour
 		if(_input != null)
 			_input.UpdateInput();
 		else
+		{
 			_input = InputManager.Instance.DetectNewCharacterInput();
+
+			if(_input != null)
+				_movementController.OnPlayerInputDetected();
+		}
 
 		UpdateLandedFlag();
 	}

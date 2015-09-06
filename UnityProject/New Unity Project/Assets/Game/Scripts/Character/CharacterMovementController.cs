@@ -9,7 +9,6 @@ public class CharacterMovementController : MonoBehaviour
 
 	private float _speed			= Constants.CHARACTER_DEFAULT_SPEED;
 	private Character _character	= null;
-	private bool _isInitialized     = false;
 
 	#endregion
 
@@ -24,7 +23,7 @@ public class CharacterMovementController : MonoBehaviour
 		_character = GetComponent<Character>();
 	}
 
-	private void Initialize()
+	public void OnPlayerInputDetected()
 	{
 		float initialYRotation 			 = transform.rotation.eulerAngles.y;
 		float initialZRotation 			 = _character.firstPersonCamera != null ? _character.firstPersonCamera.transform.localRotation.eulerAngles.z : transform.rotation.eulerAngles.z;
@@ -36,12 +35,6 @@ public class CharacterMovementController : MonoBehaviour
 	{
 		if(_character.Input != null)
 		{
-			if(!_isInitialized)
-			{
-				Initialize();
-				_isInitialized = true;
-			}
-
 			UpdateMovement();
 			UpdateRotation();
 			CheckForJump();
