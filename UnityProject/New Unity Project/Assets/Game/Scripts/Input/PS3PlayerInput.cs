@@ -5,7 +5,7 @@ public class PS3PlayerInput : PlayerInput
 {
 	#region Methods
 
-	public override void UpdateInput()
+	public override void UpdateInput(Vector3 currentCharacterPosition)
 	{
 		_isJumpButtonDown = Input.GetKey(KeyCode.JoystickButton14);
 

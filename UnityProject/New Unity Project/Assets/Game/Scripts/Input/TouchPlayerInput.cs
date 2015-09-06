@@ -11,13 +11,13 @@ public class TouchPlayerInput : PlayerInput
 
 	#region Methods
 
-	public override void UpdateInput()
+	public override void UpdateInput(Vector3 currentCharacterPosition)
 	{
 		_isJumpButtonDown = Input.touchCount > 1;
 
 		CheckForNewTouch();
 
-		UpdateRotation();
+		UpdateRotation(currentCharacterPosition);
 		UpdateMovement();
 	}
 
@@ -33,13 +33,19 @@ public class TouchPlayerInput : PlayerInput
 		}
 	}
 
-	private void UpdateRotation()
+	private void UpdateRotation(Vector3 currentCharacterPosition)
 	{
-		/*if(Input.GetKey(KeyCode.A))
-			_targetRotation.y -= Constants.KEYBOARD_ROTATION_SPEED;
-		
-		if(Input.GetKey(KeyCode.D))
-			_targetRotation.y += Constants.KEYBOARD_ROTATION_SPEED;*/
+		if(_lastTouchPosition != Vector3.zero)
+		{
+			Vector3 relativeRotation = _lastTouchPosition - currentCharacterPosition;
+
+			_targetRotation.y = Quaternion.LookRotation(relativeRotation).eulerAngles.y;
+			/*if(Input.GetKey(KeyCode.A))
+				_targetRotation.y -= Constants.KEYBOARD_ROTATION_SPEED;
+			
+			if(Input.GetKey(KeyCode.D))
+				_targetRotation.y += Constants.KEYBOARD_ROTATION_SPEED;*/
+		}
 	}
 	
 	private void UpdateMovement()

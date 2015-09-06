@@ -77,7 +77,7 @@ public class Character : MonoBehaviour
 	void Update()
 	{
 		if(_input != null)
-			_input.UpdateInput();
+			_input.UpdateInput(transform.position);
 		else
 		{
 			_input = InputManager.Instance.DetectNewCharacterInput();
