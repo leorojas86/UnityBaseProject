@@ -7,11 +7,11 @@ public class Game : MonoBehaviour
 
 	void Awake() 
 	{
-		//InputManager.Instance.RegisteredInputs.Add(new KeyboardAndMousePlayerInput());
+		InputManager.Instance.RegisteredInputs.Add(new KeyboardAndMousePlayerInput());
 		//InputManager.Instance.RegisteredInputs.Add(new KeyboardPlayerInput());
 		//InputManager.Instance.RegisteredInputs.Add(new PS3PlayerInput());
 		//InputManager.Instance.RegisteredInputs.Add(new XboxPlayerInput());
-		InputManager.Instance.RegisteredInputs.Add(new TouchPlayerInput());
+		//InputManager.Instance.RegisteredInputs.Add(new TouchPlayerInput());
 
 		Application.targetFrameRate = 120;
 	}

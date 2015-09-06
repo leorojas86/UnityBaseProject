@@ -26,38 +26,22 @@ public class KeyboardAndMousePlayerInput : PlayerInput
 		bool isSPressed = Input.GetKey(KeyCode.S);
 		bool isDPressed = Input.GetKey(KeyCode.D);
 
-		float rotationMovement = 0;
+		Vector2 movementVector = Vector2.zero;
 
-		if(isWPressed && isAPressed)
-			rotationMovement = _targetRotation.y + 315;
-		else if(isWPressed && isDPressed)
-			rotationMovement = _targetRotation.y + 45;
-		else if(isSPressed && isAPressed)
-			rotationMovement = _targetRotation.y + 225;
-		else if(isSPressed && isDPressed)
-			rotationMovement = _targetRotation.y + 135;
-		else
-		{
-			if(isWPressed)
-				rotationMovement = _targetRotation.y;
+		if(isWPressed)
+			movementVector.y += 1;
 
-			if(isSPressed)
-				rotationMovement = _targetRotation.y + 180;
+		if(isSPressed)
+			movementVector.y -= 1;
 
-			if(isAPressed)
-				rotationMovement = _targetRotation.y + 270;
+		if(isDPressed)
+			movementVector.x += 1;
 
-			if(isDPressed)
-				rotationMovement = _targetRotation.y + 90;
-		}
+		if(isAPressed)
+			movementVector.x -= 1;
 
-		if(rotationMovement != 0)
-		{
-			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, rotationMovement);
-			_targetMovement 		   = new Vector3(movement2D.y, 0, movement2D.x);
-		}
-		else
-			_targetMovement = Vector3.zero;
+		Vector2 rotatedMovement = MathUtils.GetRotatedPointAroundPivot(Vector3.zero, movementVector, -_targetRotation.y);
+		_targetMovement         = new Vector3(rotatedMovement.x,0, rotatedMovement.y);
 	}
 
 	public override PlayerInput Detect()
