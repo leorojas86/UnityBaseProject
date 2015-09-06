@@ -76,10 +76,10 @@ public class Character : MonoBehaviour
 
 	void Update()
 	{
-		if(_input == null)
-			_input = InputManager.Instance.DetectNewCharacterInput();
+		if(_input != null)
+			_input.UpdateInput();
 		else
-			_input.UpdateInput(this);
+			_input = InputManager.Instance.DetectNewCharacterInput();
 
 		UpdateLandedFlag();
 	}

@@ -5,7 +5,7 @@ public class KeyboardPlayerInput : PlayerInput
 {
 	#region Methods
 
-	public override void UpdateInput(Character character)
+	public override void UpdateInput()
 	{
 		_isJumpButtonDown = Input.GetKey(KeyCode.Space);
 
