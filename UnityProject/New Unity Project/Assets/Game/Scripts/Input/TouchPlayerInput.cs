@@ -42,7 +42,7 @@ public class TouchPlayerInput : PlayerInput
 
 	private void CheckForNewTouch()
 	{
-		if(Input.GetMouseButtonDown(0))
+		if(Input.GetMouseButtonUp(0))
 		{
 			Ray touchRay      = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit[] hits = Physics.RaycastAll(touchRay);
@@ -70,7 +70,7 @@ public class TouchPlayerInput : PlayerInput
 
 	public override PlayerInput Detect()
 	{
-		if(Input.GetMouseButtonDown(0))
+		if(Input.GetMouseButtonUp(0))
 			return new TouchPlayerInput();
 
 		return null;
