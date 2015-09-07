@@ -23,7 +23,17 @@ public class TouchPlayerInput : PlayerInput
 
     private void OnSwipe(SwipeGesture sender)
     {
-        _isJumpButtonDown = sender.LastDetectedSwipe == SwipeGesture.SwipeDirections.Up;
+        bool swipeUp = sender.LastDetectedSwipe == SwipeGesture.SwipeDirections.Up;
+
+        if(swipeUp)
+        {
+            if(_isBendTriggered)
+                _isBendTriggered = false;
+            else
+                _isJumpTriggered = true;
+        }
+
+        _isBendTriggered = sender.LastDetectedSwipe == SwipeGesture.SwipeDirections.Down;
     }
 
     #endregion
@@ -32,8 +42,8 @@ public class TouchPlayerInput : PlayerInput
 
     public override void UpdateInput(Vector3 currentCharacterPosition)
 	{
-        if(_isJumpButtonDown)
-           _isJumpButtonDown = false;
+        if(_isJumpTriggered)
+           _isJumpTriggered = false;
 
         _swipeGesture.Update();
 
@@ -52,7 +62,7 @@ public class TouchPlayerInput : PlayerInput
 				CleanLastInput();
 		}
 
-		if(_isJumpButtonDown)
+		if(_isJumpTriggered)
 			CleanLastInput();
 	}
 

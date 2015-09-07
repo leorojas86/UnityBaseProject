@@ -7,7 +7,7 @@ public class XboxPlayerInput : PlayerInput
 
 	public override void UpdateInput(Vector3 currentCharacterPosition)
 	{
-		_isJumpButtonDown = Input.GetKey(KeyCode.JoystickButton2);
+		_isJumpTriggered = Input.GetKey(KeyCode.JoystickButton2);
 
 		UpdateRotation();
 		UpdateMovement();

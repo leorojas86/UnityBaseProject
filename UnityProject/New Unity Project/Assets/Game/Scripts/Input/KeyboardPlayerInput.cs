@@ -7,7 +7,7 @@ public class KeyboardPlayerInput : PlayerInput
 
 	public override void UpdateInput(Vector3 currentCharacterPosition)
 	{
-		_isJumpButtonDown = Input.GetKey(KeyCode.Space);
+		_isJumpTriggered = Input.GetKey(KeyCode.Space);
 
 		UpdateRotation();
 		UpdateMovement();

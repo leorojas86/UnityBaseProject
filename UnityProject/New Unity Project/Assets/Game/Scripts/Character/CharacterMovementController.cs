@@ -43,7 +43,7 @@ public class CharacterMovementController : MonoBehaviour
 
 	private void CheckForJump()
 	{
-		if(_character.Input.IsJumpButtonDown && _character.IsLanded)
+		if(_character.Input.IsJumpTriggered && _character.IsLanded)
 		{
 			Vector3 velocity    		  = _character.RigidBody.velocity;
 			velocity.y 		    		  += Constants.CHARACTER_JUMP_FORCE;

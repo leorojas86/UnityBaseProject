@@ -7,8 +7,8 @@ public abstract class PlayerInput
 
 	protected Vector3 _targetRotation = Vector3.zero;
 	protected Vector3 _targetMovement = Vector3.zero;
-	protected bool _isJumpButtonDown  = false;
-	protected bool _isBendButtonDown  = false;
+	protected bool _isJumpTriggered  = false;
+	protected bool _isBendTriggered  = false;
 	
 	#endregion
 	
@@ -25,14 +25,14 @@ public abstract class PlayerInput
 		get { return _targetMovement; }
 	}
 	
-	public bool IsJumpButtonDown
+	public bool IsJumpTriggered
 	{
-		get { return _isJumpButtonDown; }
+		get { return _isJumpTriggered; }
 	}
 
-	public bool IsBendButtonDown
+	public bool IsBendTriggered
 	{
-		get { return _isBendButtonDown; }
+		get { return _isBendTriggered; }
 	}
 	
 	#endregion
