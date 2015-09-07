@@ -7,8 +7,8 @@ public class CharacterMovementController : MonoBehaviour
 {
 	#region Variables
 
-	private float _speed			= Constants.CHARACTER_DEFAULT_SPEED;
-	private Character _character	= null;
+	private float _speed		 = Constants.CHARACTER_DEFAULT_SPEED;
+	private Character _character = null;
 
 	#endregion
 
@@ -38,8 +38,17 @@ public class CharacterMovementController : MonoBehaviour
 			UpdateMovement();
 			UpdateRotation();
 			CheckForJump();
+            UpdateBend();
 		}
 	}
+
+    private void UpdateBend()
+    {
+        float targetXRotation                         = _character.Input.IsBendToogle ? Constants.CHARACTER_BEND_X_ROTATION : Constants.CHARACTER_STAND_X_ROTATION;
+        Vector3 currentRotation                       = _character.Capsule.transform.localEulerAngles;
+        currentRotation.x                             = Mathf.Lerp(currentRotation.x, targetXRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+        _character.Capsule.transform.localEulerAngles = currentRotation;
+    }
 
 	private void CheckForJump()
 	{

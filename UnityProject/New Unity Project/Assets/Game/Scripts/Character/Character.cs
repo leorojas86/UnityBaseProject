@@ -13,6 +13,7 @@ public class Character : MonoBehaviour
 	private CharacterMovementController _movementController = null;
 	private PlayerInput _input 								= null;
 	private Rigidbody _rigidBody 							= null;
+    private CapsuleCollider _capsule                        = null;
 
 	private bool _isGoingDown	= false;
 	private bool _isGoingUp		= false;
@@ -25,7 +26,12 @@ public class Character : MonoBehaviour
 	public Rigidbody RigidBody
 	{
 		get { return _rigidBody; }
-	} 
+	}
+
+    public CapsuleCollider Capsule
+    {
+        get { return _capsule; }
+    }
 	
 	public int Health
 	{
@@ -72,6 +78,7 @@ public class Character : MonoBehaviour
 	{
 		_rigidBody 			= GetComponentInChildren<Rigidbody>();
 		_movementController = GetComponent<CharacterMovementController>();
+        _capsule            = GetComponentInChildren<CapsuleCollider>();
 	}
 
 	void Update()

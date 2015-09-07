@@ -27,13 +27,14 @@ public class TouchPlayerInput : PlayerInput
 
         if(swipeUp)
         {
-            if(_isBendTriggered)
-                _isBendTriggered = false;
+            if(_isBendToogle)
+                _isBendToogle = false;
             else
                 _isJumpTriggered = true;
         }
 
-        _isBendTriggered = sender.LastDetectedSwipe == SwipeGesture.SwipeDirections.Down;
+        if(!_isBendToogle)
+            _isBendToogle = sender.LastDetectedSwipe == SwipeGesture.SwipeDirections.Down;
     }
 
     #endregion
