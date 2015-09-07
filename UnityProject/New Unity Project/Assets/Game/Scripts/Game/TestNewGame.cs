@@ -1,19 +1,19 @@
 using UnityEngine;
 using System.Collections;
 
-public class Game : MonoBehaviour 
+public class TestNewGame : MonoBehaviour 
 {
 	#region Variables
 
 	public Transform touchGuide = null;
 
-	private static Game _instance = null;
+	private static TestNewGame _instance = null;
 
 	#endregion
 
 	#region Properties
 
-	public static Game Instance
+	public static TestNewGame Instance
 	{
 		get { return _instance; }
 	}

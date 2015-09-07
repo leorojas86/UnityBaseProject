@@ -50,7 +50,7 @@ public class TouchPlayerInput : PlayerInput
 			if(hits.Length > 0)
 			{
 				_lastTouchPosition 							= hits[0].point;
-				Game.Instance.touchGuide.transform.position = _lastTouchPosition;
+				TestNewGame.Instance.touchGuide.transform.position = _lastTouchPosition;
 			}
 			else
 				_lastTouchPosition = touchRay.GetPoint(10000);
