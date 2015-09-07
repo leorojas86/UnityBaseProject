@@ -9,6 +9,9 @@ public class KeyboardPlayerInput : PlayerInput
 	{
 		_isJumpTriggered = Input.GetKey(KeyCode.Space);
 
+        if(Input.GetKeyDown(KeyCode.Q))
+            _isBendToogle = !_isBendToogle;
+
 		UpdateRotation();
 		UpdateMovement();
 	}

@@ -7,7 +7,10 @@ public class KeyboardAndMousePlayerInput : PlayerInput
 
 	public override void UpdateInput(Vector3 currentCharacterPosition)
 	{
-		_isJumpTriggered = Input.GetKey(KeyCode.Space);
+		_isJumpTriggered = Input.GetKeyDown(KeyCode.Space);
+
+        if(Input.GetKeyDown(KeyCode.Q))
+            _isBendToogle = !_isBendToogle;
 
 		UpdateRotation();
 		UpdateMovement();
