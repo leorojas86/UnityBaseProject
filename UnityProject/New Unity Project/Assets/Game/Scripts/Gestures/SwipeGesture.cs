@@ -24,34 +24,16 @@ public class SwipeGesture
 	
 	#region Variables
 	
-	/// <summary>
-	/// The minimum distance to be travelled before detecting a swipe.
-	/// </summary>
-	[SerializeField] private float _minSwipeDistance = 2f;
+	private float _minSwipeDistance = 2f;
 
-	/// <summary>
-	/// The detect on drag distance.
-	/// </summary>
-	[SerializeField] private float _detectOnDragDistance = 10f;
+	private float _detectOnDragDistance = 10f;
 	
-	/// <summary>
-	/// Determines at which directions a swipe may be detected. The default is detecting a swipe in all directions.
-	/// </summary>
-	[SerializeField] private SwipeDirections _detectSwipeDirection = SwipeDirections.All;	
+	private SwipeDirections _detectSwipeDirection = SwipeDirections.All;	
 	
-	/// <summary>
-	/// Method to be called whenever a swipe is detected.
-	/// </summary>
-    public System.Action<SwipeGesture> OnSwipe = null;
+	public System.Action<SwipeGesture> OnSwipe = null;
 	
-	/// <summary>
-	/// The orientation of the last detected swipe.
-	/// </summary>
 	private SwipeDirections _lastDetectedSwipe = SwipeDirections.None;
 
-	/// <summary>
-	/// The _swipe start position.
-	/// </summary>
 	private Vector3 _swipeStartPosition = Vector3.zero;
 
     private bool _isActive = false;
@@ -72,10 +54,19 @@ public class SwipeGesture
 	}
 	
 	#endregion
-	
-	#region Methods
 
-	/// <summary>
+    #region Constructors
+
+    public SwipeGesture(float minSwipeDistance = 2)
+    {
+        _minSwipeDistance = minSwipeDistance;
+    }
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
 	/// Method used to update the swipe gesture.
 	/// </summary>
 	public void Update()

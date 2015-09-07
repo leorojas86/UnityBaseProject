@@ -6,7 +6,7 @@ public class TouchPlayerInput : PlayerInput
 	#region Variables
 
 	private Vector3 _lastTouchPosition = Vector3.zero;
-    private SwipeGesture _swipeGesture = new SwipeGesture();
+    private SwipeGesture _swipeGesture = new SwipeGesture(5);
 
 	#endregion
 
