@@ -6,13 +6,37 @@ public class TouchPlayerInput : PlayerInput
 	#region Variables
 
 	private Vector3 _lastTouchPosition = Vector3.zero;
+    private SwipeGesture _swipeGesture = new SwipeGesture();
 
 	#endregion
 
-	#region Methods
+    #region Contructors
 
-	public override void UpdateInput(Vector3 currentCharacterPosition)
+    public TouchPlayerInput()
+    {
+        _swipeGesture.OnSwipe = OnSwipe;
+    }
+
+    #endregion
+
+    #region Events
+
+    private void OnSwipe(SwipeGesture sender)
+    {
+        _isJumpButtonDown = sender.LastDetectedSwipe == SwipeGesture.SwipeDirections.Up;
+    }
+
+    #endregion
+
+    #region Methods
+
+    public override void UpdateInput(Vector3 currentCharacterPosition)
 	{
+        if(_isJumpButtonDown)
+           _isJumpButtonDown = false;
+
+        _swipeGesture.Update();
+
 		CheckForNewTouch();
 
 		if(_lastTouchPosition != Vector3.zero)
@@ -27,8 +51,6 @@ public class TouchPlayerInput : PlayerInput
 			else
 				CleanLastInput();
 		}
-
-		_isJumpButtonDown = Input.touchCount > 1 || Input.GetMouseButton(1);
 
 		if(_isJumpButtonDown)
 			CleanLastInput();
@@ -70,7 +92,7 @@ public class TouchPlayerInput : PlayerInput
 
 	public override PlayerInput Detect()
 	{
-		if(Input.GetMouseButtonUp(0))
+		if(Input.GetMouseButtonDown(0))
 			return new TouchPlayerInput();
 
 		return null;
