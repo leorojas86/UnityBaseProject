@@ -37,22 +37,26 @@ public class CharacterMovementController : MonoBehaviour
 		{
 			UpdateMovement();
 			UpdateRotation();
-			CheckForJump();
-            UpdateBend();
+            
+            if(_character.IsLanded)
+            {
+                CheckForJump();
+                UpdateBend();
+            }
 		}
 	}
 
     private void UpdateBend()
     {
-        float targetXRotation                         = _character.Input.IsBendToogle ? Constants.CHARACTER_BEND_X_ROTATION : Constants.CHARACTER_STAND_X_ROTATION;
-        Vector3 currentRotation                       = _character.Capsule.transform.localEulerAngles;
-        currentRotation.x                             = Mathf.Lerp(currentRotation.x, targetXRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+        float targetXRotation = _character.Input.IsBendToogle ? Constants.CHARACTER_BEND_X_ROTATION : Constants.CHARACTER_STAND_X_ROTATION;
+        Vector3 currentRotation = _character.Capsule.transform.localEulerAngles;
+        currentRotation.x = Mathf.Lerp(currentRotation.x, targetXRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
         _character.Capsule.transform.localEulerAngles = currentRotation;
     }
 
 	private void CheckForJump()
 	{
-		if(_character.Input.IsJumpTriggered && _character.IsLanded)
+		if(_character.Input.IsJumpTriggered)
 		{
 			Vector3 velocity    		  = _character.RigidBody.velocity;
 			velocity.y 		    		  += Constants.CHARACTER_JUMP_FORCE;
