@@ -2,8 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(Character))]
-public class CharacterMovementController : MonoBehaviour 
+public class CharacterMovementController 
 {
 	#region Variables
 
@@ -15,21 +14,26 @@ public class CharacterMovementController : MonoBehaviour
 
 	#endregion
 
-	#region Methods
+    #region Constructors
 
-	void Awake()
-	{
-		_character = GetComponent<Character>();
-	}
+    public CharacterMovementController(Character character)
+    {
+        _character = character;
+    }
+
+    #endregion
+
+    #region Methods
+
 
 	public void OnPlayerInputDetected()
 	{
-		float initialZRotation 			 = _character.firstPersonCamera != null ? _character.firstPersonCamera.transform.localRotation.eulerAngles.z : transform.rotation.eulerAngles.z;
-		_character.Input.TargetRotation  = new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, initialZRotation);
-		_character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
+        float initialZRotation              = _character.firstPersonCamera != null ? _character.firstPersonCamera.transform.localRotation.eulerAngles.z : _character.transform.rotation.eulerAngles.z;
+        _character.Input.TargetRotation     = new Vector3(_character.transform.rotation.eulerAngles.x, _character.transform.rotation.eulerAngles.y, initialZRotation);
+		_character.RigidBody.constraints    = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 	
-	void Update() 
+	public void Update() 
 	{
 		if(_character.Input != null)
 		{

@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(CharacterMovementController))]
 public class Character : MonoBehaviour 
 {
 	#region Variables
@@ -83,9 +82,10 @@ public class Character : MonoBehaviour
 
 	void Awake()
 	{
-		_rigidBody 			= GetComponentInChildren<Rigidbody>();
-		_movementController = GetComponent<CharacterMovementController>();
-        _capsule            = GetComponentInChildren<CapsuleCollider>();
+        _rigidBody = GetComponentInChildren<Rigidbody>();
+        _capsule   = GetComponentInChildren<CapsuleCollider>();
+
+        _movementController = new CharacterMovementController(this);
 	}
 
 	void Update()
@@ -101,6 +101,8 @@ public class Character : MonoBehaviour
 		}
 
 		UpdateLandedFlag();
+
+        _movementController.Update();
 	}
 
 	public void TakeDamage(int damage, Object damageOwner)
@@ -121,11 +123,6 @@ public class Character : MonoBehaviour
 
 		_movementController.Reset();
 	}
-
-	/*void OnGUI()
-	{
-		GUI.Label(new Rect(100,0,1000,1000), "_rigidBody.velocity.y = " + _rigidBody.velocity.y + " _isLanded = " + _isLanded +  " _isGoingDown = " + _isGoingDown + " _isGoingUp = " + _isGoingUp);
-	}*/
 
 	private void UpdateLandedFlag()
 	{
