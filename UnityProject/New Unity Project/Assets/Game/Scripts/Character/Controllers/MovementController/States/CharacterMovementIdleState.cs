@@ -29,13 +29,4 @@ public class CharacterMovementIdleState : CharacterMovementState
     }
 
     #endregion
-
-    #region Transitions
-
-    public bool GoToMovingState()
-    {
-        return _character.IsLanded && _character.Input != null && _character.Input.TargetMovement != Vector3.zero;
-    }
-
-    #endregion
 }

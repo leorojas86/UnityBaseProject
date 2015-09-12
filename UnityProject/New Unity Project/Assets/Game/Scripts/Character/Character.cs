@@ -60,6 +60,19 @@ public class Character : MonoBehaviour
 	public PlayerInput Input
 	{
 		get { return _input; }
+        set 
+        {
+            if (_input != null)
+                _input.Character = null;
+
+            _input = value;
+
+            if (_input != null)
+            {
+                _input.Character = this;
+                _movementController.OnPlayerInputDetected();
+            }
+        }
 	}
 
 	public bool IsFalling
@@ -101,10 +114,10 @@ public class Character : MonoBehaviour
 			_input.UpdateInput(transform.position);
 		else
 		{
-			_input = InputManager.Instance.DetectNewCharacterInput();
+			PlayerInput input = InputManager.Instance.DetectNewCharacterInput();
 
-			if(_input != null)
-				_movementController.OnPlayerInputDetected();
+            if(input != null)
+               Input = input;
 		}
 
 		UpdateLandedFlag();
@@ -165,6 +178,16 @@ public class Character : MonoBehaviour
 			}
 		}
 	}
+
+    public bool CanBend()
+    {
+        return _movementController.CanBend();
+    }
+
+    public bool CanJump()
+    {
+        return _movementController.CanJump();
+    }
 
 	#endregion
 }

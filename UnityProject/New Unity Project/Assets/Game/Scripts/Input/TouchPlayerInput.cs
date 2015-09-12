@@ -15,8 +15,6 @@ public class TouchPlayerInput : PlayerInput
     public TouchPlayerInput()
     {
         _swipeGesture.OnSwipe = OnSwipe;
-
-        CleanLastInput();
     }
 
     #endregion
@@ -28,13 +26,14 @@ public class TouchPlayerInput : PlayerInput
         switch (sender.LastDetectedSwipe)
         {
             case SwipeGesture.SwipeDirections.Up:
-                if (_isBendToogle)
+                if (_isBendToogle && _character.CanBend())
                     _isBendToogle = false;//Get up, take stand position
                 else
-                    _isJumpTriggered = true;
+                    _isJumpTriggered = _character.CanJump();
             break;
-            case SwipeGesture.SwipeDirections.Down:
-                _isBendToogle = sender.LastDetectedSwipe == SwipeGesture.SwipeDirections.Down;
+            case SwipeGesture.SwipeDirections.Down: 
+                if(_character.CanBend())
+                    _isBendToogle = sender.LastDetectedSwipe == SwipeGesture.SwipeDirections.Down;
             break;
         }
     }
@@ -59,7 +58,7 @@ public class TouchPlayerInput : PlayerInput
                 //_isBreakToogle = false;
 			}
 			else
-				CleanLastInput();
+                ClearLastInput();
 		}
 
         UpdateSwipeGesture();
@@ -71,17 +70,7 @@ public class TouchPlayerInput : PlayerInput
             _isJumpTriggered = false;
 
         _swipeGesture.Update();
-
-        //if (_isJumpTriggered)
-           // CleanLastInput();
     }
-
-	private void CleanLastInput()
-	{
-		_lastTouchPosition = Vector3.zero;
-		_targetMovement    = Vector3.zero;
-        //_isBreakToogle     = true;
-	}
 
     private void CheckForNewTouch(Vector3 currentCharacterPosition)
 	{

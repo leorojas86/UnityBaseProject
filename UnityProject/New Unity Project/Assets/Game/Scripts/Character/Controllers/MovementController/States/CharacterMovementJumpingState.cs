@@ -31,9 +31,40 @@ public class CharacterMovementJumpingState : CharacterMovementMovingState
     {
         base.OnExecute();
 
-        Debug.Log("_character.IsLanded = " + _character.IsLanded);
+        //Debug.Log("_character.IsLanded = " + _character.IsLanded);
 
         _isCompleted = _character.IsLanded;
+    }
+
+    public override void OnExit()
+    {
+        base.OnExit();
+
+        _character.Input.ClearLastInput();
+    }
+
+    #endregion
+
+    #region Transitions
+
+    public override bool GoToMovingState()
+    {
+        return _isCompleted && base.GoToMovingState();
+    }
+
+    public override bool GoToIdle()
+    {
+        return _isCompleted && base.GoToIdle();
+    }
+
+    public override bool CanBend()
+    {
+        return false;
+    }
+
+    public override bool CanJump()
+    {
+        return false;
     }
 
     #endregion

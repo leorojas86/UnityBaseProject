@@ -41,7 +41,8 @@ public class CharacterMovementController
 
         bendingState.AddTransition(idleState, bendingState.IsCompleted);
 
-        jumpingState.AddTransition(idleState, jumpingState.IsCompleted);
+        jumpingState.AddTransition(movingStateState, jumpingState.GoToMovingState);
+        jumpingState.AddTransition(idleState, jumpingState.GoToIdle);
 
         _fsm.CurrentState       = idleState;//Initial State
         _fsm.IsDebugInfoEnabled = true;
@@ -64,6 +65,16 @@ public class CharacterMovementController
 		if(_character.Input != null)
             _fsm.Update();
 	}
+
+    public bool CanBend()
+    {
+        return (_fsm.CurrentState as CharacterMovementState).CanBend();
+    }
+
+    public bool CanJump()
+    {
+        return (_fsm.CurrentState as CharacterMovementState).CanJump();
+    }
 
 	public void Reset()
 	{

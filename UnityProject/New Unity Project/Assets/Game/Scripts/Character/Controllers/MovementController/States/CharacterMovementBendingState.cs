@@ -5,6 +5,7 @@ public class CharacterMovementBendingState : CharacterMovementIdleState
 {
     #region Variables
 
+
     #endregion
 
     #region Constructors
@@ -16,6 +17,13 @@ public class CharacterMovementBendingState : CharacterMovementIdleState
     #endregion
 
     #region Methods
+
+    public override void OnEnter()
+    {
+        base.OnEnter();
+
+        _character.Input.ClearLastInput();
+    }
 
     public override void OnExecute()
     {
@@ -41,6 +49,20 @@ public class CharacterMovementBendingState : CharacterMovementIdleState
         base.OnExit();
 
         _character.IsBended = _character.Input.IsBendToogle;
+    }
+
+    #endregion
+
+    #region Transitions
+
+    public override bool CanBend()
+    {
+        return false;
+    }
+
+    public override bool CanJump()
+    {
+        return false;
     }
 
     #endregion
