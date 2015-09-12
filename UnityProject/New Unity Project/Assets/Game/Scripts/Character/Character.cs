@@ -62,15 +62,17 @@ public class Character : MonoBehaviour
 		get { return _input; }
         set 
         {
-            if (_input != null)
-                _input.Character = null;
-
-            _input = value;
-
-            if (_input != null)
+            if (_input != value)
             {
-                _input.Character = this;
-                _movementController.OnPlayerInputDetected();
+                if (_input != null)
+                    _input.Character = null;
+
+                _input = value;
+
+                if (_input != null)
+                    _input.Character = this;
+
+                _movementController.OnPlayerInputChanged();
             }
         }
 	}

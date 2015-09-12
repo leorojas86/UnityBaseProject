@@ -31,16 +31,12 @@ public class CharacterMovementJumpingState : CharacterMovementMovingState
     {
         base.OnExecute();
 
-        //Debug.Log("_character.IsLanded = " + _character.IsLanded);
-
         _isCompleted = _character.IsLanded;
     }
 
     public override void OnExit()
     {
         base.OnExit();
-
-        _character.Input.ClearLastInput();
     }
 
     #endregion

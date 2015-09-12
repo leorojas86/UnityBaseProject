@@ -21,8 +21,6 @@ public class CharacterMovementBendingState : CharacterMovementIdleState
     public override void OnEnter()
     {
         base.OnEnter();
-
-        _character.Input.ClearLastInput();
     }
 
     public override void OnExecute()
@@ -49,6 +47,8 @@ public class CharacterMovementBendingState : CharacterMovementIdleState
         base.OnExit();
 
         _character.IsBended = _character.Input.IsBendToogle;
+
+        _character.Input.ClearLastInput();
     }
 
     #endregion

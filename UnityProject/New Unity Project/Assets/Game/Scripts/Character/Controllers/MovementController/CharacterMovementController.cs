@@ -45,7 +45,7 @@ public class CharacterMovementController
         jumpingState.AddTransition(idleState, jumpingState.GoToIdle);
 
         _fsm.CurrentState       = idleState;//Initial State
-        _fsm.IsDebugInfoEnabled = true;
+        //_fsm.IsDebugInfoEnabled = true;
     }
 
     #endregion
@@ -53,11 +53,9 @@ public class CharacterMovementController
     #region Methods
 
 
-	public void OnPlayerInputDetected()
+	public void OnPlayerInputChanged()
 	{
-        float initialZRotation              = _character.firstPersonCamera != null ? _character.firstPersonCamera.transform.localRotation.eulerAngles.z : _character.transform.rotation.eulerAngles.z;
-        _character.Input.TargetRotation     = new Vector3(_character.transform.rotation.eulerAngles.x, _character.transform.rotation.eulerAngles.y, initialZRotation);
-		_character.RigidBody.constraints    = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
+		_character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 	
 	public void Update() 
