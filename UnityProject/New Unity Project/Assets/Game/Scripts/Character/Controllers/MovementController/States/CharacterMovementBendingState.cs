@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterMovementBendingState : CharacterMovementState
+public class CharacterMovementBendingState : CharacterMovementIdleState
 {
     #region Variables
 
@@ -41,18 +41,6 @@ public class CharacterMovementBendingState : CharacterMovementState
         base.OnExit();
 
         _character.IsBended = _character.Input.IsBendToogle;
-    }
-
-    protected override void UpdateMovementInput()
-    {
-        //Do not move when bending
-        //base.UpdateMovementInput();
-    }
-
-    protected override void UpdateRotationInput()
-    {
-        //Do not rotate when bending
-        //base.UpdateRotationInput();
     }
 
     #endregion

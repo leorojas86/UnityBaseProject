@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterMovementJumpingState : CharacterMovementState
+public class CharacterMovementJumpingState : CharacterMovementMovingState
 {
     #region Constructors
 
@@ -30,6 +30,8 @@ public class CharacterMovementJumpingState : CharacterMovementState
     public override void OnExecute()
     {
         base.OnExecute();
+
+        Debug.Log("_character.IsLanded = " + _character.IsLanded);
 
         _isCompleted = _character.IsLanded;
     }
