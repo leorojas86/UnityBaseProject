@@ -2,8 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-// Project: Flash to Unity.
-public sealed class MathUtils
+public static class MathUtils
 {		
 	#region Constants
 	

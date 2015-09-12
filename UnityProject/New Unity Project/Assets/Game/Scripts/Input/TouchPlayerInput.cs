@@ -43,7 +43,7 @@ public class TouchPlayerInput : PlayerInput
 
     public override void UpdateInput(Vector3 currentCharacterPosition)
 	{
-		CheckForNewTouch();
+		CheckForNewTouch(currentCharacterPosition);
 
 		if(_lastTouchPosition != Vector3.zero)
 		{
@@ -78,20 +78,12 @@ public class TouchPlayerInput : PlayerInput
 		_targetMovement    = Vector3.zero;
 	}
 
-	private void CheckForNewTouch()
+    private void CheckForNewTouch(Vector3 currentCharacterPosition)
 	{
 		if(Input.GetMouseButtonUp(0))
 		{
-			Ray touchRay      = Camera.main.ScreenPointToRay(Input.mousePosition);
-			RaycastHit[] hits = Physics.RaycastAll(touchRay);
-
-			if(hits.Length > 0)
-			{
-				_lastTouchPosition 							= hits[0].point;
-				TestNewGame.Instance.touchGuide.transform.position = _lastTouchPosition;
-			}
-			else
-				_lastTouchPosition = touchRay.GetPoint(10000);
+            _lastTouchPosition                                  = PhysicsUtils.GetCurrentMousePositionRaycastHitPoint(Constants.TOUCH_INPUT_MAX_RAYCAST_DISTANCE);
+            TestNewGame.Instance.touchGuide.transform.position  = _lastTouchPosition;
 		}
 	}
 

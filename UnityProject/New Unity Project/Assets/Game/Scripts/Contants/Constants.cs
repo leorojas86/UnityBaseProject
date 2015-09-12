@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Constants 
+public static class Constants 
 {
 	#region Constants
 
@@ -19,6 +19,7 @@ public class Constants
 
     public const float TOUCH_INPUT_SWIPE_GESTURE_MIN_DISTANCE   = 8;
     public const float TOUCH_INPUT_MIN_TOUCH_DISTANCE           = 2;
+    public const float TOUCH_INPUT_MAX_RAYCAST_DISTANCE         = 10000;
 
 	#endregion
 }
