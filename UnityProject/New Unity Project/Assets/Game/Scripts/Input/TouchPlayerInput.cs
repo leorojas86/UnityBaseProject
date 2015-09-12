@@ -23,18 +23,18 @@ public class TouchPlayerInput : PlayerInput
 
     private void OnSwipe(SwipeGesture sender)
     {
-        bool swipeUp = sender.LastDetectedSwipe == SwipeGesture.SwipeDirections.Up;
-
-        if(swipeUp)
+        switch (sender.LastDetectedSwipe)
         {
-            if(_isBendToogle)
-                _isBendToogle = false;
-            else
-                _isJumpTriggered = true;
+            case SwipeGesture.SwipeDirections.Up:
+                if (_isBendToogle)
+                    _isBendToogle = false;//Get up, take stand position
+                else
+                    _isJumpTriggered = true;
+            break;
+            case SwipeGesture.SwipeDirections.Down:
+                _isBendToogle = sender.LastDetectedSwipe == SwipeGesture.SwipeDirections.Down;
+            break;
         }
-
-        if(!_isBendToogle)
-            _isBendToogle = sender.LastDetectedSwipe == SwipeGesture.SwipeDirections.Down;
     }
 
     #endregion
@@ -43,11 +43,6 @@ public class TouchPlayerInput : PlayerInput
 
     public override void UpdateInput(Vector3 currentCharacterPosition)
 	{
-        if(_isJumpTriggered)
-           _isJumpTriggered = false;
-
-        _swipeGesture.Update();
-
 		CheckForNewTouch();
 
 		if(_lastTouchPosition != Vector3.zero)
@@ -63,9 +58,19 @@ public class TouchPlayerInput : PlayerInput
 				CleanLastInput();
 		}
 
-		if(_isJumpTriggered)
-			CleanLastInput();
+        UpdateSwipeGesture();
 	}
+
+    private void UpdateSwipeGesture()
+    {
+        if (_isJumpTriggered)//Clean Trigger, only one frame trigger
+            _isJumpTriggered = false;
+
+        _swipeGesture.Update();
+
+        //if (_isJumpTriggered)
+           // CleanLastInput();
+    }
 
 	private void CleanLastInput()
 	{
