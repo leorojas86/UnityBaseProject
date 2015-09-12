@@ -5,7 +5,9 @@ public class CharacterMovementState : FSMState
 {
     #region Variables
 
-    protected Character _character = null;
+    protected Character _character      = null;
+    protected bool _lastBendToogleState = false;
+
 
     #endregion
 
@@ -66,6 +68,25 @@ public class CharacterMovementState : FSMState
             Quaternion targetRigbodyRotation    = PhysicsUtils.SetQuaternionXAndYAxis(_character.RigidBody.rotation, _character.Input.TargetRotation.z, _character.Input.TargetRotation.y);
             _character.RigidBody.rotation       = Quaternion.Lerp(_character.RigidBody.rotation, targetRigbodyRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
         }
+    }
+
+    #endregion
+
+    #region Transitions
+
+    public bool GoToBendingState()
+    {
+        return  _character.Input != null && 
+                _character.IsLanded && 
+                _character.IsBended != _character.Input.IsBendToogle;
+    }
+
+    public bool GoToJumpingState()
+    {
+        return  _character.Input != null && 
+                _character.IsLanded && 
+                _character.Input.IsJumpTriggered && 
+                !_character.Input.IsBendToogle;
     }
 
     #endregion

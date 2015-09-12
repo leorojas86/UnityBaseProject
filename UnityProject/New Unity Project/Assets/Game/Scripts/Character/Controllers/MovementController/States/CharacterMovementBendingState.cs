@@ -36,6 +36,13 @@ public class CharacterMovementBendingState : CharacterMovementState
         _isCompleted = MathUtils.Approximately(currentRotation.x, targetXRotation, Constants.CHARACTER_BENDING_SPEED);
     }
 
+    public override void OnExit()
+    {
+        base.OnExit();
+
+        _character.IsBended = _character.Input.IsBendToogle;
+    }
+
     protected override void UpdateMovementInput()
     {
         //Do not move when bending

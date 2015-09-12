@@ -9,7 +9,7 @@ public abstract class PlayerInput
 	protected Vector3 _targetMovement = Vector3.zero;
 	protected bool _isJumpTriggered   = false;
 	protected bool _isBendToogle      = false;
-    protected bool _isBreakToogle     = false;
+    //protected bool _isBreakToogle     = false;
 	
 	#endregion
 	
@@ -36,10 +36,10 @@ public abstract class PlayerInput
 		get { return _isBendToogle; }
 	}
 
-    public bool IsBreakToogle
+    /*public bool IsBreakToogle
     {
         get { return _isBreakToogle; }
-    }
+    }*/
 	
 	#endregion
 

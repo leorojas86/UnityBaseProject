@@ -1,42 +1,40 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterMovementMovingState : CharacterMovementState
+public class CharacterMovementIdleState : CharacterMovementState
 {
-    #region Variables
-
-    protected bool _lastBendToogleState = false;
-
-    #endregion
-
     #region Constructors
 
-    public CharacterMovementMovingState(Character character) : base(character)
+    public CharacterMovementIdleState(Character character) : base(character)
     {
-        _character = character;
     }
 
     #endregion
 
     #region Methods
 
-    public bool GoToBendingState()
+    public override void OnExecute()
     {
-        if(_character.Input != null && _character.IsLanded)
-        {
-            if (_lastBendToogleState != _character.Input.IsBendToogle)
-            {
-                _lastBendToogleState = _character.Input.IsBendToogle;
-                return true;
-            }
-        }
+        base.OnExecute();
 
-        return false;
+        if(_character.IsLanded)
+            UpdateBreak();
     }
 
-    public bool GoToJumpingState()
+    private void UpdateBreak()
     {
-        return _character.Input != null && _character.IsLanded && _character.Input.IsJumpTriggered;
+        Vector3 velocity                = _character.RigidBody.velocity;
+        Vector3 breakVelocity           = Vector3.Lerp(velocity, Vector3.zero, Constants.CHARACTER_BREAK_LERP);
+        _character.RigidBody.velocity   = breakVelocity;
+    }
+
+    #endregion
+
+    #region Transitions
+
+    public bool GoToMovingState()
+    {
+        return _character.IsLanded && _character.Input != null && _character.Input.TargetMovement != Vector3.zero;
     }
 
     #endregion

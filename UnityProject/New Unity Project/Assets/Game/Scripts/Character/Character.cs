@@ -18,6 +18,7 @@ public class Character : MonoBehaviour
 	private bool _isGoingDown	= false;
 	private bool _isGoingUp		= false;
 	private bool _isLanded 		= false;
+    private bool _isBended      = false;
 
 	#endregion
 
@@ -75,6 +76,12 @@ public class Character : MonoBehaviour
 	{
 		get { return _isLanded; }
 	}
+
+    public bool IsBended
+    {
+        get { return _isBended;  }
+        set { _isBended = value;  }
+    }
 	
 	#endregion
 

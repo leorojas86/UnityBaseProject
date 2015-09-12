@@ -26,18 +26,24 @@ public class CharacterMovementController
 
     private void InitializeFSM()
     {
-        CharacterMovementMovingState defaultState  = new CharacterMovementMovingState(_character);
-        CharacterMovementBendingState bendingState = new CharacterMovementBendingState(_character);
-        CharacterMovementJumpingState jumpingState = new CharacterMovementJumpingState(_character);
+        CharacterMovementIdleState idleState          = new CharacterMovementIdleState(_character);
+        CharacterMovementMovingState movingStateState = new CharacterMovementMovingState(_character);
+        CharacterMovementBendingState bendingState    = new CharacterMovementBendingState(_character);
+        CharacterMovementJumpingState jumpingState    = new CharacterMovementJumpingState(_character);
 
-        defaultState.AddTransition(bendingState, defaultState.GoToBendingState);
-        defaultState.AddTransition(jumpingState, defaultState.GoToJumpingState);
+        idleState.AddTransition(bendingState, idleState.GoToBendingState);
+        idleState.AddTransition(jumpingState, idleState.GoToJumpingState);
+        idleState.AddTransition(movingStateState, idleState.GoToMovingState);
 
-        bendingState.AddTransition(defaultState, bendingState.IsCompleted);
+        movingStateState.AddTransition(bendingState, movingStateState.GoToBendingState);
+        movingStateState.AddTransition(jumpingState, movingStateState.GoToJumpingState);
+        movingStateState.AddTransition(idleState, movingStateState.GoToIdle);
 
-        jumpingState.AddTransition(defaultState, jumpingState.IsCompleted);
+        bendingState.AddTransition(idleState, bendingState.IsCompleted);
 
-        _fsm.CurrentState       = defaultState;//Initial State
+        jumpingState.AddTransition(idleState, jumpingState.IsCompleted);
+
+        _fsm.CurrentState       = idleState;//Initial State
         _fsm.IsDebugInfoEnabled = true;
     }
 
@@ -56,23 +62,8 @@ public class CharacterMovementController
 	public void Update() 
 	{
 		if(_character.Input != null)
-		{
-            if(_character.IsLanded)
-                UpdateBreak();
-
             _fsm.Update();
-		}
 	}
-
-    private void UpdateBreak()
-    {
-        if(_character.Input.IsBreakToogle)
-        {
-            Vector3 velocity              = _character.RigidBody.velocity;
-            Vector3 breakVelocity         = Vector3.Lerp(velocity, Vector3.zero, Constants.CHARACTER_BREAK_LERP);
-            _character.RigidBody.velocity = breakVelocity;
-        }
-    }
 
 	public void Reset()
 	{
