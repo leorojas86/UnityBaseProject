@@ -7,7 +7,6 @@ public class CharacterMovementController : MonoBehaviour
 {
 	#region Variables
 
-	private float _speed		 = Constants.CHARACTER_DEFAULT_SPEED;
 	private Character _character = null;
 
 	#endregion
@@ -78,7 +77,7 @@ public class CharacterMovementController : MonoBehaviour
 	{
 		if(_character.Input.TargetMovement != Vector3.zero)
 		{
-			Vector3 targetVelocity    	  = _character.Input.TargetMovement * _speed;
+            Vector3 targetVelocity        = _character.Input.TargetMovement * _character.MovementSpeed;
             float movementLerp            = GetMovementLerp();
 			Vector3 newVelocity 	  	  = Vector3.Lerp(_character.RigidBody.velocity, targetVelocity, movementLerp);
 			newVelocity.y		  	  	  = _character.RigidBody.velocity.y; //Keep gravity movement, only change x,z

@@ -8,6 +8,7 @@ public class Character : MonoBehaviour
 
 	public Camera firstPersonCamera = null;
 
+    private float _movementSpeed                            = Constants.CHARACTER_DEFAULT_SPEED;
 	private int _health 									= Constants.CHARACTER_DEFAULT_HEALTH;
 	private int _score  									= 0;
 	private CharacterMovementController _movementController = null;
@@ -22,6 +23,12 @@ public class Character : MonoBehaviour
 	#endregion
 
 	#region Properties
+
+    public float MovementSpeed
+    {
+        get { return _movementSpeed; }
+        set { _movementSpeed = value;  }
+    }
 
 	public Rigidbody RigidBody
 	{
