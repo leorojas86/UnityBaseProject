@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CharacterMovementDefaultState : CharacterMovementState
+public class CharacterMovementMovingState : CharacterMovementState
 {
     #region Variables
 
@@ -11,7 +11,7 @@ public class CharacterMovementDefaultState : CharacterMovementState
 
     #region Constructors
 
-    public CharacterMovementDefaultState(Character character) : base(character)
+    public CharacterMovementMovingState(Character character) : base(character)
     {
         _character = character;
     }
@@ -22,7 +22,7 @@ public class CharacterMovementDefaultState : CharacterMovementState
 
     public bool GoToBendingState()
     {
-        if(_character.Input != null)
+        if(_character.Input != null && _character.IsLanded)
         {
             if (_lastBendToogleState != _character.Input.IsBendToogle)
             {
@@ -32,6 +32,11 @@ public class CharacterMovementDefaultState : CharacterMovementState
         }
 
         return false;
+    }
+
+    public bool GoToJumpingState()
+    {
+        return _character.Input != null && _character.IsLanded && _character.Input.IsJumpTriggered;
     }
 
     #endregion
