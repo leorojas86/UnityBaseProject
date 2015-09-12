@@ -15,6 +15,8 @@ public class TouchPlayerInput : PlayerInput
     public TouchPlayerInput()
     {
         _swipeGesture.OnSwipe = OnSwipe;
+
+        CleanLastInput();
     }
 
     #endregion
@@ -53,6 +55,8 @@ public class TouchPlayerInput : PlayerInput
 			{
 				UpdateRotation(relativePosition);
 				UpdateMovement(relativePosition);
+
+                _isBreakToogle = false;
 			}
 			else
 				CleanLastInput();
@@ -76,6 +80,7 @@ public class TouchPlayerInput : PlayerInput
 	{
 		_lastTouchPosition = Vector3.zero;
 		_targetMovement    = Vector3.zero;
+        _isBreakToogle     = true;
 	}
 
     private void CheckForNewTouch(Vector3 currentCharacterPosition)

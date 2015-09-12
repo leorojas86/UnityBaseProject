@@ -42,16 +42,27 @@ public class CharacterMovementController : MonoBehaviour
             {
                 CheckForJump();
                 UpdateBend();
+                UpdateBreak();
             }
 		}
 	}
 
+    private void UpdateBreak()
+    {
+        if(_character.Input.IsBreakToogle)
+        {
+            Vector3 velocity              = _character.RigidBody.velocity;
+            Vector3 breakVelocity         = Vector3.Lerp(velocity, Vector3.zero, Constants.CHARACTER_BREAK_LERP);
+            _character.RigidBody.velocity = breakVelocity;
+        }
+    }
+
     private void UpdateBend()
     {
-        float targetXRotation = _character.Input.IsBendToogle ? Constants.CHARACTER_BEND_X_ROTATION : Constants.CHARACTER_STAND_X_ROTATION;
-        Vector3 currentRotation = _character.Capsule.transform.localEulerAngles;
-        currentRotation.x = Mathf.Lerp(currentRotation.x, targetXRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-        _character.Capsule.transform.localEulerAngles = currentRotation;
+        float targetXRotation                           = _character.Input.IsBendToogle ? Constants.CHARACTER_BEND_X_ROTATION : Constants.CHARACTER_STAND_X_ROTATION;
+        Vector3 currentRotation                         = _character.Capsule.transform.localEulerAngles;
+        currentRotation.x                               = Mathf.Lerp(currentRotation.x, targetXRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+        _character.Capsule.transform.localEulerAngles   = currentRotation;
     }
 
 	private void CheckForJump()
