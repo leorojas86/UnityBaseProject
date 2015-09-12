@@ -80,12 +80,25 @@ public class CharacterMovementController : MonoBehaviour
 		if(_character.Input.TargetMovement != Vector3.zero)
 		{
 			Vector3 targetVelocity    	  = _character.Input.TargetMovement * _speed;
-			float lerp			      	  = _character.IsLanded ? Constants.CHARACTER_MOVEMENT_LERP_SPEED : Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_FLYING_MULTIPLIER;
-			Vector3 newVelocity 	  	  = Vector3.Lerp(_character.RigidBody.velocity, targetVelocity, lerp);
+            float movementLerp            = GetMovementLerp();
+			Vector3 newVelocity 	  	  = Vector3.Lerp(_character.RigidBody.velocity, targetVelocity, movementLerp);
 			newVelocity.y		  	  	  = _character.RigidBody.velocity.y; //Keep gravity movement, only change x,z
 			_character.RigidBody.velocity = newVelocity;
 		}
 	}
+
+    private float GetMovementLerp()
+    {
+        if (_character.IsLanded)
+        {
+            if(_character.Input.IsBendToogle)
+                return Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_BEND_MULTIPLIER;
+
+            return Constants.CHARACTER_MOVEMENT_LERP_SPEED;
+        }
+
+        return Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_FLYING_MULTIPLIER;
+    }
 
 	private void UpdateRotation()
 	{

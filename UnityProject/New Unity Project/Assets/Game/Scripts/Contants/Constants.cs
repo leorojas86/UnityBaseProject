@@ -9,6 +9,7 @@ public static class Constants
 	public const int CHARACTER_DEFAULT_HEALTH 			   		= 1000;
 	public const float CHARACTER_DEFAULT_SPEED			   		= 10.0f;
 	public const float CHARACTER_MOVEMENT_FLYING_MULTIPLIER  	= 0.1f;
+    public const float CHARACTER_MOVEMENT_BEND_MULTIPLIER       = 0.4f;
 	public const float CHARACTER_MOVEMENT_LERP_SPEED	   		= 0.1f;
 	public const float CHARACTER_JUMP_FORCE 			   		= 10f;
     public const float CHARACTER_STAND_X_ROTATION               = 0f;
