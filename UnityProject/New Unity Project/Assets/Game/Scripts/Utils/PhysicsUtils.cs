@@ -33,4 +33,21 @@ public static class PhysicsUtils
         else
             return touchRay.GetPoint(maxRaycastDistance);
     }
+
+    public static Quaternion SetQuaternionYAxis(Quaternion quaternion, float y)
+    {
+        Vector3 euler = quaternion.eulerAngles;
+        euler.y       = y;
+
+        return Quaternion.Euler(euler);
+    }
+
+    public static Quaternion SetQuaternionXAndYAxis(Quaternion quaternion, float x, float y)
+    {
+        Vector3 euler = quaternion.eulerAngles;
+        euler.x = x;
+        euler.y = y;
+
+        return Quaternion.Euler(euler);
+    }
 }

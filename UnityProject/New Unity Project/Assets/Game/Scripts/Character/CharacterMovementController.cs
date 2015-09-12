@@ -25,9 +25,8 @@ public class CharacterMovementController : MonoBehaviour
 
 	public void OnPlayerInputDetected()
 	{
-		float initialYRotation 			 = transform.rotation.eulerAngles.y;
 		float initialZRotation 			 = _character.firstPersonCamera != null ? _character.firstPersonCamera.transform.localRotation.eulerAngles.z : transform.rotation.eulerAngles.z;
-		_character.Input.TargetRotation  = new Vector3(0, initialYRotation, initialZRotation);
+		_character.Input.TargetRotation  = new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, initialZRotation);
 		_character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 	
@@ -89,7 +88,7 @@ public class CharacterMovementController : MonoBehaviour
 
     private float GetMovementLerp()
     {
-        if (_character.IsLanded)
+        if(_character.IsLanded)
         {
             if(_character.Input.IsBendToogle)
                 return Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_BEND_MULTIPLIER;
@@ -102,18 +101,23 @@ public class CharacterMovementController : MonoBehaviour
 
 	private void UpdateRotation()
 	{
-		if(_character.firstPersonCamera != null)
-		{	
-			_character.firstPersonCamera.transform.localRotation    = Quaternion.Lerp(_character.firstPersonCamera.transform.localRotation, Quaternion.Euler(_character.Input.TargetRotation.z, 0, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-			_character.RigidBody.rotation   	 	 				= Quaternion.Lerp(_character.RigidBody.rotation, Quaternion.Euler(0, _character.Input.TargetRotation.y, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-		}
-		else
-			_character.RigidBody.rotation = Quaternion.Lerp(_character.RigidBody.rotation, Quaternion.Euler(_character.Input.TargetRotation.z, _character.Input.TargetRotation.y, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+        if (_character.firstPersonCamera != null)
+        {
+            _character.firstPersonCamera.transform.localRotation = Quaternion.Lerp(_character.firstPersonCamera.transform.localRotation, Quaternion.Euler(_character.Input.TargetRotation.z, 0, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+            Quaternion targetRigbodyRotation                     = PhysicsUtils.SetQuaternionYAxis(_character.RigidBody.rotation, _character.Input.TargetRotation.y);
+            _character.RigidBody.rotation                        = Quaternion.Lerp(_character.RigidBody.rotation, targetRigbodyRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+        }
+        else
+        {
+            Quaternion targetRigbodyRotation = PhysicsUtils.SetQuaternionXAndYAxis(_character.RigidBody.rotation, _character.Input.TargetRotation.z, _character.Input.TargetRotation.y);
+            _character.RigidBody.rotation    = Quaternion.Lerp(_character.RigidBody.rotation, targetRigbodyRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+        }
 	}
 
 	public void Reset()
 	{
-		_character.RigidBody.velocity = Vector3.zero;
+		_character.RigidBody.velocity    = Vector3.zero;
+        _character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
 	}
 
 	#endregion
