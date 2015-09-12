@@ -64,7 +64,7 @@ public abstract class PlayerInput
 
 	#region Methods
 
-	public abstract void UpdateInput(Vector3 currentCharacterPosition);
+	public abstract void UpdateInput();
 
 	public abstract PlayerInput Detect();
 

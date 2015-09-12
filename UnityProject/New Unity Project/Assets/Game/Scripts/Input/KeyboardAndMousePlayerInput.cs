@@ -5,7 +5,7 @@ public class KeyboardAndMousePlayerInput : PlayerInput
 {
 	#region Methods
 
-	public override void UpdateInput(Vector3 currentCharacterPosition)
+	public override void UpdateInput()
 	{
 		_isJumpTriggered = Input.GetKeyDown(KeyCode.Space);
 

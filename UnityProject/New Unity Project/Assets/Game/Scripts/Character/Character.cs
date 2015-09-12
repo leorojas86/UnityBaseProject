@@ -111,7 +111,7 @@ public class Character : MonoBehaviour
 	void Update()
 	{
 		if(_input != null)
-			_input.UpdateInput(transform.position);
+			_input.UpdateInput();
 		else
 		{
 			PlayerInput input = InputManager.Instance.DetectNewCharacterInput();

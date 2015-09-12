@@ -5,7 +5,7 @@ public class PS3PlayerInput : PlayerInput
 {
 	#region Methods
 
-	public override void UpdateInput(Vector3 currentCharacterPosition)
+	public override void UpdateInput()
 	{
 		_isJumpTriggered = Input.GetKey(KeyCode.JoystickButton14);
 

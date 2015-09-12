@@ -42,13 +42,13 @@ public class TouchPlayerInput : PlayerInput
 
     #region Methods
 
-    public override void UpdateInput(Vector3 currentCharacterPosition)
+    public override void UpdateInput()
 	{
-		CheckForNewTouch(currentCharacterPosition);
+		CheckForNewTouch();
 
 		if(_lastTouchPosition != Vector3.zero)
 		{
-			Vector3 relativePosition = _lastTouchPosition - currentCharacterPosition;
+			Vector3 relativePosition = _lastTouchPosition - _character.transform.position;
 
             if (relativePosition.magnitude > Constants.TOUCH_INPUT_MIN_TOUCH_DISTANCE)//Do not move if the target is less that 2 meters distance
 			{
@@ -72,7 +72,7 @@ public class TouchPlayerInput : PlayerInput
         _swipeGesture.Update();
     }
 
-    private void CheckForNewTouch(Vector3 currentCharacterPosition)
+    private void CheckForNewTouch()
 	{
 		if(Input.GetMouseButtonUp(0))
 		{
