@@ -53,7 +53,7 @@ public class FSMState
 	/// </summary>
 	public virtual void OnEnter()
 	{
-		_isCompleted = false;//Variable to trigger transition when the state is completed
+        CleanVariables();
 	}
 	
 	/// <summary>
@@ -68,6 +68,7 @@ public class FSMState
 	/// </summary>
 	public virtual void OnExit()
 	{
+        CleanVariables();
 	}
 
 	public virtual void AddTransition(FSMState toState, FSMTransition.OnTransitionDelegate delegateFunction)
@@ -112,6 +113,11 @@ public class FSMState
 	{
 		return _isCompleted;
 	}
+
+    protected virtual void CleanVariables()
+    {
+        _isCompleted = false;//Variable to trigger transition when the state is completed
+    }
 
 	public virtual void Release()
 	{

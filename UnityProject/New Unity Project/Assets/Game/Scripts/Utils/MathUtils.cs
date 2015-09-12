@@ -476,6 +476,11 @@ public static class MathUtils
 
 		return xOffset <= offset && yOffset <= offset;
 	}
+
+    public static bool Approximately(float a, float b, float offset)
+    {
+        return Mathf.Abs(a - b) <= offset;
+    }
 	
 	#endregion
 }

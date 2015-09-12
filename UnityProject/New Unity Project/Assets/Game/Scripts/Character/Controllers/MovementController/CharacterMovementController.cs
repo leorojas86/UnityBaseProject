@@ -7,6 +7,7 @@ public class CharacterMovementController
 	#region Variables
 
 	private Character _character = null;
+    private FSM _fsm             = new FSM();
 
 	#endregion
 
@@ -19,6 +20,22 @@ public class CharacterMovementController
     public CharacterMovementController(Character character)
     {
         _character = character;
+
+        InitializeFSM();
+    }
+
+    private void InitializeFSM()
+    {
+        CharacterMovementDefaultState defaultState = new CharacterMovementDefaultState(_character);
+        CharacterMovementBendingState bendingState = new CharacterMovementBendingState(_character);
+
+        defaultState.AddTransition(bendingState, defaultState.GoToBendingState);
+
+        bendingState.AddTransition(defaultState, bendingState.IsCompleted);
+
+        _fsm.CurrentState = defaultState;//Initial State
+
+        _fsm.IsDebugInfoEnabled = true;
     }
 
     #endregion
@@ -43,10 +60,11 @@ public class CharacterMovementController
             if(_character.IsLanded)
             {
                 CheckForJump();
-                UpdateBend();
                 UpdateBreak();
             }
 		}
+
+        _fsm.Update();
 	}
 
     private void UpdateBreak()
@@ -57,14 +75,6 @@ public class CharacterMovementController
             Vector3 breakVelocity         = Vector3.Lerp(velocity, Vector3.zero, Constants.CHARACTER_BREAK_LERP);
             _character.RigidBody.velocity = breakVelocity;
         }
-    }
-
-    private void UpdateBend()
-    {
-        float targetXRotation                           = _character.Input.IsBendToogle ? Constants.CHARACTER_BEND_X_ROTATION : Constants.CHARACTER_STAND_X_ROTATION;
-        Vector3 currentRotation                         = _character.Capsule.transform.localEulerAngles;
-        currentRotation.x                               = Mathf.Lerp(currentRotation.x, targetXRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-        _character.Capsule.transform.localEulerAngles   = currentRotation;
     }
 
 	private void CheckForJump()
