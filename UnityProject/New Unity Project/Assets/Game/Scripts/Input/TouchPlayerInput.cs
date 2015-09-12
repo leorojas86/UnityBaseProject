@@ -6,7 +6,7 @@ public class TouchPlayerInput : PlayerInput
 	#region Variables
 
 	private Vector3 _lastTouchPosition = Vector3.zero;
-    private SwipeGesture _swipeGesture = new SwipeGesture(5);
+    private SwipeGesture _swipeGesture = new SwipeGesture(Constants.TOUCH_INPUT_SWIPE_GESTURE_MIN_DISTANCE);
 
 	#endregion
 
@@ -54,7 +54,7 @@ public class TouchPlayerInput : PlayerInput
 		{
 			Vector3 relativePosition = _lastTouchPosition - currentCharacterPosition;
 
-			if(relativePosition.magnitude > 2)//Do not move if the target is less that 2 meters distance
+            if (relativePosition.magnitude > Constants.TOUCH_INPUT_MIN_TOUCH_DISTANCE)//Do not move if the target is less that 2 meters distance
 			{
 				UpdateRotation(relativePosition);
 				UpdateMovement(relativePosition);

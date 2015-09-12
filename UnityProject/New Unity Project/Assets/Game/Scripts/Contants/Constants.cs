@@ -14,8 +14,11 @@ public class Constants
     public const float CHARACTER_STAND_X_ROTATION               = 0;
     public const float CHARACTER_BEND_X_ROTATION                = 90;
 
-	public const float KEYBOARD_ROTATION_SPEED			   = 2f;
-	public const float MOUSE_ROTATION_SPEED				   = 8f;
+	public const float KEYBOARD_ROTATION_SPEED  = 2f;
+	public const float MOUSE_ROTATION_SPEED	    = 8f;
+
+    public const float TOUCH_INPUT_SWIPE_GESTURE_MIN_DISTANCE   = 8;
+    public const float TOUCH_INPUT_MIN_TOUCH_DISTANCE           = 2;
 
 	#endregion
 }
