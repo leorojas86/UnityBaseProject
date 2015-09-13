@@ -77,25 +77,20 @@ public class Character : MonoBehaviour
         }
 	}
 
-    public Quaternion InputRotation
+    public Quaternion Rotation
     {
-        get 
+        get { return transform.localRotation; }
+        set { transform.localRotation = value; }
+    }
+
+    public Quaternion CameraRotation
+    {
+        get { return firstPersonCamera != null ? firstPersonCamera.transform.localRotation : Quaternion.identity; }
+        set 
         {
             if(firstPersonCamera != null)
-                return Quaternion.Euler(new Vector3(firstPersonCamera.transform.localRotation.eulerAngles.x, _rigidBody.rotation.eulerAngles.y, _rigidBody.rotation.eulerAngles.z));
-            else
-                return _rigidBody.rotation;
+                firstPersonCamera.transform.localRotation = value;
         }
-        set
-        {
-             if(firstPersonCamera != null)
-             {
-                 firstPersonCamera.transform.localRotation  = Quaternion.Euler(value.eulerAngles.x, firstPersonCamera.transform.localEulerAngles.y, firstPersonCamera.transform.localEulerAngles.z);
-                 _rigidBody.rotation                        = Quaternion.Euler(_rigidBody.rotation.eulerAngles.x, value.eulerAngles.y, value.eulerAngles.z);
-             }
-             else
-                 _rigidBody.rotation = value;
-         }
     }
 
 	public bool IsFalling

@@ -20,25 +20,21 @@ public abstract class PlayerInput
     public Vector2 TargetRotation
 	{
         get { return _targetRotation; }
-		set { _targetRotation = value; }
 	} 
 	
 	public Vector3 TargetMovement 
 	{
 		get { return _targetMovement; }
-        set { _targetMovement = value; }
 	}
 	
 	public bool IsJumpTriggered
 	{
 		get { return _isJumpTriggered; }
-        set { _isJumpTriggered = value; }
 	}
 
 	public bool IsBendToogle
 	{
 		get { return _isBendToogle; }
-        set { _isBendToogle = value;  }
 	}
 
     public Character Character

@@ -52,8 +52,11 @@ public class CharacterMovementMovingState : CharacterMovementState
 
     protected virtual void UpdateInputRotation()
     {
-        Quaternion targetRotation = _character.MovementController.InitialInputRotation * Quaternion.AngleAxis(_character.Input.TargetRotation.x, Vector3.up) * Quaternion.AngleAxis(_character.Input.TargetRotation.y, Vector3.left);
-        _character.InputRotation  = Quaternion.Lerp(_character.InputRotation, targetRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+        Quaternion targetRotation = _character.MovementController.InitialRotation * Quaternion.AngleAxis(_character.Input.TargetRotation.x, Vector3.up);
+        _character.Rotation       = Quaternion.Lerp(_character.Rotation, targetRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+
+        Quaternion targetCameraRotation = _character.MovementController.InitialCameraRotation * Quaternion.AngleAxis(_character.Input.TargetRotation.y, Vector3.left);
+        _character.CameraRotation       = Quaternion.Lerp(_character.CameraRotation, targetCameraRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
     }
 
     #endregion
