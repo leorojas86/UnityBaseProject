@@ -29,12 +29,12 @@ public class KeyboardPlayerInput : PlayerInput
 	{
 		if(Input.GetKey(KeyCode.W))
 		{
-            Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, _character.RigidBody.rotation.eulerAngles.y);
+            Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, _character.Rotation.eulerAngles.y);
 			_targetMovement    = new Vector3(movement2D.y, 0, movement2D.x);
 		}
 		else if(Input.GetKey(KeyCode.S))
 		{
-            Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, _character.RigidBody.rotation.eulerAngles.y - 180);
+            Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, _character.Rotation.eulerAngles.y - 180);
 			_targetMovement    = new Vector3(movement2D.y, 0, movement2D.x);
 		}
 		else

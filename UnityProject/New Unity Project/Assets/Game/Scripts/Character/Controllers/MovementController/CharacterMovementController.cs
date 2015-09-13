@@ -66,11 +66,6 @@ public class CharacterMovementController
     #endregion
 
     #region Methods
-
-	public void OnPlayerInputChanged()
-	{
-		
-	}
 	
 	public void Update() 
 	{

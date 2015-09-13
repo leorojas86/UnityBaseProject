@@ -71,16 +71,14 @@ public class Character : MonoBehaviour
 
                 if (_input != null)
                     _input.Character = this;
-
-                _movementController.OnPlayerInputChanged();
             }
         }
 	}
 
     public Quaternion Rotation
     {
-        get { return transform.localRotation; }
-        set { transform.localRotation = value; }
+        get { return _rigidBody.rotation; }
+        set { _rigidBody.rotation = value; }
     }
 
     public Quaternion CameraRotation

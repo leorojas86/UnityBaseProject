@@ -43,7 +43,7 @@ public class KeyboardAndMousePlayerInput : PlayerInput
 		if(isAPressed)
 			movementVector.x -= 1;
 
-		Vector2 rotatedMovement = MathUtils.GetRotatedPointAroundPivot(Vector3.zero, movementVector, -_character.RigidBody.rotation.eulerAngles.y);
+		Vector2 rotatedMovement = MathUtils.GetRotatedPointAroundPivot(Vector3.zero, movementVector, -_character.Rotation.eulerAngles.y);
 		_targetMovement         = new Vector3(rotatedMovement.x,0, rotatedMovement.y);
 	}
 

@@ -48,6 +48,11 @@ public class CharacterMovementBendingState : CharacterMovementIdleState
 
         _character.IsBended = _character.Input.IsBendToogle;
 
+        /*if (_character.IsBended)
+           _character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;
+       else
+           _character.RigidBody.constraints = RigidbodyConstraints.FreezeRotation;*/
+
         _character.Input.ClearLastInput();
     }
 
