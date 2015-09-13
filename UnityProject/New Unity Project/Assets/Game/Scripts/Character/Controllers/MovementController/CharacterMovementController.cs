@@ -6,12 +6,18 @@ public class CharacterMovementController
 {
 	#region Variables
 
-	private Character _character = null;
-    private FSM _fsm             = new FSM();
+	private Character _character             = null;
+    private FSM _fsm                         = new FSM();
+    private Quaternion _initialInputRotation = Quaternion.identity;
 
 	#endregion
 
 	#region Properties
+
+    public Quaternion InitialInputRotation
+    {
+        get { return _initialInputRotation; }
+    }
 
 	#endregion
 
@@ -19,7 +25,8 @@ public class CharacterMovementController
 
     public CharacterMovementController(Character character)
     {
-        _character = character;
+        _character            = character;
+        _initialInputRotation = _character.InputRotation;
 
         InitializeFSM();
     }
@@ -51,7 +58,6 @@ public class CharacterMovementController
     #endregion
 
     #region Methods
-
 
 	public void OnPlayerInputChanged()
 	{

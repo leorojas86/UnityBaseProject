@@ -59,7 +59,7 @@ public class CharacterMovementState : FSMState
     public virtual bool GoToMovingState()
     {
         return  _character.Input != null && 
-                (_character.Input.TargetMovement != Vector3.zero || _character.Input.TargetRotation != Quaternion.identity);
+                (_character.Input.TargetMovement != Vector3.zero || _character.Input.TargetRotation != Vector2.zero);
     }
 
     public virtual bool GoToIdle()

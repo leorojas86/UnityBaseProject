@@ -18,12 +18,8 @@ public class KeyboardAndMousePlayerInput : PlayerInput
 
 	private void UpdateRotation()
 	{
-        Vector3 eulerAngles = _targetRotation.eulerAngles;
-
-        eulerAngles.x -= Input.GetAxis("Mouse Y") * Constants.MOUSE_ROTATION_SPEED;
-        eulerAngles.y += Input.GetAxis("Mouse X") * Constants.MOUSE_ROTATION_SPEED;
-
-        _targetRotation = Quaternion.Euler(eulerAngles);
+        _targetRotation.x += Input.GetAxis("Mouse X") * Constants.MOUSE_ROTATION_SPEED;
+        _targetRotation.y += Input.GetAxis("Mouse Y") * Constants.MOUSE_ROTATION_SPEED;
 	}
 	
 	private void UpdateMovement()
@@ -47,7 +43,7 @@ public class KeyboardAndMousePlayerInput : PlayerInput
 		if(isAPressed)
 			movementVector.x -= 1;
 
-		Vector2 rotatedMovement = MathUtils.GetRotatedPointAroundPivot(Vector3.zero, movementVector, -_targetRotation.eulerAngles.y);
+		Vector2 rotatedMovement = MathUtils.GetRotatedPointAroundPivot(Vector3.zero, movementVector, -_character.RigidBody.rotation.eulerAngles.y);
 		_targetMovement         = new Vector3(rotatedMovement.x,0, rotatedMovement.y);
 	}
 

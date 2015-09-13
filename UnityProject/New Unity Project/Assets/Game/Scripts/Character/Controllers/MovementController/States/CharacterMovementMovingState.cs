@@ -3,10 +3,6 @@ using System.Collections;
 
 public class CharacterMovementMovingState : CharacterMovementState
 {
-    #region Variables
-
-    #endregion
-
     #region Constructors
 
     public CharacterMovementMovingState(Character character) : base(character)
@@ -17,12 +13,17 @@ public class CharacterMovementMovingState : CharacterMovementState
 
     #region Methods
 
+    public override void OnEnter()
+    {
+        base.OnEnter();
+    }
+
     public override void OnExecute()
     {
         base.OnExecute();
 
         UpdateMovementInput();
-        UpdateRotationInput();
+        UpdateInputRotation();
     }
 
     #endregion
@@ -49,9 +50,10 @@ public class CharacterMovementMovingState : CharacterMovementState
         return Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_FLYING_MULTIPLIER;
     }
 
-    protected virtual void UpdateRotationInput()
+    protected virtual void UpdateInputRotation()
     {
-        _character.InputRotation = Quaternion.Lerp(_character.InputRotation, _character.Input.TargetRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+        Quaternion targetRotation = _character.MovementController.InitialInputRotation * Quaternion.AngleAxis(_character.Input.TargetRotation.x, Vector3.up) * Quaternion.AngleAxis(_character.Input.TargetRotation.y, Vector3.left);
+        _character.InputRotation  = Quaternion.Lerp(_character.InputRotation, targetRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
     }
 
     #endregion

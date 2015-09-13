@@ -15,9 +15,7 @@ public class XboxPlayerInput : PlayerInput
 
 	private void UpdateRotation()
 	{
-        Vector3 eulerAngles = _targetRotation.eulerAngles;
-        eulerAngles.y       += Input.GetAxis("Horizontal") * Constants.KEYBOARD_ROTATION_SPEED;
-        _targetRotation     = Quaternion.Euler(eulerAngles);
+        _targetRotation.y += Input.GetAxis("Horizontal") * Constants.KEYBOARD_ROTATION_SPEED;
 	}
 
 	private void UpdateMovement()
@@ -26,8 +24,8 @@ public class XboxPlayerInput : PlayerInput
 		
 		if(verticalAxis != 0)
 		{
-			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, verticalAxis, _targetRotation.eulerAngles.y);
-			_targetMovement 		   = new Vector3(movement2D.y, 0, movement2D.x);
+			Vector2 movement2D  = MathUtils.GetPointAtDistance(Vector2.zero, verticalAxis, _targetRotation.y);
+			_targetMovement     = new Vector3(movement2D.y, 0, movement2D.x);
 		}
 		else
 			_targetMovement = Vector3.zero;

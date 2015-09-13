@@ -6,7 +6,7 @@ public abstract class PlayerInput
 	#region Variables
 
     protected Character _character       = null;
-    protected Quaternion _targetRotation = Quaternion.identity;
+    protected Vector2 _targetRotation    = Vector2.zero;
 	protected Vector3 _targetMovement    = Vector3.zero;
 	protected bool _isJumpTriggered      = false;
 	protected bool _isBendToogle         = false;
@@ -17,9 +17,9 @@ public abstract class PlayerInput
 	
 	#region Properties
 
-	public Quaternion TargetRotation
+    public Vector2 TargetRotation
 	{
-		get { return _targetRotation; }
+        get { return _targetRotation; }
 		set { _targetRotation = value; }
 	} 
 	
@@ -44,13 +44,7 @@ public abstract class PlayerInput
     public Character Character
     {
         get { return _character; }
-        set 
-        { 
-            _character = value;
-
-            if(_character != null)
-                _targetRotation = _character.InputRotation;
-        }
+        set {  _character = value; }
     }
 
     /*public bool IsBreakToogle
@@ -78,7 +72,7 @@ public abstract class PlayerInput
     {
         _targetMovement  = Vector3.zero;
         _isJumpTriggered = false;
-        _targetRotation  = _character.InputRotation;
+        _targetRotation  = Vector2.zero;
     }
 
 	#endregion

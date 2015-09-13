@@ -118,6 +118,11 @@ public class Character : MonoBehaviour
         get { return _isBended;  }
         set { _isBended = value;  }
     }
+
+    public CharacterMovementController MovementController
+    {
+        get { return _movementController; }
+    }
 	
 	#endregion
 
