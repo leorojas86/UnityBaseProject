@@ -31,6 +31,8 @@ public class TestNewGame : MonoBehaviour
 		//InputManager.Instance.RegisteredInputs.Add(new TouchPlayerInput());
 
 		Application.targetFrameRate = 120;
+        Time.fixedDeltaTime         = 1.0f / Application.targetFrameRate;
+        Time.maximumDeltaTime       = Time.fixedDeltaTime;
 
 		_instance = this;
 	}

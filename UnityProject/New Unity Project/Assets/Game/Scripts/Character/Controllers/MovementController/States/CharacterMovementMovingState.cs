@@ -5,7 +5,6 @@ public class CharacterMovementMovingState : CharacterMovementState
 {
     #region Variables
 
-
     #endregion
 
     #region Constructors
@@ -45,30 +44,13 @@ public class CharacterMovementMovingState : CharacterMovementState
     protected virtual float GetMovementLerp()
     {
         if(_character.IsLanded)
-        {
-            if(_character.Input.IsBendToogle)
-                return Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_BEND_MULTIPLIER;
-
-            return Constants.CHARACTER_MOVEMENT_LERP_SPEED;
-        }
+            return _character.IsBended ? Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_BEND_MULTIPLIER : Constants.CHARACTER_MOVEMENT_LERP_SPEED;
 
         return Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_FLYING_MULTIPLIER;
     }
 
     protected virtual void UpdateRotationInput()
     {
-       /* if(_character.firstPersonCamera != null)
-        {
-            _character.firstPersonCamera.transform.localRotation = Quaternion.Lerp(_character.firstPersonCamera.transform.localRotation, Quaternion.Euler(_character.Input.TargetRotation.x, 0, 0), Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-            Quaternion targetRigbodyRotation                     = PhysicsUtils.SetQuaternionYAxis(_character.RigidBody.rotation, _character.Input.TargetRotation.y);
-            _character.RigidBody.rotation                        = Quaternion.Lerp(_character.RigidBody.rotation, targetRigbodyRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-        }
-        else
-        {
-            Quaternion targetRigbodyRotation = PhysicsUtils.SetQuaternionXAndYAxis(_character.RigidBody.rotation, _character.Input.TargetRotation.z, _character.Input.TargetRotation.y);
-            _character.RigidBody.rotation    = Quaternion.Lerp(_character.RigidBody.rotation, targetRigbodyRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
-        }*/
-
         _character.InputRotation = Quaternion.Lerp(_character.InputRotation, _character.Input.TargetRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
     }
 
