@@ -8,8 +8,6 @@ public class Character : MonoBehaviour
 	public Camera firstPersonCamera = null;
 
     private float _movementSpeed                            = Constants.CHARACTER_DEFAULT_SPEED;
-	private int _health 									= Constants.CHARACTER_DEFAULT_HEALTH;
-	private int _score  									= 0;
 	private CharacterMovementController _movementController = null;
     private CharacterStatsController _statsController       = null;
 	private PlayerInput _input 								= null;
@@ -40,23 +38,6 @@ public class Character : MonoBehaviour
     {
         get { return _capsule; }
     }
-	
-	public int Health
-	{
-		get { return _health; }
-		set { _health = value; }
-	}
-	
-	public int Score
-	{
-		get { return _score; }
-		set { _score = value; }
-	}
-
-	public bool IsDead
-	{
-		get { return _health == 0; }
-	}
 
 	public PlayerInput Input
 	{
@@ -117,6 +98,11 @@ public class Character : MonoBehaviour
     {
         get { return _movementController; }
     }
+
+    public CharacterStatsController StatsController
+    {
+        get { return _statsController; }
+    }
 	
 	#endregion
 
@@ -148,22 +134,9 @@ public class Character : MonoBehaviour
         _movementController.Update();
 	}
 
-	public void TakeDamage(int damage, Object damageOwner)
-	{
-		if(!IsDead)
-		{
-			_health -= damage;
-			
-			if(_health <= 0)
-				_health = 0;
-		}
-	}
-
 	public void Reset()
 	{
-		_health = Constants.CHARACTER_DEFAULT_HEALTH;
-		_score 	= 0;
-
+        _statsController.Reset();
 		_movementController.Reset();
 	}
 
