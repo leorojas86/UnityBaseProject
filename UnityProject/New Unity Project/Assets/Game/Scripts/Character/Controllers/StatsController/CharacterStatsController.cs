@@ -8,7 +8,7 @@ public class CharacterStatsController
     private Character _character = null;
 
     private int _health = Constants.CHARACTER_DEFAULT_HEALTH;
-    private int _score = 0;
+    private int _score  = 0;
 
     #endregion
 
@@ -43,6 +43,11 @@ public class CharacterStatsController
     #endregion
 
     #region Methods
+
+    public void Update()
+    {
+
+    }
 
     public void TakeDamage(int damage, Object damageOwner)
     {

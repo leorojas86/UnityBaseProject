@@ -60,7 +60,7 @@ public abstract class PlayerInput
 
 	#region Methods
 
-	public abstract void UpdateInput();
+	public abstract void Update();
 
 	public abstract PlayerInput Detect();
 

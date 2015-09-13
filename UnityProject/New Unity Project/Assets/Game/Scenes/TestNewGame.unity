@@ -365,6 +365,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   touchGuide: {fileID: 1852995935}
+  mainCharacter: {fileID: 1602675557}
 --- !u!1 &1059633973
 GameObject:
   m_ObjectHideFlags: 0

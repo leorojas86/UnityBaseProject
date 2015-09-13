@@ -5,7 +5,8 @@ public class TestNewGame : MonoBehaviour
 {
 	#region Variables
 
-	public Transform touchGuide = null;
+	public Transform touchGuide     = null;
+    public Character mainCharacter  = null;
 
 	private static TestNewGame _instance = null;
 
@@ -40,6 +41,14 @@ public class TestNewGame : MonoBehaviour
 	void Update()
 	{
 		InputManager.Instance.Update();
+
+        if (mainCharacter.Input == null)
+        {
+            PlayerInput input = InputManager.Instance.DetectNewCharacterInput();
+
+            if (input != null)
+                mainCharacter.Input = input;
+        }
 	}
 
 	void OnDestroy()

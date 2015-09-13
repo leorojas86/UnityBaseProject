@@ -119,18 +119,12 @@ public class Character : MonoBehaviour
 
 	void Update()
 	{
-		if(_input != null)
-			_input.UpdateInput();
-		else
-		{
-			PlayerInput input = InputManager.Instance.DetectNewCharacterInput();
-
-            if(input != null)
-               Input = input;
-		}
+        if(_input != null)
+            _input.Update();
 
 		UpdateLandedFlag();
 
+        _statsController.Update();
         _movementController.Update();
 	}
 

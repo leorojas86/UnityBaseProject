@@ -42,7 +42,7 @@ public class TouchPlayerInput : PlayerInput
 
     #region Methods
 
-    public override void UpdateInput()
+    public override void Update()
 	{
 		CheckForNewTouch();
 
