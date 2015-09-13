@@ -91,7 +91,9 @@ public class CharacterMovementController
 	{
 		_character.RigidBody.velocity    = Vector3.zero;
         _character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
-	}
+        _character.Rotation              = _initialRotation;
+        _character.CameraRotation        = _initialCameraRotation;
+    }
 
 	#endregion
 }
