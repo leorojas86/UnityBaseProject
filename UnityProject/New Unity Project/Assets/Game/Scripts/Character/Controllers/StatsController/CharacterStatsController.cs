@@ -7,28 +7,32 @@ public class CharacterStatsController
 
     private Character _character = null;
 
-    private int _health = Constants.CHARACTER_DEFAULT_HEALTH;
-    private int _score  = 0;
+    private Stat _health = new Stat(Constants.CHARACTER_DEFAULT_HEALTH);
+    private Stat _score  = new Stat(true);
+    private Stat _mana   = new Stat(true);
 
     #endregion
 
     #region Properties
 
-    public int Health
+    public Stat Health
     {
         get { return _health; }
-        set { _health = value; }
     }
 
-    public int Score
+    public Stat Score
     {
         get { return _score; }
-        set { _score = value; }
+    }
+
+    public Stat Mana
+    {
+        get { return _mana; }
     }
 
     public bool IsDead
     {
-        get { return _health == 0; }
+        get { return _health.value == 0; }
     }
 
     #endregion
@@ -53,17 +57,16 @@ public class CharacterStatsController
     {
         if (!IsDead)
         {
-            _health -= damage;
+            _health.value -= damage;
 
-            if (_health <= 0)
-                _health = 0;
+            if (_health.value <= 0)
+                _health.value = 0;
         }
     }
 
     public void Reset()
     {
-        _health = Constants.CHARACTER_DEFAULT_HEALTH;
-        _score = 0;
+        _health.value = Constants.CHARACTER_DEFAULT_HEALTH;
     }
 
     #endregion

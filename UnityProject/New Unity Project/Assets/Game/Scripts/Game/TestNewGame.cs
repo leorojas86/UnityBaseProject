@@ -42,6 +42,11 @@ public class TestNewGame : MonoBehaviour
 	{
 		InputManager.Instance.Update();
 
+        DetectCharacterInput();
+	}
+
+    private void DetectCharacterInput()
+    {
         if (mainCharacter.Input == null)
         {
             PlayerInput input = InputManager.Instance.DetectNewCharacterInput();
@@ -49,7 +54,7 @@ public class TestNewGame : MonoBehaviour
             if (input != null)
                 mainCharacter.Input = input;
         }
-	}
+    }
 
 	void OnDestroy()
 	{
