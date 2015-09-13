@@ -83,7 +83,9 @@ public class TouchPlayerInput : PlayerInput
 
 	private void UpdateRotation(Vector3 relativePosition)
 	{
-		_targetRotation.y = Quaternion.LookRotation(relativePosition).eulerAngles.y;
+        Vector3 eulerAngles   = _targetRotation.eulerAngles;
+        eulerAngles.y         = Quaternion.LookRotation(relativePosition).eulerAngles.y;
+		_targetRotation       = Quaternion.Euler(eulerAngles);
 	}
 	
 	private void UpdateMovement(Vector3 relativePosition)

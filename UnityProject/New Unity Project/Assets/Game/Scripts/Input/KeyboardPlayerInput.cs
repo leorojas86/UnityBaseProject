@@ -18,23 +18,27 @@ public class KeyboardPlayerInput : PlayerInput
 
 	private void UpdateRotation()
 	{
+        Vector3 eulerAngles = _targetRotation.eulerAngles;
+
 		if(Input.GetKey(KeyCode.A))
-			_targetRotation.y -= Constants.KEYBOARD_ROTATION_SPEED;
+			eulerAngles.y -= Constants.KEYBOARD_ROTATION_SPEED;
 		
 		if(Input.GetKey(KeyCode.D))
-			_targetRotation.y += Constants.KEYBOARD_ROTATION_SPEED;
+			eulerAngles.y += Constants.KEYBOARD_ROTATION_SPEED;
+
+        _targetRotation = Quaternion.Euler(eulerAngles);
 	}
 	
 	private void UpdateMovement()
 	{
 		if(Input.GetKey(KeyCode.W))
 		{
-			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, _targetRotation.y);
+			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, _targetRotation.eulerAngles.y);
 			_targetMovement    = new Vector3(movement2D.y, 0, movement2D.x);
 		}
 		else if(Input.GetKey(KeyCode.S))
 		{
-			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, _targetRotation.y - 180);
+			Vector2 movement2D = MathUtils.GetPointAtDistance(Vector2.zero, 1, _targetRotation.eulerAngles.y - 180);
 			_targetMovement    = new Vector3(movement2D.y, 0, movement2D.x);
 		}
 		else

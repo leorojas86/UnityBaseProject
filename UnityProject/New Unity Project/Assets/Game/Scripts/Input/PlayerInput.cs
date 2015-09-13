@@ -5,19 +5,19 @@ public abstract class PlayerInput
 {
 	#region Variables
 
-    protected Character _character    = null;
-	protected Vector3 _targetRotation = Vector3.zero;
-	protected Vector3 _targetMovement = Vector3.zero;
-	protected bool _isJumpTriggered   = false;
-	protected bool _isBendToogle      = false;
-    protected bool _isDisabled        = false;
+    protected Character _character       = null;
+    protected Quaternion _targetRotation = Quaternion.identity;
+	protected Vector3 _targetMovement    = Vector3.zero;
+	protected bool _isJumpTriggered      = false;
+	protected bool _isBendToogle         = false;
+    protected bool _isDisabled           = false;
     //protected bool _isBreakToogle     = false;
 	
 	#endregion
 	
 	#region Properties
 
-	public Vector3 TargetRotation
+	public Quaternion TargetRotation
 	{
 		get { return _targetRotation; }
 		set { _targetRotation = value; }
@@ -49,7 +49,7 @@ public abstract class PlayerInput
             _character = value;
 
             if(_character != null)
-                UpdateTargetRotationToCurrent();
+                _targetRotation = _character.InputRotation;
         }
     }
 
@@ -70,12 +70,6 @@ public abstract class PlayerInput
 
 	#region Methods
 
-    protected virtual void UpdateTargetRotationToCurrent()
-    {
-        float initialZRotation          = _character.firstPersonCamera != null ? _character.firstPersonCamera.transform.localRotation.eulerAngles.z : _character.transform.rotation.eulerAngles.z;
-        _character.Input.TargetRotation = new Vector3(_character.transform.rotation.eulerAngles.x, _character.transform.rotation.eulerAngles.y, initialZRotation);
-    }
-
 	public abstract void UpdateInput();
 
 	public abstract PlayerInput Detect();
@@ -84,8 +78,7 @@ public abstract class PlayerInput
     {
         _targetMovement  = Vector3.zero;
         _isJumpTriggered = false;
-
-        UpdateTargetRotationToCurrent();
+        _targetRotation  = _character.InputRotation;
     }
 
 	#endregion
