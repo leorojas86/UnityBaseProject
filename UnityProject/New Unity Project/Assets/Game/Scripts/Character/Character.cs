@@ -11,6 +11,7 @@ public class Character : MonoBehaviour
 	private int _health 									= Constants.CHARACTER_DEFAULT_HEALTH;
 	private int _score  									= 0;
 	private CharacterMovementController _movementController = null;
+    private CharacterStatsController _statsController       = null;
 	private PlayerInput _input 								= null;
 	private Rigidbody _rigidBody 							= null;
     private CapsuleCollider _capsule                        = null;
@@ -126,6 +127,7 @@ public class Character : MonoBehaviour
         _rigidBody = GetComponentInChildren<Rigidbody>();
         _capsule   = GetComponentInChildren<CapsuleCollider>();
 
+        _statsController    = new CharacterStatsController(this);
         _movementController = new CharacterMovementController(this);
 	}
 
