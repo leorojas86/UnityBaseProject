@@ -89,6 +89,10 @@ public class CharacterMovementController
         _character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
         _character.Rotation              = _initialRotation;
         _character.CameraRotation        = _initialCameraRotation;
+
+        _character.Input.ClearLastInput();
+
+        _fsm.GotoState<CharacterMovementIdleState>();
     }
 
 	#endregion
