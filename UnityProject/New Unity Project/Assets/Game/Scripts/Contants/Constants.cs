@@ -5,7 +5,7 @@ public static class Constants
 {
 	#region Constants
 
-	public const float CHARACTER_MAX_LANDED_Y_VELOCITY 			= 2f;
+	public const float CHARACTER_MAX_LANDED_Y_VELOCITY 			= 2.5f;
 	public const int CHARACTER_DEFAULT_HEALTH 			   		= 1000;
 	public const float CHARACTER_DEFAULT_SPEED			   		= 10.0f;
 	public const float CHARACTER_MOVEMENT_FLYING_MULTIPLIER  	= 0.1f;

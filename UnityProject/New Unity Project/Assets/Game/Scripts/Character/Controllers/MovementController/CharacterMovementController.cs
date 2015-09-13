@@ -6,10 +6,10 @@ public class CharacterMovementController
 {
 	#region Variables
 
-	private Character _character                = null;
-    private FSM _fsm                            = new FSM();
-    private Quaternion _initialRotation         = Quaternion.identity;
-    private Quaternion _initialCameraRotation   = Quaternion.identity;
+	private Character _character               = null;
+    private FSM _fsm                           = new FSM();
+    private Quaternion _initialRotation        = Quaternion.identity;
+    private Quaternion _initialCameraRotation  = Quaternion.identity;
 
 	#endregion
 
@@ -31,9 +31,10 @@ public class CharacterMovementController
 
     public CharacterMovementController(Character character)
     {
-        _character              = character;
-        _initialRotation        = _character.Rotation;
-        _initialCameraRotation  = _character.CameraRotation;
+        _character                          = character;
+        _initialRotation                    = _character.Rotation;
+        _initialCameraRotation              = _character.CameraRotation;
+        _character.RigidBody.constraints    = RigidbodyConstraints.FreezeRotation;
 
         InitializeFSM();
     }
@@ -68,7 +69,7 @@ public class CharacterMovementController
 
 	public void OnPlayerInputChanged()
 	{
-		_character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
+		
 	}
 	
 	public void Update() 
