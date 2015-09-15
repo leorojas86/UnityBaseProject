@@ -6,13 +6,15 @@ public class CharacterPhysicsController
     #region Variables
 
     //private Character _character        = null;
-    private Rigidbody _rigidBody        = null;
-    private CapsuleCollider _capsule    = null;
+    private Rigidbody _rigidBody            = null;
+    private CapsuleCollider _capsule        = null;
+    private Transform _topCapsuleGuide      = null;
+    private Transform _bottomCapsuleGuide   = null; 
 
-    private bool _isGoingDown = false;
-    private bool _isGoingUp = false;
-    private bool _isLanded = false;
-    private bool _isBended = false;
+    private bool _isGoingDown   = false;
+    private bool _isGoingUp     = false;
+    private bool _isLanded      = false;
+    private bool _isBended      = false;
 
     #endregion
 
@@ -59,6 +61,9 @@ public class CharacterPhysicsController
         _rigidBody              = character.GetComponentInChildren<Rigidbody>();
         _capsule                = character.GetComponentInChildren<CapsuleCollider>();
         _rigidBody.constraints  = RigidbodyConstraints.FreezeRotation;
+
+        _topCapsuleGuide    = character.transform.Find("Capsule/Guides/Top");
+        _bottomCapsuleGuide = character.transform.Find("Capsule/Guides/Bottom");
     }
 
     #endregion
@@ -104,5 +109,4 @@ public class CharacterPhysicsController
     }
 
     #endregion
-
 }

@@ -34,11 +34,6 @@ public class Character : MonoBehaviour
         }
 	}
 
-    public CharacterPhysicsController PhysicsController
-    {
-        get { return _physicsController; }
-    }
-
     public Quaternion Rotation
     {
         get { return _physicsController.RigidBody.rotation; }
@@ -69,6 +64,11 @@ public class Character : MonoBehaviour
     public CharacterStatsController StatsController
     {
         get { return _statsController; }
+    }
+
+    public CharacterPhysicsController PhysicsController
+    {
+        get { return _physicsController; }
     }
 	
 	#endregion
