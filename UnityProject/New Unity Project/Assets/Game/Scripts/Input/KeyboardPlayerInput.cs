@@ -19,10 +19,10 @@ public class KeyboardPlayerInput : PlayerInput
 	private void UpdateRotation()
 	{
 		if(Input.GetKey(KeyCode.A))
-            _targetRotation.y -= Constants.KEYBOARD_ROTATION_SPEED;
+            _targetRotation.x -= Constants.KEYBOARD_ROTATION_SPEED;
 		
 		if(Input.GetKey(KeyCode.D))
-            _targetRotation.y += Constants.KEYBOARD_ROTATION_SPEED;
+            _targetRotation.x += Constants.KEYBOARD_ROTATION_SPEED;
 	}
 	
 	private void UpdateMovement()
