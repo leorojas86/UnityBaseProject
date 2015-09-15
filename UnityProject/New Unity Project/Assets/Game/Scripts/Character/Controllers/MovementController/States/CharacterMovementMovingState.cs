@@ -26,25 +26,21 @@ public class CharacterMovementMovingState : CharacterMovementState
         UpdateInputRotation();
     }
 
-    #endregion
-
-    #region Transitions
-
     protected virtual void UpdateMovementInput()
     {
-        if(_character.Input.TargetMovement != Vector3.zero)
+        if (_character.Input.TargetMovement != Vector3.zero)
         {
-            Vector3 targetVelocity          = _character.Input.TargetMovement * _character.StatsController.MovementSpeed.value;
-            float movementLerp              = GetMovementLerp();
-            Vector3 newVelocity             = Vector3.Lerp(_character.RigidBody.velocity, targetVelocity, movementLerp);
-            newVelocity.y                   = _character.RigidBody.velocity.y; //Keep gravity movement, only change x,z
-            _character.RigidBody.velocity   = newVelocity;
+            Vector3 targetVelocity = _character.Input.TargetMovement * _character.StatsController.MovementSpeed.value;
+            float movementLerp = GetMovementLerp();
+            Vector3 newVelocity = Vector3.Lerp(_character.RigidBody.velocity, targetVelocity, movementLerp);
+            newVelocity.y = _character.RigidBody.velocity.y; //Keep gravity movement, only change x,z
+            _character.RigidBody.velocity = newVelocity;
         }
     }
 
     protected virtual float GetMovementLerp()
     {
-        if(_character.IsLanded)
+        if (_character.IsLanded)
             return _character.IsBended ? Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_BEND_MULTIPLIER : Constants.CHARACTER_MOVEMENT_LERP_SPEED;
 
         return Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_FLYING_MULTIPLIER;
@@ -52,15 +48,19 @@ public class CharacterMovementMovingState : CharacterMovementState
 
     protected virtual void UpdateInputRotation()
     {
-        if(_character.Input.TargetRotation != Vector2.zero)
+        if (_character.Input.TargetRotation != Vector2.zero)
         {
-            Quaternion targetRotation   = _character.MovementController.InitialRotation * Quaternion.AngleAxis(_character.Input.TargetRotation.x, Vector3.up);
-            _character.Rotation         = Quaternion.Lerp(_character.Rotation, targetRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+            Quaternion targetRotation = _character.MovementController.InitialRotation * Quaternion.AngleAxis(_character.Input.TargetRotation.x, Vector3.up);
+            _character.Rotation = Quaternion.Lerp(_character.Rotation, targetRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
 
             Quaternion targetCameraRotation = _character.MovementController.InitialCameraRotation * Quaternion.AngleAxis(_character.Input.TargetRotation.y, Vector3.left);
-            _character.CameraRotation       = Quaternion.Lerp(_character.CameraRotation, targetCameraRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
+            _character.CameraRotation = Quaternion.Lerp(_character.CameraRotation, targetCameraRotation, Constants.CHARACTER_MOVEMENT_LERP_SPEED);
         }
     }
+
+    #endregion
+
+    #region Transitions
 
     #endregion
 }

@@ -36,7 +36,7 @@ public static class PhysicsUtils
 
     public static Quaternion SetQuaternionYAxis(Quaternion quaternion, float y)
     {
-        Vector3 euler = quaternion.eulerAngles;
+        Vector3 euler = quaternion.eulerAngles; 
         euler.y       = y;
 
         return Quaternion.Euler(euler);
