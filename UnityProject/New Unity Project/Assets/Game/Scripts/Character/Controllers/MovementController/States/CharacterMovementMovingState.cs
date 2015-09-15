@@ -30,18 +30,18 @@ public class CharacterMovementMovingState : CharacterMovementState
     {
         if (_character.Input.TargetMovement != Vector3.zero)
         {
-            Vector3 targetVelocity = _character.Input.TargetMovement * _character.StatsController.MovementSpeed.value;
-            float movementLerp = GetMovementLerp();
-            Vector3 newVelocity = Vector3.Lerp(_character.RigidBody.velocity, targetVelocity, movementLerp);
-            newVelocity.y = _character.RigidBody.velocity.y; //Keep gravity movement, only change x,z
-            _character.RigidBody.velocity = newVelocity;
+            Vector3 targetVelocity  = _character.Input.TargetMovement * _character.StatsController.MovementSpeed.value;
+            float movementLerp      = GetMovementLerp();
+            Vector3 newVelocity     = Vector3.Lerp(_character.Velocity, targetVelocity, movementLerp);
+            newVelocity.y           = _character.Velocity.y; //Keep gravity movement, only change x,z
+            _character.Velocity     = newVelocity;
         }
     }
 
     protected virtual float GetMovementLerp()
     {
-        if (_character.IsLanded)
-            return _character.IsBended ? Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_BEND_MULTIPLIER : Constants.CHARACTER_MOVEMENT_LERP_SPEED;
+        if (_character.PhysicsController.IsLanded)
+            return _character.PhysicsController.IsBended ? Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_BEND_MULTIPLIER : Constants.CHARACTER_MOVEMENT_LERP_SPEED;
 
         return Constants.CHARACTER_MOVEMENT_LERP_SPEED * Constants.CHARACTER_MOVEMENT_FLYING_MULTIPLIER;
     }

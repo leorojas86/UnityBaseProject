@@ -5,7 +5,7 @@ public class CharacterStatsController
 {
     #region Variables
 
-    private Character _character = null;
+    //private Character _character = null;
 
     private Stat _movementSpeed     = new Stat(Constants.CHARACTER_DEFAULT_SPEED);
     private Stat _health            = new Stat(Constants.CHARACTER_DEFAULT_HEALTH);
@@ -47,7 +47,7 @@ public class CharacterStatsController
 
     public CharacterStatsController(Character character)
     {
-        _character = character;
+        //_character = character;
     }
 
     #endregion

@@ -22,16 +22,16 @@ public class CharacterMovementJumpingState : CharacterMovementMovingState
 
     private void AddJumpVelocity()
     {
-        Vector3 velocity                = _character.RigidBody.velocity;
-        velocity.y                      += Constants.CHARACTER_JUMP_FORCE;
-        _character.RigidBody.velocity   = velocity;
+        Vector3 velocity      = _character.Velocity;
+        velocity.y            += Constants.CHARACTER_JUMP_FORCE;
+        _character.Velocity   = velocity;
     }
 
     public override void OnExecute()
     {
         base.OnExecute();
 
-        _isCompleted = _character.IsLanded;
+        _isCompleted = _character.PhysicsController.IsLanded;
     }
 
     public override void OnExit()

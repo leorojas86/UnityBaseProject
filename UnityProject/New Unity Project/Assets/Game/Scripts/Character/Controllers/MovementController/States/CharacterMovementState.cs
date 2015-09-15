@@ -44,14 +44,14 @@ public class CharacterMovementState : FSMState
     public virtual bool GoToBendingState()
     {
         return  _character.Input != null && 
-                _character.IsLanded && 
-                _character.IsBended != _character.Input.IsBendToogle;
+                _character.PhysicsController.IsLanded &&
+                _character.PhysicsController.IsBended != _character.Input.IsBendToogle;
     }
 
     public virtual bool GoToJumpingState()
     {
-        return  _character.Input != null && 
-                _character.IsLanded && 
+        return  _character.Input != null &&
+                _character.PhysicsController.IsLanded && 
                 _character.Input.IsJumpTriggered && 
                 !_character.Input.IsBendToogle;
     }
@@ -64,7 +64,7 @@ public class CharacterMovementState : FSMState
 
     public virtual bool GoToIdle()
     {
-        return _character.Input != null && _character.IsLanded && _character.Input.TargetMovement == Vector3.zero;
+        return _character.Input != null && _character.PhysicsController.IsLanded && _character.Input.TargetMovement == Vector3.zero;
     }
 
     #endregion

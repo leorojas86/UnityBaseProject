@@ -17,15 +17,13 @@ public class CharacterMovementIdleState : CharacterMovementState
     {
         base.OnExecute();
 
-        if(_character.IsLanded)
+        if(_character.PhysicsController.IsLanded)
             UpdateBreak();
     }
 
     private void UpdateBreak()
     {
-        Vector3 velocity                = _character.RigidBody.velocity;
-        Vector3 breakVelocity           = Vector3.Lerp(velocity, Vector3.zero, Constants.CHARACTER_BREAK_LERP);
-        _character.RigidBody.velocity   = breakVelocity;
+        _character.Velocity = Vector3.Lerp(_character.Velocity, Vector3.zero, Constants.CHARACTER_BREAK_LERP);
     }
 
     #endregion

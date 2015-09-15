@@ -32,10 +32,10 @@ public class CharacterMovementBendingState : CharacterMovementIdleState
 
     private void UpdateBend()
     {
-        Vector3 currentRotation                       = _character.Capsule.transform.localEulerAngles;
-        currentRotation.x                            += _character.Input.IsBendToogle ? Constants.CHARACTER_BENDING_SPEED : -Constants.CHARACTER_BENDING_SPEED;
-        _character.Capsule.transform.localEulerAngles = currentRotation;
-        float targetXRotation                         = _character.Input.IsBendToogle ? Constants.CHARACTER_BEND_X_ROTATION : Constants.CHARACTER_STAND_X_ROTATION;
+        Vector3 currentRotation                                         = _character.PhysicsController.Capsule.transform.localEulerAngles;
+        currentRotation.x                                               += _character.Input.IsBendToogle ? Constants.CHARACTER_BENDING_SPEED : -Constants.CHARACTER_BENDING_SPEED;
+        _character.PhysicsController.Capsule.transform.localEulerAngles = currentRotation;
+        float targetXRotation                                           = _character.Input.IsBendToogle ? Constants.CHARACTER_BEND_X_ROTATION : Constants.CHARACTER_STAND_X_ROTATION;
 
        // Debug.Log("currentRotation.x = " + currentRotation.x + " targetXRotation = " + targetXRotation);
 
@@ -46,7 +46,7 @@ public class CharacterMovementBendingState : CharacterMovementIdleState
     {
         base.OnExit();
 
-        _character.IsBended = _character.Input.IsBendToogle;
+        _character.PhysicsController.IsBended = _character.Input.IsBendToogle;
 
         /*if (_character.IsBended)
            _character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationY | RigidbodyConstraints.FreezeRotationZ;

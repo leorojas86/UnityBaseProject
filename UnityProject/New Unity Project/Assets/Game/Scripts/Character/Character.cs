@@ -9,28 +9,12 @@ public class Character : MonoBehaviour
 
 	private CharacterMovementController _movementController = null;
     private CharacterStatsController _statsController       = null;
+    private CharacterPhysicsController _physicsController   = null;
 	private PlayerInput _input 								= null;
-	private Rigidbody _rigidBody 							= null;
-    private CapsuleCollider _capsule                        = null;
-
-	private bool _isGoingDown	= false;
-	private bool _isGoingUp		= false;
-	private bool _isLanded 		= false;
-    private bool _isBended      = false;
 
 	#endregion
 
 	#region Properties
-
-	public Rigidbody RigidBody
-	{
-		get { return _rigidBody; }
-	}
-
-    public CapsuleCollider Capsule
-    {
-        get { return _capsule; }
-    }
 
 	public PlayerInput Input
 	{
@@ -50,10 +34,15 @@ public class Character : MonoBehaviour
         }
 	}
 
+    public CharacterPhysicsController PhysicsController
+    {
+        get { return _physicsController; }
+    }
+
     public Quaternion Rotation
     {
-        get { return _rigidBody.rotation; }
-        set { _rigidBody.rotation = value; }
+        get { return _physicsController.RigidBody.rotation; }
+        set { _physicsController.RigidBody.rotation = value; }
     }
 
     public Quaternion CameraRotation
@@ -66,25 +55,10 @@ public class Character : MonoBehaviour
         }
     }
 
-	public bool IsFalling
-	{
-		get { return _isGoingDown; }
-	}
-	
-	public bool IsJumping
-	{
-		get { return _isGoingUp; }
-	}
-	
-	public bool IsLanded
-	{
-		get { return _isLanded; }
-	}
-
-    public bool IsBended
+    public Vector3 Velocity
     {
-        get { return _isBended;  }
-        set { _isBended = value;  }
+        get { return _physicsController.RigidBody.velocity; }
+        set { _physicsController.RigidBody.velocity = value; }
     }
 
     public CharacterMovementController MovementController
@@ -103,10 +77,8 @@ public class Character : MonoBehaviour
 
 	void Awake()
 	{
-        _rigidBody = GetComponentInChildren<Rigidbody>();
-        _capsule   = GetComponentInChildren<CapsuleCollider>();
-
         _statsController    = new CharacterStatsController(this);
+        _physicsController  = new CharacterPhysicsController(this);
         _movementController = new CharacterMovementController(this);
 	}
 
@@ -115,8 +87,7 @@ public class Character : MonoBehaviour
         if(_input != null)
             _input.Update();
 
-		UpdateLandedFlag();
-
+        _physicsController.Update();
         _statsController.Update();
         _movementController.Update();
 	}
@@ -124,43 +95,19 @@ public class Character : MonoBehaviour
 	public void Reset()
 	{
         _statsController.Reset();
+        _physicsController.Reset();
 		_movementController.Reset();
-	}
-
-	private void UpdateLandedFlag()
-	{
-		if(_isLanded)
-			_isLanded = Mathf.Abs(_rigidBody.velocity.y) < Constants.CHARACTER_MAX_LANDED_Y_VELOCITY;
-		else
-		{
-			_isGoingUp   = _rigidBody.velocity.y > Constants.CHARACTER_MAX_LANDED_Y_VELOCITY;
-			_isGoingDown = _rigidBody.velocity.y < -Constants.CHARACTER_MAX_LANDED_Y_VELOCITY;
-		}
 	}
 
 	void OnCollisionEnter(Collision collision)
 	{
-		CheckForTerrainCollision(collision);
+        _physicsController.CheckForTerrainCollision(collision);
 	}
-	
-	void OnCollisionStay(Collision collision)
-	{
-		CheckForTerrainCollision(collision);
-	}
-	
-	private void CheckForTerrainCollision(Collision collision)
-	{
-		if(!_isLanded)
-		{
-			_isLanded = collision.collider.gameObject.layer == LayerMask.NameToLayer("Terrain");
-			
-			if(_isLanded)
-			{
-				_isGoingUp   = false;
-				_isGoingDown = false;
-			}
-		}
-	}
+
+    void OnCollisionStay(Collision collision)
+    {
+        _physicsController.CheckForTerrainCollision(collision);
+    }
 
     public bool CanBend()
     {

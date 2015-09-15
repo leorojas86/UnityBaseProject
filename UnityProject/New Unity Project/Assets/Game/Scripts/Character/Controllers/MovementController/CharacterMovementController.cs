@@ -31,10 +31,9 @@ public class CharacterMovementController
 
     public CharacterMovementController(Character character)
     {
-        _character                          = character;
-        _initialRotation                    = _character.Rotation;
-        _initialCameraRotation              = _character.CameraRotation;
-        _character.RigidBody.constraints    = RigidbodyConstraints.FreezeRotation;
+        _character             = character;
+        _initialRotation       = _character.Rotation;
+        _initialCameraRotation = _character.CameraRotation;
 
         InitializeFSM();
     }
@@ -85,10 +84,9 @@ public class CharacterMovementController
 
 	public void Reset()
 	{
-		_character.RigidBody.velocity    = Vector3.zero;
-        _character.RigidBody.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ | RigidbodyConstraints.FreezeRotation;
-        _character.Rotation              = _initialRotation;
-        _character.CameraRotation        = _initialCameraRotation;
+		_character.Velocity         = Vector3.zero;
+        _character.Rotation         = _initialRotation;
+        _character.CameraRotation   = _initialCameraRotation;
 
         _character.Input.ClearLastInput();
 
