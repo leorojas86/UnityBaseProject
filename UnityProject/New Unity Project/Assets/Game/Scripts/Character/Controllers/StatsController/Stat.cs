@@ -5,9 +5,9 @@ public class Stat
 {
     #region Variables
 
-    public float value     = 0;
-    public float increment = 0.05f;
-    public float minValue  = 0;
+    public float value     = 0f;
+    public float increment = 0f;
+    public float minValue  = 0f;
     public float maxValue  = 1000;
     public bool isDisabled = false;
 

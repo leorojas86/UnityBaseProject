@@ -34,7 +34,7 @@ public class CharacterMovementMovingState : CharacterMovementState
     {
         if(_character.Input.TargetMovement != Vector3.zero)
         {
-            Vector3 targetVelocity          = _character.Input.TargetMovement * _character.MovementSpeed;
+            Vector3 targetVelocity          = _character.Input.TargetMovement * _character.StatsController.MovementSpeed.value;
             float movementLerp              = GetMovementLerp();
             Vector3 newVelocity             = Vector3.Lerp(_character.RigidBody.velocity, targetVelocity, movementLerp);
             newVelocity.y                   = _character.RigidBody.velocity.y; //Keep gravity movement, only change x,z

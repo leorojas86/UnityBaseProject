@@ -7,13 +7,20 @@ public class CharacterStatsController
 
     private Character _character = null;
 
-    private Stat _health = new Stat(Constants.CHARACTER_DEFAULT_HEALTH);
-    private Stat _score  = new Stat(true);
-    private Stat _mana   = new Stat(true);
+    private Stat _movementSpeed     = new Stat(Constants.CHARACTER_DEFAULT_SPEED);
+    private Stat _health            = new Stat(Constants.CHARACTER_DEFAULT_HEALTH);
+    private Stat _score             = new Stat(true);
+    private Stat _mana              = new Stat(true);
 
     #endregion
 
     #region Properties
+
+    public Stat MovementSpeed
+    {
+        get { return _movementSpeed; }
+        set { _movementSpeed = value; }
+    }
 
     public Stat Health
     {
