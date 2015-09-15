@@ -19,7 +19,6 @@ public class CharacterStatsController
     public Stat MovementSpeed
     {
         get { return _movementSpeed; }
-        set { _movementSpeed = value; }
     }
 
     public Stat Health
@@ -55,20 +54,17 @@ public class CharacterStatsController
 
     #region Methods
 
-    public void Update()
-    {
-
-    }
-
     public void TakeDamage(int damage, Object damageOwner)
     {
-        if (!IsDead)
-        {
-            _health.value -= damage;
+        _health.Decrease(damage);
+    }
 
-            if (_health.value <= 0)
-                _health.value = 0;
-        }
+    public void Update()
+    {
+        _movementSpeed.Update();
+        _health.Update();
+        _score.Update();
+        _mana.Update();
     }
 
     public void Reset()

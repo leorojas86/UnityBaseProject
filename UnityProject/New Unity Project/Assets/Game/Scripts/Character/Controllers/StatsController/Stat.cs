@@ -31,11 +31,18 @@ public class Stat
 
     public void Update()
     {
-        if(increment != 0 && !isDisabled)
-        {
-            value += increment;
-            value = Mathf.Clamp(value, minValue, maxValue);
-        }
+        if(increment != 0 && !this.isDisabled)
+            Increase(this.increment);
+    }
+
+    public void Decrease(float value)
+    {
+        this.value = Mathf.Clamp(this.value - value, this.minValue, this.maxValue);
+    }
+
+    public void Increase(float value)
+    {
+        this.value = Mathf.Clamp(this.value + value, this.minValue, this.maxValue);
     }
 
     #endregion
