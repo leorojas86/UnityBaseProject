@@ -13,7 +13,7 @@ public class Stat
 
     public float value     = 0f;
     public float increment = 0f;
-    public float maxValue  = 1000;
+    public float maxValue  = 0f;
     public bool isDisabled = false;
 
     #endregion
@@ -31,7 +31,8 @@ public class Stat
 
     public Stat(float value)
     {
-        this.value = value;
+        this.value    = value;
+        this.maxValue = value; 
     }
 
     public Stat(bool isDisabled)
