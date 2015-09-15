@@ -3,13 +3,27 @@ using System.Collections;
 
 public class Stat
 {
+    #region Constants
+
+    public const float EMPTY_VALUE = 0f;
+
+    #endregion
+
     #region Variables
 
     public float value     = 0f;
     public float increment = 0f;
-    public float minValue  = 0f;
     public float maxValue  = 1000;
     public bool isDisabled = false;
+
+    #endregion
+
+    #region Properties
+
+    public bool IsEmpty
+    {
+        get { return this.value == EMPTY_VALUE; }
+    }
 
     #endregion
 
@@ -37,12 +51,12 @@ public class Stat
 
     public void Decrease(float value)
     {
-        this.value = Mathf.Clamp(this.value - value, this.minValue, this.maxValue);
+        this.value = Mathf.Clamp(this.value - value, EMPTY_VALUE, this.maxValue);
     }
 
     public void Increase(float value)
     {
-        this.value = Mathf.Clamp(this.value + value, this.minValue, this.maxValue);
+        this.value = Mathf.Clamp(this.value + value, EMPTY_VALUE, this.maxValue);
     }
 
     #endregion

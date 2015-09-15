@@ -38,7 +38,7 @@ public class CharacterStatsController
 
     public bool IsDead
     {
-        get { return _health.value == 0; }
+        get { return _health.IsEmpty; }
     }
 
     #endregion
