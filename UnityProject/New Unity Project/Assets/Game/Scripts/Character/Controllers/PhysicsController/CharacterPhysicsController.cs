@@ -75,6 +75,12 @@ public class CharacterPhysicsController
         UpdateLandedFlag();
     }
 
+    public void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawCube(_capsule.bounds.center, _capsule.bounds.size);
+    }
+
     private void UpdateLandedFlag()
     {
         if (_isLanded)

@@ -119,5 +119,10 @@ public class Character : MonoBehaviour
         return _movementController.CanJump();
     }
 
+    void OnDrawGizmos()
+    {
+        _physicsController.OnDrawGizmos();
+    }
+
 	#endregion
 }
