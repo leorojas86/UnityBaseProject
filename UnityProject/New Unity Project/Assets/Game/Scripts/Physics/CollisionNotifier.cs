@@ -25,14 +25,24 @@ public class CollisionNotifier : MonoBehaviour
     public struct CollisionData
     {
         public Collision collision;
+        public Collider collider;
         public Type type;
         public State state;
 
-        public CollisionData(Collision collision, Type type, State state)
+        public CollisionData(Collision collision, State state)
         {
             this.collision = collision;
-            this.type      = type;
+            this.type      = Type.Collision;
             this.state     = state;
+            this.collider  = null;
+        }
+
+        public CollisionData(Collider collider, State state)
+        {
+            this.collider   = collider;
+            this.type       = Type.Trigger;
+            this.state      = state;
+            this.collision  = null;
         }
     }
 
@@ -61,17 +71,17 @@ public class CollisionNotifier : MonoBehaviour
         NotifyOnCollision(collision, Type.Collision, State.Exit);
     }
 
-    void OnTriggerEnter(Collision collision)
+    void OnTriggerEnter(Collider collision)
     {
         NotifyOnCollision(collision, Type.Trigger, State.Enter);
     }
 
-    void OnTriggerStay(Collision collision)
+    void OnTriggerStay(Collider collision)
     {
         NotifyOnCollision(collision, Type.Trigger, State.Stay);
     }
 
-    void OnTriggerExit(Collision collision)
+    void OnTriggerExit(Collider collision)
     {
         NotifyOnCollision(collision, Type.Trigger, State.Exit);
     }
@@ -80,7 +90,16 @@ public class CollisionNotifier : MonoBehaviour
     {
         if(OnCollision != null)
         {
-            CollisionData data = new CollisionData(collision, type, state);
+            CollisionData data = new CollisionData(collision, state);
+            OnCollision(data);
+        }
+    }
+
+    private void NotifyOnCollision(Collider collider, Type type, State state)
+    {
+        if (OnCollision != null)
+        {
+            CollisionData data = new CollisionData(collider, state);
             OnCollision(data);
         }
     }
