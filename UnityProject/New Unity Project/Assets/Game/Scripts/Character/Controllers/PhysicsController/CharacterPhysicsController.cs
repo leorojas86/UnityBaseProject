@@ -77,8 +77,8 @@ public class CharacterPhysicsController
 
     public void OnDrawGizmos()
     {
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawCube(_capsule.bounds.center, _capsule.bounds.size);
+        //Gizmos.color = Color.magenta;
+        //Gizmos.DrawCube(_capsule.bounds.center, _capsule.bounds.size);
     }
 
     private void UpdateLandedFlag()
