@@ -8,8 +8,8 @@ public class CharacterPhysicsController
     //private Character _character        = null;
     private Rigidbody _rigidBody            = null;
     private CapsuleCollider _capsule        = null;
-    private Transform _topCapsuleGuide      = null;
-    private Transform _bottomCapsuleGuide   = null; 
+    //private Transform _topCapsuleGuide      = null;
+    //private Transform _bottomCapsuleGuide   = null; 
 
     private bool _isGoingDown   = false;
     private bool _isGoingUp     = false;
@@ -62,8 +62,8 @@ public class CharacterPhysicsController
         _capsule                = character.GetComponentInChildren<CapsuleCollider>();
         _rigidBody.constraints  = RigidbodyConstraints.FreezeRotation;
 
-        _topCapsuleGuide    = character.transform.Find("Capsule/Guides/Top");
-        _bottomCapsuleGuide = character.transform.Find("Capsule/Guides/Bottom");
+        //_topCapsuleGuide    = character.transform.Find("Capsule/Guides/Top");
+        //_bottomCapsuleGuide = character.transform.Find("Capsule/Guides/Bottom");
     }
 
     #endregion
