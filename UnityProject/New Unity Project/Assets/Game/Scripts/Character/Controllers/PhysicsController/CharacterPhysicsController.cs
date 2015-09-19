@@ -50,7 +50,7 @@ public class CharacterPhysicsController
         get { return _isBended; }
         set 
         {
-            if (value != _isBended)
+            if(value != _isBended)
             { 
                 _isBended = value;
                 UpdateBendedState();
@@ -96,7 +96,7 @@ public class CharacterPhysicsController
     {
         UpdateLandedFlag();
 
-        Debug.Log("_isLanded " + _isLanded);
+        //Debug.Log("_isLanded " + _isLanded);
     }
 
     public void OnDrawGizmos()
@@ -107,7 +107,7 @@ public class CharacterPhysicsController
 
     private void UpdateLandedFlag()
     {
-        if (_isLanded)
+        if(_isLanded)
             _isLanded = Mathf.Abs(_rigidBody.velocity.y) < Constants.CHARACTER_MAX_LANDED_Y_VELOCITY;
         else
         {
@@ -118,13 +118,13 @@ public class CharacterPhysicsController
 
     private void CheckForIsLanded(CollisionNotifier.CollisionData data)
     {
-        Debug.Log("data.state = " + data.state);
+        //Debug.Log("data.state = " + data.state);
 
         switch(data.state)
         {
             case CollisionNotifier.State.Enter:
             case CollisionNotifier.State.Stay:
-                if (!_isLanded)
+                if(!_isLanded)
                 {
                     _isLanded    = true;
                     _isGoingUp   = false;
