@@ -59,6 +59,11 @@ public class CharacterStatsController
         _health.Decrease(damage);
     }
 
+    public void Die()
+    {
+        _health.Empty();
+    }
+
     public void Update()
     {
         _movementSpeed.Update();

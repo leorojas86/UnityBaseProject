@@ -20,7 +20,7 @@ public static class Constants
 	public const float KEYBOARD_ROTATION_SPEED  = 2f;
 	public const float MOUSE_ROTATION_SPEED	    = 8f;
 
-    public const float TOUCH_INPUT_SWIPE_GESTURE_MIN_DISTANCE   = 8f;
+    public const float TOUCH_INPUT_SWIPE_GESTURE_MIN_DISTANCE   = 15f;
     public const float TOUCH_INPUT_MIN_TOUCH_DISTANCE           = 2f;
     public const float TOUCH_INPUT_MAX_RAYCAST_DISTANCE         = 10000f;
 

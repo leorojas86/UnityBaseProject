@@ -60,5 +60,10 @@ public class Stat
         this.value = Mathf.Clamp(this.value + value, EMPTY_VALUE, this.maxValue);
     }
 
+    public void Empty()
+    {
+        value = EMPTY_VALUE;
+    }
+
     #endregion
 }

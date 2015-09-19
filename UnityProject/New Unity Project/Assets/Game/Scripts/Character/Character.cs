@@ -99,16 +99,6 @@ public class Character : MonoBehaviour
 		_movementController.Reset();
 	}
 
-    public bool CanBend()
-    {
-        return _movementController.CanBend();
-    }
-
-    public bool CanJump()
-    {
-        return _movementController.CanJump();
-    }
-
     void OnDrawGizmos()
     {
         if (_physicsController != null)

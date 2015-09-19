@@ -26,13 +26,13 @@ public class TouchPlayerInput : PlayerInput
         switch(sender.LastDetectedSwipe)
         {
             case SwipeGesture.SwipeDirections.Up:
-                if (_isBendToogle && _character.CanBend())
+                if (_isBendToogle && _character.MovementController.CanBend())
                     _isBendToogle = false;//Get up, take stand position
                 else
-                    _isJumpTriggered = _character.CanJump();
+                    _isJumpTriggered = _character.MovementController.CanJump();
             break;
-            case SwipeGesture.SwipeDirections.Down: 
-                if(_character.CanBend())
+            case SwipeGesture.SwipeDirections.Down:
+                if(_character.MovementController.CanBend())
                     _isBendToogle = sender.LastDetectedSwipe == SwipeGesture.SwipeDirections.Down;
             break;
         }
