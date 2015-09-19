@@ -6,10 +6,11 @@ public class CharacterMovementController
 {
 	#region Variables
 
-	private Character _character               = null;
-    private FSM _fsm                           = new FSM();
-    private Quaternion _initialRotation        = Quaternion.identity;
-    private Quaternion _initialCameraRotation  = Quaternion.identity;
+	private Character _character                = null;
+    private FSM _fsm                            = new FSM();
+    private Vector3 _initialPosition            = Vector3.zero;
+    private Quaternion _initialRotation         = Quaternion.identity;
+    private Quaternion _initialCameraRotation   = Quaternion.identity;
 
 	#endregion
 
@@ -31,9 +32,10 @@ public class CharacterMovementController
 
     public CharacterMovementController(Character character)
     {
-        _character             = character;
-        _initialRotation       = _character.Rotation;
-        _initialCameraRotation = _character.CameraRotation;
+        _character              = character;
+        _initialPosition        = _character.transform.position;
+        _initialRotation        = _character.Rotation;
+        _initialCameraRotation  = _character.CameraRotation;
 
         InitializeFSM();
     }
@@ -63,6 +65,8 @@ public class CharacterMovementController
         jumpingState.AddTransition(movingStateState, jumpingState.GoToMovingState);
         jumpingState.AddTransition(idleState, jumpingState.GoToIdle);
 
+        _fsm.AddState(idleState);
+
         _fsm.CurrentState       = idleState;//Initial State
         //_fsm.IsDebugInfoEnabled = true;
     }
@@ -89,9 +93,10 @@ public class CharacterMovementController
 
 	public void Reset()
 	{
-		_character.Velocity         = Vector3.zero;
-        _character.Rotation         = _initialRotation;
-        _character.CameraRotation   = _initialCameraRotation;
+		_character.Velocity             = Vector3.zero;
+        _character.transform.position   = _initialPosition;
+        _character.Rotation             = _initialRotation;
+        _character.CameraRotation       = _initialCameraRotation;
 
         _character.Input.ClearLastInput();
 

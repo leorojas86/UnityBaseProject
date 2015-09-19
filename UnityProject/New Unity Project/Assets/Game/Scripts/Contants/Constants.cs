@@ -16,7 +16,7 @@ public static class Constants
     public const float CHARACTER_STAND_X_ROTATION               = 0f;
     public const float CHARACTER_BEND_X_ROTATION                = 90f;
     public const float CHARACTER_BREAK_LERP                     = 0.1f;
-    public const float CHARACTER_MAX_FALLING_Y_VELOCITY         = 15f;
+    public const float CHARACTER_MAX_FALLING_Y_VELOCITY         = 20f;
 
 	public const float KEYBOARD_ROTATION_SPEED  = 2f;
 	public const float MOUSE_ROTATION_SPEED	    = 8f;

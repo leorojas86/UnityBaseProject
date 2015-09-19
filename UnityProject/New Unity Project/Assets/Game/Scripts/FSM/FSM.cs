@@ -156,7 +156,7 @@ public class FSM
 		if(state != null)
 			CurrentState = state;
 		else
-			Debug.LogError("State of type = " + stateType + " was not found on FSM, please ensure that was added to the 'States' list."); 
+			Debug.LogError("State of type = " + stateType + " was not found on FSM, please make sure that it was added to the 'States' list."); 
 	}
 
 	public virtual void Release()

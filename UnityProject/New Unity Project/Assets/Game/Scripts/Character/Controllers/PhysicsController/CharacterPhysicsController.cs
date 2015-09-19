@@ -64,7 +64,7 @@ public class CharacterPhysicsController
 
     public CharacterPhysicsController(Character character)
     {
-        //_character              = character;
+        _character               = character;
         _rigidBody               = character.GetComponentInChildren<Rigidbody>();
         _capsule                 = character.GetComponentInChildren<CapsuleCollider>();
         _bottomCollisionNotifier = character.transform.Find("Capsule/Collisions/BottomSphere").GetComponent<CollisionNotifier>();
