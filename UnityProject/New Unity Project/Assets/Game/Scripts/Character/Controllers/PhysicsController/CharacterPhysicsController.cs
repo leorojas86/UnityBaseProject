@@ -53,6 +53,7 @@ public class CharacterPhysicsController
             if(value != _isBended)
             { 
                 _isBended = value;
+
                 UpdateBendedState();
             }
         }
@@ -83,13 +84,17 @@ public class CharacterPhysicsController
         if(_isBended)
         {
             _bottomCollisionNotifier.OnCollision = null;
-            _frontCollisionNotifier.OnCollision = CheckForIsLanded;
+            _frontCollisionNotifier.OnCollision  = CheckForIsLanded;
         }
         else
         {
             _bottomCollisionNotifier.OnCollision = CheckForIsLanded;
-            _frontCollisionNotifier.OnCollision = null;
+            _frontCollisionNotifier.OnCollision  = null;
         }
+
+        Vector3 currentRotation             = _capsule.transform.localEulerAngles;
+        currentRotation.x                   = _isBended ? Constants.CHARACTER_BEND_X_ROTATION : Constants.CHARACTER_STAND_X_ROTATION;
+        _capsule.transform.localEulerAngles = currentRotation;
     }
 
     public void Update()
@@ -142,7 +147,7 @@ public class CharacterPhysicsController
         _isGoingDown    = false;
         _isGoingUp      = false;
         _isLanded       = false;
-        _isBended       = false;
+        IsBended        = false;
     }
 
     #endregion

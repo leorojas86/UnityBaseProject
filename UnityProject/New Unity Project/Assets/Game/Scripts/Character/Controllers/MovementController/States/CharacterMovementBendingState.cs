@@ -53,7 +53,7 @@ public class CharacterMovementBendingState : CharacterMovementIdleState
        else
            _character.RigidBody.constraints = RigidbodyConstraints.FreezeRotation;*/
 
-        _character.Input.ClearLastInput();
+        _character.Input.ClearLastInput(false);
     }
 
     #endregion

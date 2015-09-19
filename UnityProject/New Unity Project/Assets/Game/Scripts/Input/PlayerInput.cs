@@ -64,11 +64,14 @@ public abstract class PlayerInput
 
 	public abstract PlayerInput Detect();
 
-    public virtual void ClearLastInput()
+    public virtual void ClearLastInput(bool resetToogles)
     {
         _targetMovement  = Vector3.zero;
         _isJumpTriggered = false;
         _targetRotation  = Vector2.zero;
+
+        if(resetToogles)
+            _isBendToogle = false;
     }
 
 	#endregion

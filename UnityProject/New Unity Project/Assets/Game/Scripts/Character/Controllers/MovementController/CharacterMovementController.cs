@@ -98,7 +98,7 @@ public class CharacterMovementController
         _character.Rotation             = _initialRotation;
         _character.CameraRotation       = _initialCameraRotation;
 
-        _character.Input.ClearLastInput();
+        _character.Input.ClearLastInput(true);
 
         _fsm.GotoState<CharacterMovementIdleState>();
     }

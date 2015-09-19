@@ -58,7 +58,7 @@ public class TouchPlayerInput : PlayerInput
                 //_isBreakToogle = false;
 			}
 			else
-                ClearLastInput();
+                ClearLastInput(false);
 		}
 
         UpdateSwipeGesture();
@@ -93,9 +93,9 @@ public class TouchPlayerInput : PlayerInput
 		_targetMovement    = relativePosition.normalized;
 	}
 
-    public override void ClearLastInput()
+    public override void ClearLastInput(bool resetToogles)
     {
-        base.ClearLastInput();
+        base.ClearLastInput(resetToogles);
 
         _lastTouchPosition = Vector3.zero;
     }
