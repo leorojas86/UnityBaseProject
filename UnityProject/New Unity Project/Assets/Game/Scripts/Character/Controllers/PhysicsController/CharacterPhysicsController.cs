@@ -8,8 +8,8 @@ public class CharacterPhysicsController
     //private Character _character        = null;
     private Rigidbody _rigidBody            = null;
     private CapsuleCollider _capsule        = null;
-    //private Transform _topCapsuleGuide      = null;
-    //private Transform _bottomCapsuleGuide   = null; 
+    public CollisionNotifier _bottomCollisionNotifier = null;
+    public CollisionNotifier _frontCollisionNotifier  = null;
 
     private bool _isGoingDown   = false;
     private bool _isGoingUp     = false;
@@ -48,7 +48,14 @@ public class CharacterPhysicsController
     public bool IsBended
     {
         get { return _isBended; }
-        set { _isBended = value; }
+        set 
+        {
+            if (value != _isBended)
+            { 
+                _isBended = value;
+                UpdateBendedState();
+            }
+        }
     }
 
     #endregion
@@ -58,21 +65,38 @@ public class CharacterPhysicsController
     public CharacterPhysicsController(Character character)
     {
         //_character              = character;
-        _rigidBody              = character.GetComponentInChildren<Rigidbody>();
-        _capsule                = character.GetComponentInChildren<CapsuleCollider>();
-        _rigidBody.constraints  = RigidbodyConstraints.FreezeRotation;
+        _rigidBody               = character.GetComponentInChildren<Rigidbody>();
+        _capsule                 = character.GetComponentInChildren<CapsuleCollider>();
+        _bottomCollisionNotifier = character.transform.Find("Capsule/Collisions/BottomSphere").GetComponent<CollisionNotifier>();
+        _frontCollisionNotifier  = character.transform.Find("Capsule/Collisions/FrontSphere").GetComponent<CollisionNotifier>();
+        _rigidBody.constraints   = RigidbodyConstraints.FreezeRotation;
 
-        //_topCapsuleGuide    = character.transform.Find("Capsule/Guides/Top");
-        //_bottomCapsuleGuide = character.transform.Find("Capsule/Guides/Bottom");
+        UpdateBendedState();
     }
 
     #endregion
 
     #region Methods
 
+    private void UpdateBendedState()
+    {
+        if(_isBended)
+        {
+            _bottomCollisionNotifier.OnCollision = null;
+            _frontCollisionNotifier.OnCollision = CheckForIsLanded;
+        }
+        else
+        {
+            _bottomCollisionNotifier.OnCollision = CheckForIsLanded;
+            _frontCollisionNotifier.OnCollision = null;
+        }
+    }
+
     public void Update()
     {
         UpdateLandedFlag();
+
+        Debug.Log("_isLanded " + _isLanded);
     }
 
     public void OnDrawGizmos()
@@ -92,17 +116,21 @@ public class CharacterPhysicsController
         }
     }
 
-    public void CheckForTerrainCollision(Collision collision)
+    private void CheckForIsLanded(CollisionNotifier.CollisionData data)
     {
-        if (!_isLanded)
-        {
-            _isLanded = collision.collider.gameObject.layer == LayerMask.NameToLayer("Terrain");
+        Debug.Log("data.state = " + data.state);
 
-            if (_isLanded)
-            {
-                _isGoingUp = false;
-                _isGoingDown = false;
-            }
+        switch(data.state)
+        {
+            case CollisionNotifier.State.Enter:
+            case CollisionNotifier.State.Stay:
+                if (!_isLanded)
+                {
+                    _isLanded    = true;
+                    _isGoingUp   = false;
+                    _isGoingDown = false;
+                }
+            break;
         }
     }
 

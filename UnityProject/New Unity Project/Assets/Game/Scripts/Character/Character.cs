@@ -99,16 +99,6 @@ public class Character : MonoBehaviour
 		_movementController.Reset();
 	}
 
-	void OnCollisionEnter(Collision collision)
-	{
-        _physicsController.CheckForTerrainCollision(collision);
-	}
-
-    void OnCollisionStay(Collision collision)
-    {
-        _physicsController.CheckForTerrainCollision(collision);
-    }
-
     public bool CanBend()
     {
         return _movementController.CanBend();
@@ -121,7 +111,8 @@ public class Character : MonoBehaviour
 
     void OnDrawGizmos()
     {
-        _physicsController.OnDrawGizmos();
+        if (_physicsController != null)
+            _physicsController.OnDrawGizmos();
     }
 
 	#endregion
