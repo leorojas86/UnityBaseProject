@@ -5,7 +5,7 @@ public static class Constants
 {
 	#region Constants
 
-	public const float CHARACTER_MAX_LANDED_Y_VELOCITY 			= 2.5f;
+	public const float CHARACTER_LANDED_Y_VELOCITY_THRESHOLD 			= 2.5f;
 	public const float CHARACTER_DEFAULT_HEALTH 			   	= 1000;
 	public const float CHARACTER_DEFAULT_SPEED			   		= 10.0f;
 	public const float CHARACTER_MOVEMENT_FLYING_MULTIPLIER  	= 0.1f;
@@ -16,6 +16,7 @@ public static class Constants
     public const float CHARACTER_STAND_X_ROTATION               = 0f;
     public const float CHARACTER_BEND_X_ROTATION                = 90f;
     public const float CHARACTER_BREAK_LERP                     = 0.1f;
+    public const float CHARACTER_MAX_FALLING_Y_VELOCITY         = 15f;
 
 	public const float KEYBOARD_ROTATION_SPEED  = 2f;
 	public const float MOUSE_ROTATION_SPEED	    = 8f;

@@ -5,7 +5,7 @@ public class CharacterPhysicsController
 {
     #region Variables
 
-    //private Character _character        = null;
+    private Character _character            = null;
     private Rigidbody _rigidBody            = null;
     private CapsuleCollider _capsule        = null;
     public CollisionNotifier _bottomCollisionNotifier = null;
@@ -108,11 +108,14 @@ public class CharacterPhysicsController
     private void UpdateLandedFlag()
     {
         if(_isLanded)
-            _isLanded = Mathf.Abs(_rigidBody.velocity.y) < Constants.CHARACTER_MAX_LANDED_Y_VELOCITY;
+            _isLanded = Mathf.Abs(_rigidBody.velocity.y) < Constants.CHARACTER_LANDED_Y_VELOCITY_THRESHOLD;
         else
         {
-            _isGoingUp = _rigidBody.velocity.y > Constants.CHARACTER_MAX_LANDED_Y_VELOCITY;
-            _isGoingDown = _rigidBody.velocity.y < -Constants.CHARACTER_MAX_LANDED_Y_VELOCITY;
+            _isGoingUp   = _rigidBody.velocity.y > Constants.CHARACTER_LANDED_Y_VELOCITY_THRESHOLD;
+            _isGoingDown = _rigidBody.velocity.y < -Constants.CHARACTER_LANDED_Y_VELOCITY_THRESHOLD;
+
+            if(_rigidBody.velocity.y < -Constants.CHARACTER_MAX_FALLING_Y_VELOCITY)
+                _character.Die();
         }
     }
 

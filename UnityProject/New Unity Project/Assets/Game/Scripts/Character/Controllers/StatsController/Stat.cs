@@ -62,7 +62,12 @@ public class Stat
 
     public void Empty()
     {
-        value = EMPTY_VALUE;
+        this.value = EMPTY_VALUE;
+    }
+
+    public void Reset()
+    {
+        this.value = this.maxValue;
     }
 
     #endregion

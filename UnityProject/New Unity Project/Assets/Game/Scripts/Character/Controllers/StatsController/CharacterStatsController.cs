@@ -59,11 +59,6 @@ public class CharacterStatsController
         _health.Decrease(damage);
     }
 
-    public void Die()
-    {
-        _health.Empty();
-    }
-
     public void Update()
     {
         _movementSpeed.Update();
@@ -74,7 +69,7 @@ public class CharacterStatsController
 
     public void Reset()
     {
-        _health.value = Constants.CHARACTER_DEFAULT_HEALTH;
+        _health.Reset();
     }
 
     #endregion

@@ -44,17 +44,22 @@ public class CharacterMovementController
         CharacterMovementMovingState movingStateState = new CharacterMovementMovingState(_character);
         CharacterMovementBendingState bendingState    = new CharacterMovementBendingState(_character);
         CharacterMovementJumpingState jumpingState    = new CharacterMovementJumpingState(_character);
+        CharacterMovementDyingState dyingState        = new CharacterMovementDyingState(_character);
 
+        idleState.AddTransition(dyingState, idleState.GoToDyingState);
         idleState.AddTransition(bendingState, idleState.GoToBendingState);
         idleState.AddTransition(jumpingState, idleState.GoToJumpingState);
         idleState.AddTransition(movingStateState, idleState.GoToMovingState);
 
+        movingStateState.AddTransition(dyingState, movingStateState.GoToDyingState);
         movingStateState.AddTransition(bendingState, movingStateState.GoToBendingState);
         movingStateState.AddTransition(jumpingState, movingStateState.GoToJumpingState);
         movingStateState.AddTransition(idleState, movingStateState.GoToIdle);
 
+        bendingState.AddTransition(dyingState, bendingState.GoToDyingState);
         bendingState.AddTransition(idleState, bendingState.IsCompleted);
 
+        jumpingState.AddTransition(dyingState, jumpingState.GoToDyingState);
         jumpingState.AddTransition(movingStateState, jumpingState.GoToMovingState);
         jumpingState.AddTransition(idleState, jumpingState.GoToIdle);
 

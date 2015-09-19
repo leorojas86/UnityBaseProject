@@ -67,5 +67,10 @@ public class CharacterMovementState : FSMState
         return _character.Input != null && _character.PhysicsController.IsLanded && _character.Input.TargetMovement == Vector3.zero;
     }
 
+    public virtual bool GoToDyingState()
+    {
+        return _character.StatsController.Health.IsEmpty;
+    }
+
     #endregion
 }

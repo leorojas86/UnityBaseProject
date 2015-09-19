@@ -99,6 +99,11 @@ public class Character : MonoBehaviour
 		_movementController.Reset();
 	}
 
+    public void Die()
+    {
+        _statsController.Health.Empty();
+    }
+
     void OnDrawGizmos()
     {
         if (_physicsController != null)
