@@ -97,6 +97,8 @@ public class CollisionNotifier : MonoBehaviour
 
     private void NotifyOnCollision(Collider collider, Type type, State state)
     {
+		Debug.Log("NotifyOnCollision collider = " + collider + " type = " + type + " state = " + state);
+
         if (OnCollision != null)
         {
             CollisionData data = new CollisionData(collider, state);
