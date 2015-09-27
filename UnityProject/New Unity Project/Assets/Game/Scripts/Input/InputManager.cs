@@ -52,7 +52,7 @@ public class InputManager
 
 	private void CheckInput()
 	{
-		int keyCount = (int)KeyCode.Joystick8Button19;
+		int keyCount = (int)KeyCode.Joystick4Button9;
 
 		for(int keyCodeIndex = 0; keyCodeIndex < keyCount; keyCodeIndex++)
 		{
