@@ -68,7 +68,7 @@ public class CharacterMovementController
         _fsm.AddState(idleState);
 
         _fsm.CurrentState       = idleState;//Initial State
-        _fsm.IsDebugInfoEnabled = true;
+        //_fsm.IsDebugInfoEnabled = true;
     }
 
     #endregion

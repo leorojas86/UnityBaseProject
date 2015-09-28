@@ -52,12 +52,25 @@ public class CollisionNotifier : MonoBehaviour
 
     public System.Action<CollisionData> OnCollision = null;
 
+	private int _stayingCollisionsCount = 0;
+
     #endregion
+
+	#region Properties
+
+	public bool IsColliding
+	{
+		get { return _stayingCollisionsCount > 0;}
+	}
+
+	#endregion
 
     #region Events
 
     void OnCollisionEnter(Collision collision)
     {
+		_stayingCollisionsCount++;
+
         NotifyOnCollision(collision, Type.Collision, State.Enter);
     }
 
@@ -68,11 +81,15 @@ public class CollisionNotifier : MonoBehaviour
 
     void OnCollisionExit(Collision collision)
     {
+		_stayingCollisionsCount--;
+
         NotifyOnCollision(collision, Type.Collision, State.Exit);
     }
 
     void OnTriggerEnter(Collider collision)
     {
+		_stayingCollisionsCount++;
+
         NotifyOnCollision(collision, Type.Trigger, State.Enter);
     }
 
@@ -83,6 +100,8 @@ public class CollisionNotifier : MonoBehaviour
 
     void OnTriggerExit(Collider collision)
     {
+		_stayingCollisionsCount--;
+
         NotifyOnCollision(collision, Type.Trigger, State.Exit);
     }
 
@@ -97,7 +116,7 @@ public class CollisionNotifier : MonoBehaviour
 
     private void NotifyOnCollision(Collider collider, Type type, State state)
     {
-		Debug.Log("NotifyOnCollision collider = '" + collider.name + "' Notifier = '" + transform.name + "' type = '" + type + "' state = '" + state + "'");
+		//Debug.Log("NotifyOnCollision collider = '" + collider.name + "' Notifier = '" + transform.name + "' type = '" + type + "' state = '" + state + "'");
 
         if (OnCollision != null)
         {

@@ -5,11 +5,13 @@ public class CharacterPhysicsController
 {
     #region Variables
 
-    private Character _character            = null;
-    private Rigidbody _rigidBody            = null;
-    private CapsuleCollider _capsule        = null;
-    public CollisionNotifier _bottomCollisionNotifier = null;
-    public CollisionNotifier _frontCollisionNotifier  = null;
+    private Character _character            			= null;
+    private Rigidbody _rigidBody            			= null;
+    private CapsuleCollider _capsule        			= null;
+    private CollisionNotifier _bottomCollisionNotifier 	= null;
+	private CollisionNotifier _frontCollisionNotifier  	= null;
+	private CollisionNotifier _belowCollisionNotifier   = null;
+
 
     private bool _isGoingDown   = false;
     private bool _isGoingUp     = false;
@@ -79,18 +81,21 @@ public class CharacterPhysicsController
 
     #region Methods
 
+	private void SetBelowCollision(CollisionNotifier notifier)
+	{
+		if(notifier != _belowCollisionNotifier)
+		{
+			if(_belowCollisionNotifier != null)
+				_belowCollisionNotifier.OnCollision = null;
+
+			_belowCollisionNotifier = notifier;
+			_belowCollisionNotifier.OnCollision = CheckForIsLanded;
+		}
+	}
+
     private void UpdateBendedState()
     {
-        if(_isBended)
-        {
-            _bottomCollisionNotifier.OnCollision = null;
-            _frontCollisionNotifier.OnCollision  = CheckForIsLanded;
-        }
-        else
-        {
-            _bottomCollisionNotifier.OnCollision = CheckForIsLanded;
-            _frontCollisionNotifier.OnCollision  = null;
-        }
+		SetBelowCollision(_isBended ? _frontCollisionNotifier : _bottomCollisionNotifier);
 
         Vector3 currentRotation             = _capsule.transform.localEulerAngles;
         currentRotation.x                   = _isBended ? Constants.CHARACTER_BEND_X_ROTATION : Constants.CHARACTER_STAND_X_ROTATION;
@@ -112,7 +117,7 @@ public class CharacterPhysicsController
 
     private void UpdateLandedFlag()
     {
-        if(_isLanded)
+        if(_isLanded && !_belowCollisionNotifier.IsColliding)
             _isLanded = Mathf.Abs(_rigidBody.velocity.y) < Constants.CHARACTER_LANDED_Y_VELOCITY_THRESHOLD;
         else
         {
@@ -131,7 +136,7 @@ public class CharacterPhysicsController
         switch(data.state)
         {
             case CollisionNotifier.State.Enter:
-            case CollisionNotifier.State.Stay:
+            //case CollisionNotifier.State.Stay:
                 if(!_isLanded)
                 {
                     _isLanded    = true;
