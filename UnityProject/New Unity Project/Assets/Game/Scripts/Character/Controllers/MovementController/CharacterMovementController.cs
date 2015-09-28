@@ -94,10 +94,10 @@ public class CharacterMovementController
 	public void Reset()
 	{
 		_character.Velocity             = Vector3.zero;
+		_character.Rotation             = _initialRotation;
+		_character.CameraRotation       = _initialCameraRotation;
         _character.transform.position   = _initialPosition;
-        _character.Rotation             = _initialRotation;
-        _character.CameraRotation       = _initialCameraRotation;
-
+        
         _character.Input.ClearLastInput(true);
 
         _fsm.GotoState<CharacterMovementIdleState>();
