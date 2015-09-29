@@ -77,8 +77,8 @@ public class Character : MonoBehaviour
 
 	void Awake()
 	{
+		_physicsController  = new CharacterPhysicsController(this);
         _statsController    = new CharacterStatsController(this);
-        _physicsController  = new CharacterPhysicsController(this);
         _movementController = new CharacterMovementController(this);
 	}
 

@@ -12,6 +12,8 @@ public class CharacterStatsController
     private Stat _score             = new Stat(true);
     private Stat _mana              = new Stat(true);
 
+	private Material _sphereMaterial 					= null; 
+
     #endregion
 
     #region Properties
@@ -48,6 +50,7 @@ public class CharacterStatsController
     public CharacterStatsController(Character character)
     {
         //_character = character;
+		_sphereMaterial = character.PhysicsController.Capsule.GetComponent<MeshRenderer>().sharedMaterial;
     }
 
     #endregion
@@ -57,6 +60,7 @@ public class CharacterStatsController
     public void TakeDamage(int damage, Object damageOwner)
     {
         _health.Decrease(damage);
+		_sphereMaterial.color = Color.Lerp(Color.red, Color.green, _health.Percentage);
     }
 
     public void Update()
