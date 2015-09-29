@@ -25,6 +25,11 @@ public class Stat
         get { return this.value == EMPTY_VALUE; }
     }
 
+	public float Percentage
+	{
+		get { return this.value / this.maxValue; }
+	}
+
     #endregion
 
     #region Constructors

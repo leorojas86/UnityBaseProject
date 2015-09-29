@@ -12,7 +12,6 @@ public class CharacterPhysicsController
 	private CollisionNotifier _frontCollisionNotifier  	= null;
 	private CollisionNotifier _belowCollisionNotifier   = null;
 
-
     private bool _isGoingDown   = false;
     private bool _isGoingUp     = false;
     private bool _isLanded      = false;
