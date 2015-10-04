@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: CharacterCapsule
+  m_Name: DamageSphere
   m_Shader: {fileID: 4800000, guid: 30b75dd4621914e7f86e6f15cdf21691, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -135,4 +135,4 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .300000012, g: 1, b: .300000012, a: 1}
+        second: {r: 1, g: 0, b: 0, a: 1}

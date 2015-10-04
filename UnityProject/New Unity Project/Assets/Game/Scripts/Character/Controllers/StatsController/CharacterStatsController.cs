@@ -51,16 +51,23 @@ public class CharacterStatsController
     {
         //_character = character;
 		_sphereMaterial = character.PhysicsController.Capsule.GetComponent<MeshRenderer>().sharedMaterial;
-    }
+
+		UpdateHealthColor();
+	}
 
     #endregion
 
     #region Methods
 
-    public void TakeDamage(int damage, Object damageOwner)
+	public void UpdateHealthColor()
+	{
+		_sphereMaterial.SetColor("_Color", Color.Lerp(new Color(1,0.3f,0.3f), new Color(0.3f,1,0.3f), _health.Percentage));
+	}
+
+    public void TakeDamage(float damage, GameObject damageOwner)
     {
         _health.Decrease(damage);
-		_sphereMaterial.color = Color.Lerp(Color.red, Color.green, _health.Percentage);
+		UpdateHealthColor();
     }
 
     public void Update()
