@@ -5,7 +5,7 @@ public class TestDamageCollision : MonoBehaviour
 {
 	#region Constants
 
-	private const float DAMAGE_PER_FRAME = 0.02f;
+	private const float DAMAGE_PER_FRAME = 5f;
 
 	#endregion
 

@@ -66,6 +66,7 @@ public class CharacterStatsController
 
     public void TakeDamage(float damage, GameObject damageOwner)
     {
+		//Debug.Log("damage = " + damage);
         _health.Decrease(damage);
 		UpdateHealthColor();
     }
@@ -81,6 +82,8 @@ public class CharacterStatsController
     public void Reset()
     {
         _health.Reset();
+
+		UpdateHealthColor();
     }
 
     #endregion
